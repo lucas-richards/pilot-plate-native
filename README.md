@@ -1,9 +1,10 @@
-# Pilot Plate Mobile App (iOS and Android)
+#  Plate Pilot Mobile App (iOS and Android)
 
 This is the backend for the full stack Hackathon App
 
 ## Technologies Used
 
+- Expo Go
 - MongoDB
 - React Native
 - Node.js
@@ -14,7 +15,7 @@ This is the backend for the full stack Hackathon App
 
 ### ERD
 
-<img src="./images/erd.png" alt="entity relationship diagram">
+<img src="./assets/erd.png" alt="entity relationship diagram">
 
 
 ## API
