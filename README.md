@@ -2,6 +2,14 @@
 
 This is th frontend and backend for the full stack Plate Pilot App
 
+## New Architecture
+
+We had to rethink how Native Modules and Native Components work. This led us to develop the Pillars of the New Architecture:
+
+- The New Native Module System - Turbo Modules, a framework to support efficient and flexible integration with native code
+- The New Native Renderer - Fabric, which offer improved capabilities, cross-platform consistency, and performance in rendering
+- The Codegen, which generates boilerplate C++ required by the New Architecture via static typing in JavaScript
+
 ## Technologies Used
 
 - Expo Go
