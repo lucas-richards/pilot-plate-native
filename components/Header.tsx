@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     },
     text: {
       fontSize: 20,
+      //backgroundColor: 'dodgerblue',
     },
     letter: {
       color: 'red',
