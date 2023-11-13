@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { LinearGradient } from 'expo-linear-gradient';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Header from './components/Header';
+import Filter from './pages/Filter';
+import Home from './pages/Home';
+import Favorites from './pages/Favorites';
+import Profile from './pages/Profile';
 
 const Tab = createBottomTabNavigator();
 
