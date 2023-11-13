@@ -3,7 +3,8 @@ import { StyleSheet, View, Text } from 'react-native';
 
 
 const Header = () => (
-        <Text style={styles.header} >PlatePilot</Text>
+        <Text style={styles.header} >PlatePilot
+        </Text>
     
 );
 
@@ -13,7 +14,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: '100%',
         height: '5%',
-        
         fontSize: 20,
         marginTop: 30,
 
