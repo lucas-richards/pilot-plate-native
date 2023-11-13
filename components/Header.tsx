@@ -4,14 +4,11 @@ import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 
 const Header = () => (
 
-
     <View style={styles.header}>
         <Text style={styles.text}>Pl<Text style={styles.letter}>a</Text>teP<Text style={styles.letter}>i</Text>lot
-        </Text>
-        
+      </Text>
     </View>
-
-    
+      
 );
 
 const styles = StyleSheet.create({
