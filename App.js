@@ -7,16 +7,16 @@ import Header from './components/Header';
 
 export default function App() {
   return (
-    <LinearGradient
+        <LinearGradient
       colors={['rgb(239, 120, 36)', 'rgb(236, 80, 31)']}
       style={styles.container}
     >
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView>
         <Header />
-        
         <StatusBar style="auto" />
       </SafeAreaView>
     </LinearGradient>
+
   );
 }
 
