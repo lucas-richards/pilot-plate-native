@@ -17,6 +17,13 @@ This is th frontend and backend for the full stack Plate Pilot App
 
 <img src="./assets/erd.png" alt="entity relationship diagram">
 
+### Wireframes
+
+<img src="./assets/wireframe1.png" alt="wireframe">
+<img src="./assets/wireframe2.png" alt="wireframe">
+<img src="./assets/wireframe3.png" alt="wireframe">
+<img src="./assets/wireframe4.png" alt="wireframe">
+
 
 ## API
 
