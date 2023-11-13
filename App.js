@@ -6,10 +6,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { LinearGradient } from 'expo-linear-gradient';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Header from './components/Header';
-import { NavigationContainer } from '@react-navigation/native';
-
-
-
 
 function FilterScreen() {
   return (
