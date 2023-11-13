@@ -1,6 +1,6 @@
 #  Plate Pilot Mobile App (iOS and Android)
 
-This is the backend for the full stack Hackathon App
+This is th frontend and backend for the full stack Plate Pilot App
 
 ## Technologies Used
 
@@ -65,7 +65,7 @@ Request - businesses#create (requires a token):
     "business": {
         "title": "restaurant name",
         "desc": "this is a business to eat",
-        ...
+        // ...
         
     }
 }
