@@ -48,9 +48,14 @@ export default function App() {
             tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account' color={color} size={size} />) 
           }}/>
       </Tab.Navigator>
+      <StackScreen name="Home" component={HomeScreen} />
+      <StackScreen name="Settings" component={SettingsScreen} />
+      
     </NavigationContainer>
     </>
 
   );
 }
 
+Navigation.registerComponent('Home', () => App);
+Navigation.registerComponent('Settings', () => App);
