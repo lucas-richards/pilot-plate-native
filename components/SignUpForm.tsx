@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import SignUp from  './SignUpForm'
-import { Link } from '@react-navigation/native';
 
 
 
 export default function SignInForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [loading, setLoading] = useState(false); // NEW
   const [error, setError] = useState(''); // NEW
   const navigation = useNavigation();
@@ -26,7 +25,7 @@ export default function SignInForm() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign In</Text>
+      <Text style={styles.title}>Sign Up</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -42,6 +41,13 @@ export default function SignInForm() {
         onChangeText={setPassword}
         secureTextEntry
       />
+      <TextInput
+        style={styles.input}
+        placeholder="Password Confirmation"
+        value={passwordConfirm}
+        onChangeText={setPasswordConfirm}
+        secureTextEntry
+      />
       <Button
         // style={styles.button}
         onPress={handlePress}
@@ -49,12 +55,11 @@ export default function SignInForm() {
         disabled={loading}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      {/* <Text style={styles.text}>Don't have an account?</Text>
-      <Link to={{screen: 'SignUpForm'}}>change page</Link> */}
-      {/* <Button
-        style={styles.button}
-        // onPress={() => navigation.navigate(SignUp)}
-        title="Sign Up"
+      {/* <Text style={styles.text}>Already have an account?</Text>
+      <Button
+        // style={styles.button}
+        // onPress={() => navigation.navigate('SignUp')}
+        title="Sign In"
         disabled={loading}
       /> */}
     </View>
