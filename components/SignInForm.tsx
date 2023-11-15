@@ -53,7 +53,6 @@ export default function SignInForm() {
         </Text>
       </TouchableOpacity>
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      <Text style={styles.text}>Don't have an account?</Text>
       
     </View>
   );

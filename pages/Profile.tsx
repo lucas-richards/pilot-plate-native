@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import SignInForm from '../components/SignInForm';
 import SignUpForm from "../components/SignUpForm";
@@ -28,20 +28,31 @@ const Profile = ({ navigation }) => {
                     <View style={styles.container}>
 
                         {signOptionToggle ? (
-                            <View>
-                            <Text>Sign In Form</Text>
+                            
                             <SignInForm />
-                            </View>
+                            
                         ) : (
-                            <View>
-                            <Text>Sign Up Form</Text>
+                            
                             <SignUpForm />
-                            </View>
+                         
                         )}
-                    <Button 
-                    title={signOptionToggle ? 'Go to Sign Up Form' : 'Go to Sign In Form'}
-                    onPress={() => setSignOptionToggle(!signOptionToggle)}
-                />
+                        <View style={styles.container2}>
+                          <Text>
+                            {signOptionToggle ? 
+                            'Not a member yet?':'Already have an account'}
+                          </Text>
+                          <TouchableOpacity
+                            onPress={() => setSignOptionToggle(!signOptionToggle)}
+                          >
+                            <Text
+                              style={{color: 'white', paddingLeft: 5}}
+                            >
+                              {signOptionToggle ? 'Register' : 'Sign In'}
+                            </Text>
+                          </TouchableOpacity>
+
+                        </View>
+                       
                     </View>
 
                 )}
@@ -71,6 +82,13 @@ const Profile = ({ navigation }) => {
     container: {
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    container2: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 15,
     },
 
   });

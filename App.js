@@ -37,7 +37,7 @@ export default function App() {
           options={{ 
             tabBarLabel: "",
             title: <Header />,
-            tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='filter-variant' color={color} size={size} />) 
+            tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='filter-variant' color={color} size={35} />) 
           }}/>
         <Tab.Screen 
           name="Home" 
@@ -45,7 +45,7 @@ export default function App() {
           options={{ 
             tabBarLabel: "",
             title: <Header />,
-            tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='home' color={color} size={size} />) 
+            tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='home' color={color} size={35} />) 
           }}/>
         <Tab.Screen 
           name="Favorites" 
@@ -53,14 +53,16 @@ export default function App() {
           options={{ 
             tabBarLabel: "",
             title: <Header />,
-            tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='heart' color={color} size={size} />) 
+            tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='heart' color={color} size={35} />) 
           }}/>
-          <Tab.Screen name="ProfileTab" component={ProfileNavigator} 
-          options={{ 
-            tabBarLabel: "",
-            title: <Header />,
-            tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account' color={color} size={size} />) 
-          }}/>
+          <Tab.Screen 
+            name="ProfileTab" 
+            component={ProfileNavigator} 
+            options={{ 
+              tabBarLabel: "",
+              title: <Header />,
+              tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account' color={color} size={35} />) 
+            }}/>
         {/* <Tab.Screen 
           name="Profile" 
           component={Profile} 
