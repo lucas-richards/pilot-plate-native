@@ -28,13 +28,9 @@ const Profile = ({ navigation }) => {
                     <View style={styles.container}>
 
                         {signOptionToggle ? (
-                            
                             <SignInForm />
-                            
                         ) : (
-                            
                             <SignUpForm />
-                         
                         )}
                         <View style={styles.container2}>
                           <Text>
