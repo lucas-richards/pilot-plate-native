@@ -26,7 +26,7 @@ export default function SignInForm() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign In</Text>
+      <Text style={styles.title}>Enter Email And Password</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -68,7 +68,9 @@ const styles = StyleSheet.create({
     //   flex: 1,
     //   justifyContent: 'center',
     //   alignItems: 'center',
-      padding: 20,
+      paddingTop: 50,
+      maxWidth: 300,
+      minWidth: 300,
     },
     title: {
       fontSize: 20,
