@@ -9,6 +9,7 @@ const Profile = ({ navigation }) => {
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [signOptionToggle, setSignOptionToggle] = useState(false)
 
+
     return (
       <>
         <LinearGradient
@@ -76,4 +77,4 @@ const Profile = ({ navigation }) => {
 
 
 
-export default Profile
+  export default Profile

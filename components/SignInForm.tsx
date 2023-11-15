@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
+import { View, TouchableOpacity, Text, TextInput, StyleSheet, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SignUp from  './SignUpForm'
 import { Link } from '@react-navigation/native';
@@ -42,12 +42,17 @@ export default function SignInForm() {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button
-        // style={styles.button}
+      <TouchableOpacity
+        style={styles.buttonContainer}
         onPress={handlePress}
-        title="Submit"
         disabled={loading}
-      />
+      >
+        <Text 
+          style={styles.button}
+        >
+          Log In
+        </Text>
+      </TouchableOpacity>
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <Text style={styles.text}>Don't have an account?</Text>
       
@@ -70,6 +75,7 @@ const styles = StyleSheet.create({
       fontSize: 20,
       fontWeight: 'bold',
       marginBottom: 20,
+      textAlign: 'center',
     },
     input: {
       borderWidth: 1,
@@ -77,12 +83,20 @@ const styles = StyleSheet.create({
       padding: 10,
       fontSize: 20,
       marginBottom: 20,
-      borderRadius: 5,
+      borderRadius: 25,
       width: '100%',
+    },
+    buttonContainer: {
+      width: '100%',
+      borderRadius: 25,
     },
     button: {
       width: '100%',
-      fontSize: 20,
+      textAlign: 'center',
+      padding: 5,
+      fontSize: 22,
+      backgroundColor: 'black',
+      color: 'white',
     },
     error: {
       color: 'red',

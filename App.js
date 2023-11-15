@@ -77,14 +77,8 @@ export default function App() {
             title: <Header />,
           }}/> */}
       </Tab.Navigator>
-      <StackScreen name="Home" component={HomeScreen} />
-      <StackScreen name="Settings" component={SettingsScreen} />
-      
     </NavigationContainer>
     </>
 
   );
 }
-
-Navigation.registerComponent('Home', () => App);
-Navigation.registerComponent('Settings', () => App);
