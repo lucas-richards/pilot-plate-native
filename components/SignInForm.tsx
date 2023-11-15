@@ -43,7 +43,6 @@ export default function SignInForm() {
         secureTextEntry
       />
       <TouchableOpacity
-        style={styles.buttonContainer}
         onPress={handlePress}
         disabled={loading}
       >
@@ -80,16 +79,14 @@ const styles = StyleSheet.create({
     input: {
       borderWidth: 1,
       borderColor: 'black',
+      backgroundColor: 'white',
       padding: 10,
       fontSize: 20,
       marginBottom: 20,
       borderRadius: 25,
       width: '100%',
     },
-    buttonContainer: {
-      width: '100%',
-      borderRadius: 25,
-    },
+    
     button: {
       width: '100%',
       textAlign: 'center',
@@ -105,5 +102,6 @@ const styles = StyleSheet.create({
     text: {
       fontSize: 20,
       marginBottom: 20,
+      marginTop: 20,
     },
   });

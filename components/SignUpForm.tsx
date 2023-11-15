@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
+import { View, TouchableOpacity, Text, TextInput, StyleSheet, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -48,20 +48,24 @@ export default function SignInForm() {
         onChangeText={setPasswordConfirm}
         secureTextEntry
       />
-      <Button
-        // style={styles.button}
+      <TouchableOpacity
         onPress={handlePress}
-        title="Submit"
         disabled={loading}
-      />
+      >
+        <Text 
+          style={styles.button}
+        >
+          Sign Up
+        </Text>
+      </TouchableOpacity>
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      {/* <Text style={styles.text}>Already have an account?</Text>
-      <Button
+      <Text style={styles.text}>Already have an account?</Text>
+      {/* <Button
         // style={styles.button}
         // onPress={() => navigation.navigate('SignUp')}
         title="Sign In"
         disabled={loading}
-      /> */}
+      />  */}
     </View>
   );
 
@@ -79,19 +83,25 @@ const styles = StyleSheet.create({
       fontSize: 20,
       fontWeight: 'bold',
       marginBottom: 20,
+      textAlign: 'center',
     },
     input: {
       borderWidth: 1,
       borderColor: 'black',
+      backgroundColor: 'white',
       padding: 10,
       fontSize: 20,
       marginBottom: 20,
-      borderRadius: 5,
+      borderRadius: 25,
       width: '100%',
     },
     button: {
       width: '100%',
-      fontSize: 20,
+      textAlign: 'center',
+      padding: 5,
+      fontSize: 22,
+      backgroundColor: 'black',
+      color: 'white',
     },
     error: {
       color: 'red',
@@ -100,5 +110,6 @@ const styles = StyleSheet.create({
     text: {
       fontSize: 20,
       marginBottom: 20,
+      marginTop: 20,
     },
   });
