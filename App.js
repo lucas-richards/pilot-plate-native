@@ -63,21 +63,6 @@ export default function App() {
               title: <Header />,
               tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account' color={color} size={35} />) 
             }}/>
-        {/* <Tab.Screen 
-          name="Profile" 
-          component={Profile} 
-          options={{ 
-            tabBarLabel: "",
-            title: <Header />,
-            tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account' color={color} size={size} />) 
-          }}/> */}
-        {/* <Tab.Screen 
-          name="SignUpForm" 
-          component={SignUpForm} 
-          options={{ 
-            tabBarLabel: "",
-            title: <Header />,
-          }}/> */}
       </Tab.Navigator>
     </NavigationContainer>
     </>
