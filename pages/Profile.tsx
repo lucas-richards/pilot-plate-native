@@ -52,10 +52,7 @@ const Profile = ({ navigation }) => {
                     </View>
 
                 )}
-                {/* <Button
-                    title={isSignedIn ? 'Sign Out' : 'Sign In'}
-                    onPress={() => setSignOptionToggle(!signOptionToggle)}
-                /> */}
+                
             </View>
 
 
