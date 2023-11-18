@@ -1,6 +1,8 @@
 import apiUrl from '../apiConfig'
 import axios from 'axios'
 
+// Business CRUD
+
 // READ -> Index
 export const getAllBusinesses = (dataId) => {
     return axios(`${apiUrl}/businesses/search?dataId=${dataId}`)
