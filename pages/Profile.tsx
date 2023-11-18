@@ -5,8 +5,10 @@ import SignInForm from '../components/SignInForm';
 import SignUpForm from "../components/SignUpForm";
 import { signOut } from '../api/auth';
 
+
 const Profile = ({ user, setUser }) => {
     //const [user, setUser] = useState(null);
+   
     const [signOptionToggle, setSignOptionToggle] = useState(false)
 
     console.log(user)
@@ -32,7 +34,7 @@ const Profile = ({ user, setUser }) => {
                     <View style={styles.container}>
                       <Text style={styles.text}>Welcome Back!</Text>
                       <Text style={styles.text}>{user.email}</Text>
-
+                    
                       <TouchableOpacity
                         onPress={handleSignOut}
                       >
@@ -40,8 +42,6 @@ const Profile = ({ user, setUser }) => {
                         SIGN OUT
                       </Text>
                     </TouchableOpacity>
-
-
                     </View>
                 ) : (
                     <View style={styles.container}>
@@ -106,14 +106,6 @@ const Profile = ({ user, setUser }) => {
       color: 'white',
       textAlign: 'center',
       fontWeight: 'bold',
-    },
-    button: {
-      width: '100%',
-      textAlign: 'center',
-      padding: 5,
-      fontSize: 22,
-      backgroundColor: 'black',
-      color: 'white',
     },
 
   });
