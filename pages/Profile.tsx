@@ -20,9 +20,9 @@ const Profile = ({ navigation }) => {
             <View>
                 {user ? (
                     // Display profile information
-                    <View>
-                    <Text>Profile Information</Text>
-                    {/* Display user information here */}
+                    <View style={styles.container}>
+                      <Text style={styles.text}>Welcome Back</Text>
+                      <Text style={styles.text}>{user.email}</Text>
                     </View>
                 ) : (
                     <View style={styles.container}>
@@ -33,7 +33,7 @@ const Profile = ({ navigation }) => {
                             />
                         ) : (
                             <SignUpForm
-                              setUser={setUser} />
+                              setUser = {setUser} />
                         )}
                         <View style={styles.container2}>
                           <Text>
@@ -71,6 +71,8 @@ const Profile = ({ navigation }) => {
     container: {
       justifyContent: 'center',
       alignItems: 'center',
+      marginTop: 100,
+      
     },
     container2: {
       display: 'flex',
@@ -78,6 +80,13 @@ const Profile = ({ navigation }) => {
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: 15,
+    },
+    text: {
+      justifyContent: 'center',
+      fontSize: 20,
+      color: 'white',
+      textAlign: 'center',
+      fontWeight: 'bold',
     },
 
   });
