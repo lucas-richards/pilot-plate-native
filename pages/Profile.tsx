@@ -21,7 +21,7 @@ const Profile = ({ navigation }) => {
                 {user ? (
                     // Display profile information
                     <View style={styles.container}>
-                      <Text style={styles.text}>Welcome Back</Text>
+                      <Text style={styles.text}>Welcome Back!</Text>
                       <Text style={styles.text}>{user.email}</Text>
                     </View>
                 ) : (
