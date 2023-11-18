@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, TextInput, StyleSheet, Button } from 'rea
 import { useNavigation } from '@react-navigation/native';
 import SignUp from  './SignUpForm'
 import { Link } from '@react-navigation/native';
-
+import { signIn } from '../api/auth';
 
 
 export default function SignInForm({ setUser }) {
@@ -13,15 +13,18 @@ export default function SignInForm({ setUser }) {
   const [error, setError] = useState(''); // NEW
   const navigation = useNavigation();
 
+
+  const credentials = { email, password };
+
   const handlePress = async () => {
-    // setLoading(true);
-    // try {
-    //   await signIn(email, password);
-    // } catch (e) {
-    //   setError(e.message);
-    // } finally {
-    //   setLoading(false);
-    // }
+    setLoading(true);
+    signIn(credentials)
+      .then(() => signIn(credentials))
+      .then((res) => setUser(res.data.user))
+      .catch((error) => {
+        console.log(error);
+      })
+      setLoading(false);
   };
 
   return (
