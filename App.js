@@ -15,18 +15,28 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator()
 
 
-const ProfileNavigator = () => {
-  return (
-    <Stack.Navigator initialRouteName="Profile" screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="SignIn" component={SignUpForm} />
-      <Stack.Screen name="SignUp" component={SignInForm} />
-    </Stack.Navigator>
-  );
-};
+// const ProfileNavigator = () => {
+//   return (
+//     <Stack.Navigator initialRouteName="Profile" screenOptions={{headerShown: false}}>
+//       <Stack.Screen name="Profile" component={Profile} />
+//       <Stack.Screen name="SignUp" component={SignUpForm} />
+//       <Stack.Screen name="SignIn" component={SignInForm} />
+//     </Stack.Navigator>
+//   );
+// };
+// this code makes a smooth page transition
+//   <View style={{marginTop:20}}>
+//       <Pressable onPress={() => navigation.navigate("SignIn")}>
+//           <Text>
+//           HELLO
+//           </Text> 
+//       </Pressable>
+//   </View>
 
 
 export default function App() {
+   const [user, setUser] = React.useState(null);
+
   return (
     <>
     <NavigationContainer>
@@ -57,7 +67,8 @@ export default function App() {
           }}/>
           <Tab.Screen 
             name="ProfileTab" 
-            component={ProfileNavigator} 
+            //component={Profile}
+            children={() => <Profile setUser={setUser} user={user} />} //allows props to be passed
             options={{ 
               tabBarLabel: "",
               title: <Header />,
