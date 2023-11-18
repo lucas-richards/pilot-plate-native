@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import SignInForm from '../components/SignInForm';
 import SignUpForm from "../components/SignUpForm";
@@ -7,11 +7,12 @@ import { signOut } from '../api/auth';
 
 
 const Profile = ({ user, setUser }) => {
-    //const [user, setUser] = useState(null);
+    
    
     const [signOptionToggle, setSignOptionToggle] = useState(false)
 
-    console.log(user)
+    console.log('user',user)
+
     const handleSignOut = async () => {
         signOut(user)
         .then(() => {
@@ -44,24 +45,29 @@ const Profile = ({ user, setUser }) => {
                     </TouchableOpacity>
                     </View>
                 ) : (
-                    <View style={styles.container}>
 
+                    <View style={styles.container}>
+                    
                         {signOptionToggle ? (
-                            <SignInForm
+                          <SignInForm
                               setUser = {setUser} 
+                              setSignOptionToggle = {setSignOptionToggle}
+                              signOptionToggle = {signOptionToggle}
                             />
                         ) : (
                             <SignUpForm
-                              setUser = {setUser} />
+                              setUser = {setUser}
+                              setSignOptionToggle = {setSignOptionToggle}
+                              signOptionToggle = {signOptionToggle} />
                         )}
-                        <View style={styles.container2}>
+                        {/* <View style={styles.container2}>
                           <Text>
                             {signOptionToggle ? 
                             'Not a member yet?':'Already have an account'}
                           </Text>
                           <TouchableOpacity
                             onPress={() => setSignOptionToggle(!signOptionToggle)}
-                          >
+                            >
                             <Text
                               style={{color: 'white', paddingLeft: 5}}
                             >
@@ -69,10 +75,10 @@ const Profile = ({ user, setUser }) => {
                             </Text>
                           </TouchableOpacity>
 
-                        </View>
-                       
+                        </View> */}
+                        
                     </View>
-
+                    
                 )}
                 
             </View>
@@ -106,6 +112,14 @@ const Profile = ({ user, setUser }) => {
       color: 'white',
       textAlign: 'center',
       fontWeight: 'bold',
+    },
+    button: {
+      width: '100%',
+      textAlign: 'center',
+      padding: 5,
+      fontSize: 22,
+      backgroundColor: 'black',
+      color: 'white',
     },
 
   });
