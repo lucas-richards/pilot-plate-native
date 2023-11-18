@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import {Card, Button, Icon} from 'react-native-elements';
 
 
 const Home = () => {
@@ -13,7 +13,24 @@ const Home = () => {
         >   
           
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Home!</Text>
+            <View style={styles.card}>
+              <Card.Image style={styles.cardImage} source={require('../assets/wireframe2.png')} />
+              <Card.Divider/>
+              <Text style={{marginHorizontal: 10}}>
+                  restaurant info
+              </Text>
+              <Button
+                onPress={() => alert('view restaurant')}
+                icon={<Icon name='code' color='#ffffff' />}
+                buttonStyle={{width: 100, alignSelf: 'center'}}
+                title='View' />
+            </View>
+            <TouchableOpacity
+              onPress={() => alert('SPIN!')}
+              style={ styles.button }>
+              <Text style={styles.text}>SPIN</Text>
+            </TouchableOpacity>
+
           </View>
         </LinearGradient> 
       </>
@@ -21,3 +38,28 @@ const Home = () => {
     );
   }
   export default Home
+
+  const styles = StyleSheet.create({
+    text: {
+      textAlign: 'center',
+      padding: 10,
+      width: 100,
+    },
+    button: {
+      marginTop: 20,
+      borderRadius: 20,
+      backgroundColor: 'rgba(100,100,100,0.7)'
+    },
+    card: {
+      backgroundColor:'white',
+      width: 300,
+      height: 400,
+      borderRadius:10
+    },
+    cardImage: {
+      width: 300,
+      height: 250,
+      borderRadius:10
+    }
+
+  });

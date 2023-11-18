@@ -60,22 +60,6 @@ const Profile = ({ user, setUser }) => {
                               setSignOptionToggle = {setSignOptionToggle}
                               signOptionToggle = {signOptionToggle} />
                         )}
-                        {/* <View style={styles.container2}>
-                          <Text>
-                            {signOptionToggle ? 
-                            'Not a member yet?':'Already have an account'}
-                          </Text>
-                          <TouchableOpacity
-                            onPress={() => setSignOptionToggle(!signOptionToggle)}
-                            >
-                            <Text
-                              style={{color: 'white', paddingLeft: 5}}
-                            >
-                              {signOptionToggle ? 'Register' : 'Sign In'}
-                            </Text>
-                          </TouchableOpacity>
-
-                        </View> */}
                         
                     </View>
                     
@@ -120,6 +104,7 @@ const Profile = ({ user, setUser }) => {
       fontSize: 22,
       backgroundColor: 'black',
       color: 'white',
+      marginTop: 20,
     },
 
   });

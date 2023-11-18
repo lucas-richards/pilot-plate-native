@@ -11,14 +11,13 @@ export default function SignInForm({ setUser, setSignOptionToggle, signOptionTog
   const credentials = { email, password };
 
   const handlePress = async () => {
-    setLoading(true);
-    console.log(loading)
+    setLoading(true)
     signIn(credentials)
       .then(() => signIn(credentials))
       .then((res) => setUser(res.data.user))
       .catch((error) => {
-        setError(`Bad credentials: ${error.message}`);
-        setLoading(false);
+        setError(`Bad credentials: ${error.message}`)
+        setLoading(false)
       })
   };
 
