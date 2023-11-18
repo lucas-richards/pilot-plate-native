@@ -8,8 +8,6 @@ import Filter from './pages/Filter';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import Profile from './pages/Profile';
-import SignUpForm from './components/SignUpForm';
-import SignInForm from './components/SignInForm'
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator()
