@@ -1,6 +1,8 @@
 import apiUrl from '../apiConfig'
 import axios from 'axios'
 
+// Yelp API
+
 export const getbusinesses = (location, price, category, radius) => {
     console.log('this is locations',location)
 	return axios({
