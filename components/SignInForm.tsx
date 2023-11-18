@@ -6,7 +6,7 @@ import { Link } from '@react-navigation/native';
 
 
 
-export default function SignInForm() {
+export default function SignInForm({ setUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false); // NEW

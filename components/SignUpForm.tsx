@@ -1,27 +1,32 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, TextInput, StyleSheet, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { signUp, signIn } from '../api/auth';
 
 
 
-export default function SignInForm() {
+export default function SignInForm({ setUser}) {
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [loading, setLoading] = useState(false); // NEW
   const [error, setError] = useState(''); // NEW
   const navigation = useNavigation();
 
+  const credentials = { email, password, passwordConfirmation };
+
   const handlePress = async () => {
-    // setLoading(true);
-    // try {
-    //   await signIn(email, password);
-    // } catch (e) {
-    //   setError(e.message);
-    // } finally {
-    //   setLoading(false);
-    // }
-  };
+      setLoading(true);
+      signUp(credentials)
+        .then(() => signIn(credentials))
+        .then((res) => setUser(res.data.user))
+        .catch((error) => {
+          console.log(error);
+        })
+        setLoading(false);
+    }
+  
 
   return (
     <View style={styles.container}>
@@ -44,8 +49,8 @@ export default function SignInForm() {
       <TextInput
         style={styles.input}
         placeholder="Password Confirmation"
-        value={passwordConfirm}
-        onChangeText={setPasswordConfirm}
+        value={passwordConfirmation}
+        onChangeText={setPasswordConfirmation}
         secureTextEntry
       />
       <TouchableOpacity
@@ -60,12 +65,6 @@ export default function SignInForm() {
       </TouchableOpacity>
       {error ? <Text style={styles.error}>{error}</Text> : null}
       
-      {/* <Button
-        // style={styles.button}
-        // onPress={() => navigation.navigate('SignUp')}
-        title="Sign In"
-        disabled={loading}
-      />  */}
     </View>
   );
 

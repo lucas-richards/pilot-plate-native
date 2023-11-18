@@ -6,7 +6,7 @@ import SignUpForm from "../components/SignUpForm";
 
 
 const Profile = ({ navigation }) => {
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [user, setUser] = useState(null);
     const [signOptionToggle, setSignOptionToggle] = useState(false)
 
 
@@ -18,7 +18,7 @@ const Profile = ({ navigation }) => {
         >   
 
             <View>
-                {isSignedIn ? (
+                {user ? (
                     // Display profile information
                     <View>
                     <Text>Profile Information</Text>
@@ -28,9 +28,12 @@ const Profile = ({ navigation }) => {
                     <View style={styles.container}>
 
                         {signOptionToggle ? (
-                            <SignInForm />
+                            <SignInForm
+                              setUser = {setUser} 
+                            />
                         ) : (
-                            <SignUpForm />
+                            <SignUpForm
+                              setUser={setUser} />
                         )}
                         <View style={styles.container2}>
                           <Text>
@@ -55,10 +58,6 @@ const Profile = ({ navigation }) => {
                 
             </View>
 
-
-
-
-          
         </LinearGradient> 
       </>
   
