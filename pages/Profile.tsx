@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Button } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import SignInForm from '../components/SignInForm';
 import SignUpForm from "../components/SignUpForm";
+import { signOut } from '../api/auth';
 
-
-const Profile = ({ navigation }) => {
-    const [user, setUser] = useState(null);
+const Profile = ({ user, setUser }) => {
+    //const [user, setUser] = useState(null);
     const [signOptionToggle, setSignOptionToggle] = useState(false)
 
+    console.log(user)
+    const handleSignOut = async () => {
+        signOut(user)
+        .then(() => {
+          setUser(null)
+          console.log("Sign Out Success")
+        })
+
+    };
 
     return (
       <>
@@ -23,6 +32,16 @@ const Profile = ({ navigation }) => {
                     <View style={styles.container}>
                       <Text style={styles.text}>Welcome Back!</Text>
                       <Text style={styles.text}>{user.email}</Text>
+
+                      <TouchableOpacity
+                        onPress={handleSignOut}
+                      >
+                      <Text style={styles.button}>
+                        SIGN OUT
+                      </Text>
+                    </TouchableOpacity>
+
+
                     </View>
                 ) : (
                     <View style={styles.container}>
@@ -87,6 +106,14 @@ const Profile = ({ navigation }) => {
       color: 'white',
       textAlign: 'center',
       fontWeight: 'bold',
+    },
+    button: {
+      width: '100%',
+      textAlign: 'center',
+      padding: 5,
+      fontSize: 22,
+      backgroundColor: 'black',
+      color: 'white',
     },
 
   });
