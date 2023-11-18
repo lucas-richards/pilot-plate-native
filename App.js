@@ -15,18 +15,21 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator()
 
 
-const ProfileNavigator = () => {
-  return (
-    <Stack.Navigator initialRouteName="Profile" screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="SignIn" component={SignUpForm} />
-      <Stack.Screen name="SignUp" component={SignInForm} />
-    </Stack.Navigator>
-  );
-};
+// const ProfileNavigator = () => {
+//   return (
+//     <Stack.Navigator initialRouteName="Profile" screenOptions={{headerShown: false}}>
+//       <Stack.Screen name="Profile" component={Profile} />
+//       <Stack.Screen name="SignIn" component={SignUpForm} />
+//       <Stack.Screen name="SignUp" component={SignInForm} />
+//     </Stack.Navigator>
+//   );
+// };
 
 
 export default function App() {
+
+  const [user, setUser] = React.useState(null)
+
   return (
     <>
     <NavigationContainer>
@@ -57,7 +60,7 @@ export default function App() {
           }}/>
           <Tab.Screen 
             name="ProfileTab" 
-            component={ProfileNavigator} 
+            children={() => <Profile setUser={setUser} user={user} />}
             options={{ 
               tabBarLabel: "",
               title: <Header />,
