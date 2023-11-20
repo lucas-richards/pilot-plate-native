@@ -26,7 +26,7 @@ const Home = () => {
                 title='View' />
             </View>
             <TouchableOpacity
-              onPress={() => alert('SPINNN!')}
+              onPress={() => alert('SPINNN!!!!')}
               style={ styles.button }>
               <Text style={styles.text}>SPIN</Text>
             </TouchableOpacity>
