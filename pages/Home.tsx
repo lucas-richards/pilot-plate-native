@@ -11,7 +11,7 @@ const Home = () => {
           colors={['rgb(239, 120, 36)', 'rgb(236, 80, 31)']}
           style={{height: '100%'}}
         >   
-          
+          {/* restaurant card */}
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={styles.card}>
               <Card.Image style={styles.cardImage} source={require('../assets/wireframe2.png')} />
