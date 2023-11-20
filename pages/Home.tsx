@@ -20,7 +20,7 @@ const Home = () => {
                   restaurant info
               </Text>
               <Button
-                onPress={() => alert('view restaurant')}
+                onPress={() => alert('view restaurant!')}
                 icon={<Icon name='code' color='#ffffff' />}
                 buttonStyle={{width: 100, alignSelf: 'center'}}
                 title='View' />
