@@ -12,7 +12,7 @@ import Profile from './pages/Profile';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator()
 
-
+// this is a stack navigation and includes back button
 // const ProfileNavigator = () => {
 //   return (
 //     <Stack.Navigator initialRouteName="Profile" screenOptions={{headerShown: false}}>
