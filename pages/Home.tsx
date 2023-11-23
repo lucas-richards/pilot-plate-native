@@ -29,6 +29,7 @@ const Home = () => {
               onPress={() => alert('SPINNN!!!!')}
               style={ styles.button }>
               <Text style={styles.text}>SPIN</Text>
+              <Text style={styles.text}>SP</Text>
             </TouchableOpacity>
 
           </View>
