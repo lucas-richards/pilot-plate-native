@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {Card, Button, Icon} from 'react-native-elements';
 
-
+// home page
 const Home = () => {
     return (
       <>
@@ -29,7 +29,6 @@ const Home = () => {
               onPress={() => alert('SPINNN!!!!')}
               style={ styles.button }>
               <Text style={styles.text}>SPIN</Text>
-              <Text style={styles.text}>SP</Text>
             </TouchableOpacity>
 
           </View>
