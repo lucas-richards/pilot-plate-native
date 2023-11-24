@@ -37,8 +37,9 @@ const Home = () => {
             <TouchableOpacity
               onPress={() => alert('SPINNN!!!!')}
               style={ styles.button }>
-              <Text style={styles.text}>SPIN</Text>
+              <Text style={styles.text}>SPINN</Text>
             </TouchableOpacity>
+            
 
           </View>
         </LinearGradient> 
