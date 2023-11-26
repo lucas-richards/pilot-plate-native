@@ -26,7 +26,7 @@ const Home = () => {
                   more info
               </Text>
               <Text style={{marginHorizontal: 10}}>
-                  more...
+                  more..
               </Text>
               <Button
                 onPress={() => alert('view restaurant!')}
