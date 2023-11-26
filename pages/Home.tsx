@@ -23,7 +23,7 @@ const Home = () => {
                   more info
               </Text>
               <Text style={{marginHorizontal: 10}}>
-                  more info
+                  more inf
               </Text>
               <Text style={{marginHorizontal: 10}}>
                   more..
