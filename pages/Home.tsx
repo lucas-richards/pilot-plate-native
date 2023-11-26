@@ -20,7 +20,7 @@ const Home = () => {
                   restaurant info
               </Text>
               <Text style={{marginHorizontal: 10}}>
-                  more info
+                  more inf
               </Text>
               <Text style={{marginHorizontal: 10}}>
                   more inf
