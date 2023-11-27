@@ -4,8 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import {Card, Button, Icon} from 'react-native-elements';
 import { getbusinesses } from '../api/yelp_api';
 //stars
-import OneStar from "../components/OneStar"
-import HalfStar from "../components/HalfStar"
+import { StarRatingDisplay } from 'react-native-star-rating-widget';
 
 // home page
 const Home = () => {
@@ -98,52 +97,8 @@ const Home = () => {
                   {randomRestaurant.name}
               </Text>
               <Text style={{marginHorizontal: 10}}>
-                {randomRestaurant.rating}
-
-                {/* {(() => {
-                                if (randomRestaurant.rating === 1) {
-                                    return (
-                                        <span><OneStar /></span>
-                                    )
-                                } else if (data[`${randomNumber2}`].rating === 1.5) {
-                                    return (
-                                        <span><OneStar /><HalfStar /></span>
-                                    )
-                                } else if (data[`${randomNumber2}`].rating === 2) {
-                                    return (
-                                        <span><OneStar /><OneStar /></span>
-                                    )
-                                } else if (data[`${randomNumber2}`].rating === 2.5) {
-                                    return (
-                                        <span><OneStar /><OneStar /><HalfStar /></span>
-                                    )
-                                } else if (data[`${randomNumber2}`].rating === 3) {
-                                    return (
-                                        <span><OneStar /><OneStar /><OneStar /></span>
-                                    )
-                                } else if (data[`${randomNumber2}`].rating === 3.5) {
-                                    return (
-                                        <span><OneStar /><OneStar /><OneStar /><HalfStar /></span>
-                                    )
-                                } else if (data[`${randomNumber2}`].rating === 4) {
-                                    return (
-                                        <span><OneStar /><OneStar /><OneStar /><OneStar /></span>
-                                    )
-                                } else if (data[`${randomNumber2}`].rating === 4.5) {
-                                    return (
-                                        <span><OneStar /><OneStar /><OneStar /><OneStar /><HalfStar /></span>
-                                    )
-                                } else if (data[`${randomNumber2}`].rating === 5) {
-                                    return (
-                                        <span><OneStar /><OneStar /><OneStar /><OneStar /><OneStar /></span>
-                                    )
-                                } else {
-                                    return (
-                                        <span> </span>
-                                    )
-                                }
-                            })()} */}
-
+                {/* {randomRestaurant.rating} */}
+                <StarRatingDisplay rating={randomRestaurant.rating} starSize={25}/>
               </Text>
               <Text style={{marginHorizontal: 10}}>
                 {randomRestaurant.price}
