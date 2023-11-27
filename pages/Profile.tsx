@@ -73,14 +73,12 @@ const Profile = ({ user, setUser }) => {
     );
   }
 
-
-
   const styles = StyleSheet.create({
 
     container: {
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop: 100,
+      marginTop: 0,
       
     },
     container2: {

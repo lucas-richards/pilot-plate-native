@@ -86,9 +86,6 @@ export default function SignInForm({ setUser, setSignOptionToggle, signOptionTog
 
 const styles = StyleSheet.create({
     container: {
-    //   flex: 1,
-    //   justifyContent: 'center',
-    //   alignItems: 'center',
       paddingTop: 50,
       maxWidth: 300,
       minWidth: 300,
