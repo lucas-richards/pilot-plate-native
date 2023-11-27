@@ -3,6 +3,9 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, ActivityIndicator } fr
 import { LinearGradient } from 'expo-linear-gradient';
 import {Card, Button, Icon} from 'react-native-elements';
 import { getbusinesses } from '../api/yelp_api';
+//stars
+import OneStar from "../components/OneStar"
+import HalfStar from "../components/HalfStar"
 
 // home page
 const Home = () => {
@@ -22,7 +25,9 @@ const Home = () => {
     },
     display_phone: 'Loading...',
     rating: 0,
-    review_count: 0
+    review_count: 0,
+    distance: 0,
+    price:"$"
   
   })
   
@@ -41,10 +46,27 @@ const Home = () => {
  
   },[spin])
 
-  const handlePress = () => {
-    setLoading(true)
+  const delay = ms => new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+
+  const handlePress = async event => {
+
     setSpin(!spin)
+    let delayTime = [50,50,50,50,50,50,50,50,50,50,50,50,50,150,200,250,300]
+    for(let i = 0; i < 15; i++) {
+      await delay(delayTime[i])
+      setRandomRestaurant(data[i])
+    }
+    await delay(300)
+    setRandomRestaurant(data[(Math.floor(Math.random() * data.length))])
+
   }
+
+  // const handlePress = () => {
+  //   setLoading(true)
+  //   setSpin(!spin)
+  // }
 
   // const spinning = () => {
   //   data.forEach(restaurant => {
@@ -69,14 +91,65 @@ const Home = () => {
                 loading ?
                 <Card.Image style={styles.cardImage} source={{ uri: `${randomRestaurant.image_url}` }} />
                 :
-                <Card.Image style={styles.cardImage} source={{ uri: {spinning} }} />
+                <Card.Image style={styles.cardImage} source={{uri: `${randomRestaurant.image_url}`}} />
               }
               <Card.Divider/>
               <Text style={{marginHorizontal: 10}}>
-                  restaurant info
+                  {randomRestaurant.name}
               </Text>
               <Text style={{marginHorizontal: 10}}>
-                  more inf
+                {randomRestaurant.rating}
+
+                {/* {(() => {
+                                if (randomRestaurant.rating === 1) {
+                                    return (
+                                        <span><OneStar /></span>
+                                    )
+                                } else if (data[`${randomNumber2}`].rating === 1.5) {
+                                    return (
+                                        <span><OneStar /><HalfStar /></span>
+                                    )
+                                } else if (data[`${randomNumber2}`].rating === 2) {
+                                    return (
+                                        <span><OneStar /><OneStar /></span>
+                                    )
+                                } else if (data[`${randomNumber2}`].rating === 2.5) {
+                                    return (
+                                        <span><OneStar /><OneStar /><HalfStar /></span>
+                                    )
+                                } else if (data[`${randomNumber2}`].rating === 3) {
+                                    return (
+                                        <span><OneStar /><OneStar /><OneStar /></span>
+                                    )
+                                } else if (data[`${randomNumber2}`].rating === 3.5) {
+                                    return (
+                                        <span><OneStar /><OneStar /><OneStar /><HalfStar /></span>
+                                    )
+                                } else if (data[`${randomNumber2}`].rating === 4) {
+                                    return (
+                                        <span><OneStar /><OneStar /><OneStar /><OneStar /></span>
+                                    )
+                                } else if (data[`${randomNumber2}`].rating === 4.5) {
+                                    return (
+                                        <span><OneStar /><OneStar /><OneStar /><OneStar /><HalfStar /></span>
+                                    )
+                                } else if (data[`${randomNumber2}`].rating === 5) {
+                                    return (
+                                        <span><OneStar /><OneStar /><OneStar /><OneStar /><OneStar /></span>
+                                    )
+                                } else {
+                                    return (
+                                        <span> </span>
+                                    )
+                                }
+                            })()} */}
+
+              </Text>
+              <Text style={{marginHorizontal: 10}}>
+                {randomRestaurant.price}
+              </Text>
+              <Text style={{marginHorizontal: 10}}>
+                {Math.round((randomRestaurant.distance / 1609) * 10) / 10} mi away
               </Text>
               <Button
                 onPress={() => alert('view restaurant!')}
