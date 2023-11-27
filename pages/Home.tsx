@@ -22,12 +22,6 @@ const Home = () => {
               <Text style={{marginHorizontal: 10}}>
                   more inf
               </Text>
-              <Text style={{marginHorizontal: 10}}>
-                  inf
-              </Text>
-              <Text style={{marginHorizontal: 10}}>
-                  more..
-              </Text>
               <Button
                 onPress={() => alert('view restaurant!')}
                 icon={<Icon name='code' color='#ffffff' />}
@@ -35,9 +29,9 @@ const Home = () => {
                 title='View' />
             </View>
             <TouchableOpacity
-              onPress={() => alert('SPINNN!!!!')}
+              onPress={() => alert('SPIN!!')}
               style={ styles.button }>
-              <Text style={styles.text}>SPINN</Text>
+              <Text style={styles.text}>SPIN</Text>
             </TouchableOpacity>
             
 
