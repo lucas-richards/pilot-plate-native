@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, ActivityIndicator } fr
 import { LinearGradient } from 'expo-linear-gradient';
 import {Card, Button, Icon} from 'react-native-elements';
 import { getbusinesses } from '../api/yelp_api';
+//stars
+import { StarRatingDisplay } from 'react-native-star-rating-widget';
 
 // home page
 const Home = () => {
@@ -22,7 +24,9 @@ const Home = () => {
     },
     display_phone: 'Loading...',
     rating: 0,
-    price
+    review_count: 0,
+    distance: 0,
+    price:"$"
   
   })
   
@@ -41,10 +45,33 @@ const Home = () => {
  
   },[spin])
 
-  const handlePress = () => {
-    setLoading(true)
+  const delay = ms => new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+
+  const handlePress = async event => {
+
     setSpin(!spin)
+    let delayTime = [50,50,50,50,50,50,50,50,50,50,50,50,50,150,200,250,300]
+    for(let i = 0; i < 15; i++) {
+      await delay(delayTime[i])
+      setRandomRestaurant(data[i])
+    }
+    await delay(300)
+    setRandomRestaurant(data[(Math.floor(Math.random() * data.length))])
+
   }
+
+  // const handlePress = () => {
+  //   setLoading(true)
+  //   setSpin(!spin)
+  // }
+
+  // const spinning = () => {
+  //   data.forEach(restaurant => {
+  //     return restaurant.image_url
+  //   }
+  //   )}
 
     return (
       <>
@@ -59,12 +86,25 @@ const Home = () => {
           randomRestaurant ? 
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={styles.card}>
+              {
+                loading ?
+                <Card.Image style={styles.cardImage} source={{ uri: `${randomRestaurant.image_url}` }} />
+                :
+                <Card.Image style={styles.cardImage} source={{uri: `${randomRestaurant.image_url}`}} />
+              }
               <Card.Divider/>
               <Text style={{marginHorizontal: 10}}>
                   {randomRestaurant.name}
               </Text>
               <Text style={{marginHorizontal: 10}}>
-                  {randomRestaurant.price}
+                {/* {randomRestaurant.rating} */}
+                <StarRatingDisplay rating={randomRestaurant.rating} starSize={25}/>
+              </Text>
+              <Text style={{marginHorizontal: 10}}>
+                {randomRestaurant.price}
+              </Text>
+              <Text style={{marginHorizontal: 10}}>
+                {Math.round((randomRestaurant.distance / 1609) * 10) / 10} mi away
               </Text>
               <Button
                 onPress={() => alert('view restaurant!')}
