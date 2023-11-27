@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import SignInForm from '../components/SignInForm';
 import SignUpForm from "../components/SignUpForm";
@@ -29,10 +29,10 @@ const Profile = ({ user, setUser }) => {
           style={{height: '100%'}}
         >   
 
-            <View>
+            <KeyboardAvoidingView>
                 {user ? (
                     // Display profile information
-                    <View style={styles.container}>
+                    <View style={{marginTop:150}}>
                       <Text style={styles.text}>Welcome Back!</Text>
                       <Text style={styles.text}>{user.email}</Text>
                     
@@ -65,7 +65,7 @@ const Profile = ({ user, setUser }) => {
                     
                 )}
                 
-            </View>
+            </KeyboardAvoidingView>
 
         </LinearGradient> 
       </>
