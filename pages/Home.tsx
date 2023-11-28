@@ -7,15 +7,12 @@ import { getbusinesses } from '../api/yelp_api';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 
 // home page
-const Home = () => {
+const Home = ({location, price, category, radius}) => {
 
   const [data, setData] = React.useState([])
   const [spin, setSpin] = React.useState(false)
   const [loading, setLoading] = React.useState(true)
-  const [location, setLocation] = React.useState('LA')
-  const [price, setPrice] = React.useState(2)
-  const [radius, setRadius] = React.useState(1000)
-  const [category, setCategory] = React.useState('food')
+  
   const [randomRestaurant, setRandomRestaurant] = React.useState({
     image_url: 'https://s3-media0.fl.yelpcdn.com/bphoto/9Y4sB4D2z7jzqj3XZPb9jA/o.jpg',
     name: 'Loading...',
@@ -43,7 +40,7 @@ const Home = () => {
       })
       .catch(err => { console.log('err', err) })
  
-  },[spin])
+  },[spin, location, price, category, radius])
 
   const delay = ms => new Promise(
     resolve => setTimeout(resolve, ms)
@@ -52,7 +49,7 @@ const Home = () => {
   const handlePress = async event => {
 
     setSpin(!spin)
-    let delayTime = [50,50,50,50,50,50,50,50,50,50,50,50,50,150,200,250,300]
+    let delayTime = [50,50,50,50,50,50,50,50,150,150,150,200,200,200,200,300,300]
     for(let i = 0; i < 15; i++) {
       await delay(delayTime[i])
       setRandomRestaurant(data[i])

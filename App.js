@@ -33,7 +33,11 @@ const Stack = createNativeStackNavigator()
 
 
 export default function App() {
-   const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState(null);
+  const [location, setLocation] = React.useState('LA')
+  const [price, setPrice] = React.useState(2)
+  const [radius, setRadius] = React.useState(1000)
+  const [category, setCategory] = React.useState('food')
 
   return (
     <>
@@ -41,7 +45,16 @@ export default function App() {
       <Tab.Navigator initialRouteName='Home'>
         <Tab.Screen 
           name="Filter" 
-          component={Filter}         
+          children={() => <Filter 
+            location={location} 
+            setLocation={setLocation}
+            price={price}
+            setPrice={setPrice}
+            category={category}
+            setCategory={setCategory} 
+            radius={radius}
+            setRadius={setRadius} 
+            />}        
           options={{ 
             tabBarLabel: "",
             title: <Header />,
@@ -49,7 +62,12 @@ export default function App() {
           }}/>
         <Tab.Screen 
           name="Home" 
-          component={Home} 
+          children={() => <Home 
+            location={location} 
+            price={price} 
+            category={category} 
+            radius={radius} 
+            />} //allows props to be passed
           options={{ 
             tabBarLabel: "",
             title: <Header />,
@@ -65,8 +83,10 @@ export default function App() {
           }}/>
           <Tab.Screen 
             name="ProfileTab" 
-            //component={Profile}
-            children={() => <Profile setUser={setUser} user={user} />} //allows props to be passed
+            children={() => <Profile 
+                              setUser={setUser} 
+                              user={user} 
+                              />} //allows props to be passed
             options={{ 
               tabBarLabel: "",
               title: <Header />,
