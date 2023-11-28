@@ -1,5 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { 
+  StyleSheet, 
+  View, 
+  Text, 
+  TextInput, 
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Button,
+  Platform,
+ } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Slider from "react-native-a11y-slider";
 
@@ -22,7 +33,10 @@ const Filter = ({location,
         >   
           
           <Text style={styles.title}>Settings</Text>
-          <View style={styles.container}>
+          <KeyboardAvoidingView 
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.container}
+            >
             <Text style={styles.text}>Location</Text>
             <TextInput
               style={styles.input}
@@ -31,12 +45,12 @@ const Filter = ({location,
               onChangeText={setLocation}
              
             />
-            <Text style={styles.text}>Price: {price}</Text>
+            <Text style={styles.text}>Price: {"$".repeat(price)}</Text>
           
             <Slider 
               style={styles.slider}
               min={1} 
-              max={5} 
+              max={3} 
               values={[price]}
               showLabel={false}
               markerColor='#fff'
@@ -48,8 +62,8 @@ const Filter = ({location,
               placeholder="Category"
               value={category}
               onChangeText={setCategory}
-              
             />
+            
             <Text style={styles.text}>Distance: {(radius/ 1609.344).toFixed(1)} mi</Text>
             <Slider 
               style={styles.slider}
@@ -64,7 +78,9 @@ const Filter = ({location,
             
             
             
-          </View>
+            
+          </KeyboardAvoidingView>
+          
         </LinearGradient> 
       </>
   
