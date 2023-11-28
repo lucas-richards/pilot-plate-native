@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import Slider from "react-native-a11y-slider";
 
 
 const Filter = ({location,
@@ -10,7 +10,7 @@ const Filter = ({location,
                   setPrice,
                   category,
                   setCategory,
-                  Radius,
+                  radius,
                   setRadius}) => {
     
 
@@ -21,8 +21,9 @@ const Filter = ({location,
           style={{height: '100%'}}
         >   
           
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Filter!</Text>
+          <Text style={styles.title}>Settings</Text>
+          <View style={styles.container}>
+            <Text style={styles.text}>Location</Text>
             <TextInput
               style={styles.input}
               placeholder="Location"
@@ -30,14 +31,18 @@ const Filter = ({location,
               onChangeText={setLocation}
              
             />
-            
-            <TextInput
-              style={styles.input}
-              placeholder="Price"
-              value={price}
-              onChangeText={setPrice}
-              keyboardType="numeric"
+            <Text style={styles.text}>Price: {price}</Text>
+          
+            <Slider 
+              style={styles.slider}
+              min={1} 
+              max={5} 
+              values={[price]}
+              showLabel={false}
+              markerColor='#fff'
+              onChange={ (values) => setPrice(values[0]) }
             />
+            <Text style={styles.text}>Category</Text>
             <TextInput
               style={styles.input}
               placeholder="Category"
@@ -45,13 +50,19 @@ const Filter = ({location,
               onChangeText={setCategory}
               
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Radius"
-              value={Radius}
-              onChangeText={setRadius}
-              keyboardType="numeric"
+            <Text style={styles.text}>Distance: {(radius/ 1609.344).toFixed(1)} mi</Text>
+            <Slider 
+              style={styles.slider}
+              min={1} 
+              max={15} 
+              increment={0.5}
+              showLabel={false}
+              values={[radius]} 
+              markerColor='#fff'
+              onChange={ (values) => setRadius((values[0]* 1609.344).toFixed(0)) }
             />
+            
+            
             
           </View>
         </LinearGradient> 
@@ -60,23 +71,17 @@ const Filter = ({location,
     );
   }
   const styles = StyleSheet.create({
-    container: {
-      paddingTop: 50,
-      maxWidth: 300,
-      minWidth: 300,
-    },
-    container2: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 15,
-    },
     title: {
       fontSize: 20,
       fontWeight: 'bold',
-      marginBottom: 20,
+      margin: 20,
       textAlign: 'center',
+    },
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: 20,
     },
     input: {
       borderWidth: 1,
@@ -87,6 +92,9 @@ const Filter = ({location,
       marginBottom: 20,
       borderRadius: 25,
       width: '100%',
+    },
+    slider: {
+      marginBottom: 20,
     },
     
     button: {
@@ -107,8 +115,7 @@ const Filter = ({location,
     },
     text: {
       fontSize: 20,
-      marginBottom: 20,
-      marginTop: 20,
+      margin:10
     },
   });
 
