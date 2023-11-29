@@ -36,9 +36,9 @@ export default function App() {
   const [user, setUser] = React.useState(null);
   const [location, setLocation] = React.useState('LA')
   const [price, setPrice] = React.useState(2)
-  const [radius, setRadius] = React.useState(1000)
+  const [radius, setRadius] = React.useState(8000)
   const [category, setCategory] = React.useState('food')
-
+  console.log(radius)
   return (
     <>
     <NavigationContainer>
