@@ -12,7 +12,7 @@ const Home = ({location, price, category, radius, user}) => {
 
   const [data, setData] = React.useState([])
   const [spin, setSpin] = React.useState(false)
-  const [loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = React.useState(false)
   
   const [randomRestaurant, setRandomRestaurant] = React.useState({
     image_url: 'https://s3-media0.fl.yelpcdn.com/bphoto/9Y4sB4D2z7jzqj3XZPb9jA/o.jpg',
@@ -33,7 +33,7 @@ const Home = ({location, price, category, radius, user}) => {
     getbusinesses(location, price, category, radius)
       .then(res => {
         setData(res.data.businesses)
-        setLoading(false)
+        // setLoading(false)
         return res.data.businesses
       })
       .then(data => {
@@ -48,6 +48,7 @@ const Home = ({location, price, category, radius, user}) => {
   );
 
   const handlePress = async () => {
+    
 
     setSpin(!spin)
     let delayTime = [50,50,50,50,50,50,50,50,150,150,150,200,200,200,200,300,300]
@@ -57,8 +58,13 @@ const Home = ({location, price, category, radius, user}) => {
     }
     await delay(300)
     setRandomRestaurant(data[(Math.floor(Math.random() * data.length))])
+    await delay(2000)
+    setLoading(!loading)
 
   }
+
+  
+
 
     return (
       <>
@@ -73,12 +79,9 @@ const Home = ({location, price, category, radius, user}) => {
           randomRestaurant ? 
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={styles.card}>
-              {
-                loading ?
-                <Card.Image style={styles.cardImage} source={{ uri: `${randomRestaurant.image_url}` }} />
-                :
-                <Card.Image style={styles.cardImage} source={{uri: `${randomRestaurant.image_url}`}} />
-              }
+              
+              <Card.Image style={styles.cardImage} source={{ uri: `${randomRestaurant.image_url}` }} />
+                
               <Card.Divider/>
               <Text style={{marginHorizontal: 10}}>
                   {randomRestaurant.name}
@@ -97,11 +100,11 @@ const Home = ({location, price, category, radius, user}) => {
               <HeartFavorite
                 business={randomRestaurant} 
                 user={user}
-                spin={spin}
+                loading={loading}
               />
 
               <Button
-                onPress={() => alert('view restaurant!')}
+                onPress={() => alert(`view restaurant!${randomRestaurant.name}`)}
                 icon={<Icon name='code' color='#ffffff' />}
                 buttonStyle={{width: 100, alignSelf: 'center'}}
                 title='View' />
