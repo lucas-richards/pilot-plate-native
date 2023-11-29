@@ -62,6 +62,7 @@ const Filter = ({location,
               placeholder="Category"
               value={category}
               onChangeText={setCategory}
+              
             />
             
             <Text style={styles.text}>Distance: {(radius/ 1609.344).toFixed(1)} mi</Text>
