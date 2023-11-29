@@ -67,6 +67,7 @@ export default function App() {
             price={price} 
             category={category} 
             radius={radius} 
+            user={user}
             />} //allows props to be passed
           options={{ 
             tabBarLabel: "",

@@ -5,9 +5,10 @@ import {Card, Button, Icon} from 'react-native-elements';
 import { getbusinesses } from '../api/yelp_api';
 //stars
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
+import HeartFavorite from '../components/HeartFavorite';
 
 // home page
-const Home = ({location, price, category, radius}) => {
+const Home = ({location, price, category, radius, user}) => {
 
   const [data, setData] = React.useState([])
   const [spin, setSpin] = React.useState(false)
@@ -46,7 +47,7 @@ const Home = ({location, price, category, radius}) => {
     resolve => setTimeout(resolve, ms)
   );
 
-  const handlePress = async event => {
+  const handlePress = async () => {
 
     setSpin(!spin)
     let delayTime = [50,50,50,50,50,50,50,50,150,150,150,200,200,200,200,300,300]
@@ -58,17 +59,6 @@ const Home = ({location, price, category, radius}) => {
     setRandomRestaurant(data[(Math.floor(Math.random() * data.length))])
 
   }
-
-  // const handlePress = () => {
-  //   setLoading(true)
-  //   setSpin(!spin)
-  // }
-
-  // const spinning = () => {
-  //   data.forEach(restaurant => {
-  //     return restaurant.image_url
-  //   }
-  //   )}
 
     return (
       <>
@@ -103,6 +93,13 @@ const Home = ({location, price, category, radius}) => {
               <Text style={{marginHorizontal: 10}}>
                 {Math.round((randomRestaurant.distance / 1609) * 10) / 10} mi away
               </Text>
+
+              <HeartFavorite
+                business={randomRestaurant} 
+                user={user}
+                spin={spin}
+              />
+
               <Button
                 onPress={() => alert('view restaurant!')}
                 icon={<Icon name='code' color='#ffffff' />}
