@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   StyleSheet, 
   View, 
@@ -24,6 +24,21 @@ const Filter = ({location,
                   radius,
                   setRadius}) => {
     
+    const [locationValue, setLocationValue] = useState(location)
+    const [priceValue, setPriceValue] = useState(price)
+    const [categoryValue, setCategoryValue] = useState(category)
+    const [radiusValue, setRadiusValue] = useState(Math.floor(radius * 0.000621371)) //converted to miles         
+    
+    const handleSignOut = async () => {
+      setLocation(locationValue)
+      setPrice(priceValue)
+      setCategory(categoryValue)
+      setRadius((radiusValue * 1609.344).toFixed(0)) //set to meter value
+  };
+    
+
+
+
 
     return (
       <>
@@ -41,42 +56,47 @@ const Filter = ({location,
             <TextInput
               style={styles.input}
               placeholder="Location"
-              value={location}
-              onChangeText={setLocation}
+              value={locationValue}
+              onChangeText={setLocationValue}
              
             />
-            <Text style={styles.text}>Price: {"$".repeat(price)}</Text>
+            <Text style={styles.text}>Price: {"$".repeat(priceValue)}</Text>
           
             <Slider 
               style={styles.slider}
               min={1} 
               max={3} 
-              values={[price]}
+              values={[priceValue]}
               showLabel={false}
               markerColor='#fff'
-              onChange={ (values) => setPrice(values[0]) }
+              onChange={ (values) => setPriceValue(values[0]) }
             />
             <Text style={styles.text}>Category</Text>
             <TextInput
               style={styles.input}
-              placeholder="Category"
-              value={category}
-              onChangeText={setCategory}
+              placeholder="Coffee, Desserts, Mexican, etc"
+              // value={categoryValue}
+              onChangeText={setCategoryValue}
               
             />
             
-            <Text style={styles.text}>Distance: {(radius/ 1609.344).toFixed(1)} mi</Text>
+            <Text style={styles.text}>Distance: {radiusValue} mi</Text>
             <Slider 
               style={styles.slider}
               min={1} 
-              max={15} 
-              increment={0.5}
+              max={20} 
+              increment={1}
               showLabel={false}
-              values={[radius]} 
+              values={[radiusValue]} 
               markerColor='#fff'
-              onChange={ (values) => setRadius((values[0]* 1609.344).toFixed(0)) }
+              onChange={ (values) => setRadiusValue((values)) }
             />
-            
+
+          <TouchableOpacity onPress={handleSignOut} >
+            <Text style={styles.button}>
+              Save
+            </Text>
+          </TouchableOpacity>
             
             
             
@@ -117,7 +137,9 @@ const Filter = ({location,
     button: {
       width: '100%',
       textAlign: 'center',
-      padding: 5,
+      padding: 5, 
+      paddingLeft: 10,
+      paddingRight: 10,
       fontSize: 22,
       backgroundColor: 'black',
       color: 'white',
