@@ -14,8 +14,7 @@ export default function HeartFavorite({ business, user, loading }) {
         .then((res) => {
           const businesses = res.data.businesses.filter(
             (b) => b.owner._id === user._id
-          );
-  
+          )
           if (businesses.length > 0) setClick(true);
           else setClick(false);
         })
@@ -72,6 +71,7 @@ export default function HeartFavorite({ business, user, loading }) {
       <>
         {isClick ? (
           <FontAwesome
+            style={{ textAlign: 'right', marginRight: 20 }}
             name="heart"
             size={24}
             color="red"
@@ -79,6 +79,7 @@ export default function HeartFavorite({ business, user, loading }) {
           />
         ) : (
           <AntDesign
+            style={{ textAlign: 'right', marginRight: 20 }}
             name="hearto"
             size={24}
             color="black"
@@ -88,4 +89,5 @@ export default function HeartFavorite({ business, user, loading }) {
       </>
     );
   }
+
 
