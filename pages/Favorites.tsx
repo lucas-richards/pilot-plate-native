@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, Image, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { getAllBusinesses, removeBusiness } from '../api/business';
+import HeartFavorite from '../components/HeartFavorite';
 
 
 
@@ -50,6 +51,11 @@ const Favorites = ({user}) => {
                         <Text style={styles.text1}>{item.name}</Text>
                         <Text style={styles.text2}>{item.display_address}</Text>
                       </View>
+                      <HeartFavorite 
+                        business = {item}
+                        user = {user}
+                        loading = {false}
+                      />
                   </View>}
               />
         </LinearGradient> 
@@ -93,6 +99,6 @@ const Favorites = ({user}) => {
       width: 60,
       height: 60,
       borderRadius: 10,
-      margin: 5,
+      margin: 7,
     },
   })
