@@ -47,8 +47,8 @@ const Favorites = ({user}) => {
                         source={{uri: `${item.image_url}`}}
                       />
                       <View>
-                        <Text style={styles.text}>{item.name}</Text>
-                        <Text style={styles.text}>{item.display_address}</Text>
+                        <Text style={styles.text1}>{item.name}</Text>
+                        <Text style={styles.text2}>{item.display_address}</Text>
                       </View>
                   </View>}
               />
@@ -67,23 +67,32 @@ const Favorites = ({user}) => {
       textAlign: 'center',
       margin: 10,
     },
-    text: {
+    text1: {
       color: 'white',
+      flexWrap: 'wrap',
       fontSize: 15,
+      padding: 3,
+      width: 250,
+    },
+    text2: {
+      color: 'white',
+      flexWrap: 'wrap',
+      fontSize: 10,
+      padding: 3,
+      width: 250,
     },
     item: {
       flexDirection: 'row',
-      justifyContent: 'center',
       alignItems: 'center',
       margin: 8,
       height: 80,
       backgroundColor: 'rgba(0,0,0,0.5)',
       borderRadius: 10,
-      padding: 10,
     },
     image: {
-      width: 50,
-      height: 50,
+      width: 60,
+      height: 60,
       borderRadius: 10,
+      margin: 5,
     },
   })
