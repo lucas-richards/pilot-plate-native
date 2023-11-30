@@ -76,7 +76,9 @@ export default function App() {
           }}/>
         <Tab.Screen 
           name="Favorites" 
-          component= {Favorites} 
+          children={() => <Favorites  
+            user={user} 
+            />} //allows props to be passed
           options={{ 
             tabBarLabel: "",
             title: <Header />,
