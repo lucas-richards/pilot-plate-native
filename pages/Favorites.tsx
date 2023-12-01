@@ -41,11 +41,12 @@ const Favorites = ({user, setDbChange, dbChange}) => {
             removeBusiness(user, itemId)
               .then((res) => {
                 console.log('Business removed from favorites => business._id=',itemId);
+                setDbChange(!dbChange)
               })
               .catch((err) => {
                 console.log('Error removing business._id =>', err, itemId);
               });
-            setDbChange(!dbChange)
+            
           }},
         ]);
       

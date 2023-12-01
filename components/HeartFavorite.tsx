@@ -4,6 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { getAllBusinesses, createBusiness, removeBusiness } from "../api/business";
 import { Alert } from "react-native";
+import { Db } from "mongodb";
 
 export default function HeartFavorite({ business, user, setDbChange, dbChange }) {
     const [isClick, setClick] = useState(false);
@@ -34,13 +35,14 @@ export default function HeartFavorite({ business, user, setDbChange, dbChange })
           setClick(false);
           console.log('Error fetching businesses:', err);
         });
-    }, [business.id, user, isClick]);
+    }, [business.id, user, isClick, dbChange]);
   
     const removeBusinessFromFavorites = () => {
       removeBusiness(user, myBusiness._id)
         .then((res) => {
           setClick(false);
           console.log('Business removed from favorites => business._id=',myBusiness._id);
+          setDbChange(!dbChange)
         })
         .catch((err) => {
           console.log('Error removing business._id =>', err, myBusiness._id);
@@ -63,6 +65,7 @@ export default function HeartFavorite({ business, user, setDbChange, dbChange })
         .then((res) => {
           setClick(true);
           console.log('Business added to favorites');
+          setDbChange(!dbChange)
         })
         .catch((err) => {
           console.log('Error adding business:', err);
@@ -81,13 +84,12 @@ export default function HeartFavorite({ business, user, setDbChange, dbChange })
           },
           {text: 'Remove', onPress: () => {
             removeBusinessFromFavorites()
-            setDbChange(!dbChange)
           }},
         ]);
         
       } else {
         addBusinessToFavorites();
-        setDbChange(!dbChange)
+        
       }
     };
   
