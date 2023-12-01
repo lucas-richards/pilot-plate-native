@@ -8,7 +8,7 @@ import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import HeartFavorite from '../components/HeartFavorite';
 
 // home page
-const Home = ({location, price, category, radius, user}) => {
+const Home = ({location, price, category, radius, user, setDbChange, dbChange}) => {
 
   const [data, setData] = React.useState([])
   const [spin, setSpin] = React.useState(false)
@@ -100,6 +100,8 @@ const Home = ({location, price, category, radius, user}) => {
               <HeartFavorite
                 business={randomRestaurant} 
                 user={user}
+                dbChange = {dbChange}
+                setDbChange={setDbChange}
               />
 
               <Button

@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getAllBusinesses, removeBusiness } from '../api/business';
-import HeartFavorite from '../components/HeartFavorite';
+import { getAllBusinesses } from '../api/business';
+import { FontAwesome } from '@expo/vector-icons';
+import { Alert } from "react-native";
+import { removeBusiness } from "../api/business";
 
 
 
-const Favorites = ({user}) => {
+const Favorites = ({user, setDbChange, dbChange}) => {
   const [businesses,setBusinesses] = useState([])
-  const [isClick, setClick] = useState(false);
 
     useEffect(()=>{
         getAllBusinesses()
@@ -25,13 +26,36 @@ const Favorites = ({user}) => {
                 console.log('error',err)
                 
             })
-    },[user, isClick])
+    },[user, dbChange])
+
+    const handleClick = (itemId) => {
+      
+        Alert.alert('Remove restaurant', 'Remove this restaurant from favorites?', [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'Remove', onPress: () => {
+            console.log('Remove Pressed', itemId)
+            removeBusiness(user, itemId)
+              .then((res) => {
+                console.log('Business removed from favorites => business._id=',itemId);
+              })
+              .catch((err) => {
+                console.log('Error removing business._id =>', err, itemId);
+              });
+            setDbChange(!dbChange)
+          }},
+        ]);
+      
+    };
 
     if(!user){
         return <Text style={{textAlign:'center', marginTop:100, color:'black'}}>Please login to view favorites</Text>
     }
 
-    console.log('owner businesses',businesses)
+    // console.log('owner businesses',businesses)
 
     if(businesses.length === 0){
         return <Text style={{textAlign:'center', marginTop:100, color:'black'}}>No favorites yet</Text>
@@ -47,7 +71,7 @@ const Favorites = ({user}) => {
               <FlatList
                 data={businesses}
                 renderItem={({item}) => 
-                  <TouchableOpacity onPress={ ()=> setClick(!isClick)}>
+                  
                     <View style={styles.item}>
                         <Image 
                           style={styles.image} 
@@ -57,12 +81,16 @@ const Favorites = ({user}) => {
                           <Text style={styles.text1}>{item.name}</Text>
                           <Text style={styles.text2}>{item.display_address}</Text>
                         </View>
-                        <HeartFavorite 
-                          business = {item}
-                          user = {user}
+                        
+                        <FontAwesome
+                          style={{ textAlign: 'right', marginRight: 20 }}
+                          name="heart"
+                          size={24}
+                          color="red"
+                          onPress={() => handleClick(item._id)}
                         />
                     </View>
-                  </TouchableOpacity>
+                  
                   }
               />
         </LinearGradient> 

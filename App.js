@@ -38,6 +38,8 @@ export default function App() {
   const [price, setPrice] = React.useState(2)
   const [radius, setRadius] = React.useState(8000)
   const [category, setCategory] = React.useState('food')
+  const [dbChange, setDbChange] = React.useState(false)
+
   console.log(radius)
   return (
     <>
@@ -68,6 +70,8 @@ export default function App() {
             category={category} 
             radius={radius} 
             user={user}
+            dbChange = {dbChange}
+            setDbChange={setDbChange}
             />} //allows props to be passed
           options={{ 
             tabBarLabel: "",
@@ -78,6 +82,8 @@ export default function App() {
           name="Favorites" 
           children={() => <Favorites  
             user={user} 
+            dbChange={dbChange}
+            setDbChange={setDbChange}
             />} //allows props to be passed
           options={{ 
             tabBarLabel: "",

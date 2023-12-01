@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { getAllBusinesses, createBusiness, removeBusiness } from "../api/business";
 import { Alert } from "react-native";
 
-export default function HeartFavorite({ business, user }) {
+export default function HeartFavorite({ business, user, setDbChange, dbChange }) {
     const [isClick, setClick] = useState(false);
     const [myBusiness, setMyBusiness] = useState({
       _id: '',
@@ -79,11 +79,15 @@ export default function HeartFavorite({ business, user }) {
             onPress: () => console.log('Cancel Pressed'),
             style: 'cancel',
           },
-          {text: 'Remove', onPress: () => removeBusinessFromFavorites()},
+          {text: 'Remove', onPress: () => {
+            removeBusinessFromFavorites()
+            setDbChange(!dbChange)
+          }},
         ]);
         
       } else {
         addBusinessToFavorites();
+        setDbChange(!dbChange)
       }
     };
   
