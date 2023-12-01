@@ -3,9 +3,13 @@ import React, { useEffect, useState } from "react";
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { getAllBusinesses, createBusiness, removeBusiness } from "../api/business";
+import { Alert } from "react-native";
 
-export default function HeartFavorite({ business, user, loading }) {
+export default function HeartFavorite({ business, user }) {
     const [isClick, setClick] = useState(false);
+    const [myBusiness, setMyBusiness] = useState({
+      _id: '',
+    });
   
     useEffect(() => {
       if (!user) return;
@@ -15,23 +19,31 @@ export default function HeartFavorite({ business, user, loading }) {
           const businesses = res.data.businesses.filter(
             (b) => b.owner._id === user._id
           )
-          if (businesses.length > 0) setClick(true);
-          else setClick(false);
+          if (businesses.length > 0) {
+            setClick(true)
+            setMyBusiness(businesses[0]);
+            console.log('my business',myBusiness)
+          }
+          else {
+            setClick(false)
+            setMyBusiness(null)
+            console.log('my business',myBusiness)
+          };
         })
         .catch((err) => {
           setClick(false);
           console.log('Error fetching businesses:', err);
         });
-    }, [business.id, user]);
+    }, [business.id, user, isClick]);
   
     const removeBusinessFromFavorites = () => {
-      removeBusiness(user, business.id)
+      removeBusiness(user, myBusiness._id)
         .then((res) => {
           setClick(false);
-          console.log('Business removed from favorites');
+          console.log('Business removed from favorites => business._id=',myBusiness._id);
         })
         .catch((err) => {
-          console.log('Error removing business:', err);
+          console.log('Error removing business._id =>', err, myBusiness._id);
         });
     };
   
@@ -61,7 +73,15 @@ export default function HeartFavorite({ business, user, loading }) {
       if (!user) {
         console.log('NO USER');
       } else if (isClick) {
-        removeBusinessFromFavorites();
+        Alert.alert('Remove restaurant', 'Remove this restaurant from favorites?', [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'Remove', onPress: () => removeBusinessFromFavorites()},
+        ]);
+        
       } else {
         addBusinessToFavorites();
       }

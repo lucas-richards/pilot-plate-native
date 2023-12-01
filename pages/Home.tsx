@@ -100,7 +100,6 @@ const Home = ({location, price, category, radius, user}) => {
               <HeartFavorite
                 business={randomRestaurant} 
                 user={user}
-                loading={loading}
               />
 
               <Button

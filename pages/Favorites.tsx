@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, Image, FlatList } from 'react-native';
+import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { getAllBusinesses, removeBusiness } from '../api/business';
 import HeartFavorite from '../components/HeartFavorite';
@@ -8,19 +8,24 @@ import HeartFavorite from '../components/HeartFavorite';
 
 const Favorites = ({user}) => {
   const [businesses,setBusinesses] = useState([])
+  const [isClick, setClick] = useState(false);
 
     useEffect(()=>{
         getAllBusinesses()
             .then(res => {
                 console.log('this is user',user)
-                if (user)
-                setBusinesses(res.data.businesses.filter(business => business.owner._id === user._id))
+                if (user) {
+
+                  const ownerBusinesses = res.data.businesses.filter(business => business.owner._id === user._id)
+                  setBusinesses(ownerBusinesses)
+                  
+                }
             })
             .catch(err => {
                 console.log('error',err)
                 
             })
-    },[user])
+    },[user, isClick])
 
     if(!user){
         return <Text style={{textAlign:'center', marginTop:100, color:'black'}}>Please login to view favorites</Text>
@@ -42,21 +47,23 @@ const Favorites = ({user}) => {
               <FlatList
                 data={businesses}
                 renderItem={({item}) => 
-                  <View style={styles.item}>
-                      <Image 
-                        style={styles.image} 
-                        source={{uri: `${item.image_url}`}}
-                      />
-                      <View>
-                        <Text style={styles.text1}>{item.name}</Text>
-                        <Text style={styles.text2}>{item.display_address}</Text>
-                      </View>
-                      <HeartFavorite 
-                        business = {item}
-                        user = {user}
-                        loading = {false}
-                      />
-                  </View>}
+                  <TouchableOpacity onPress={ ()=> setClick(!isClick)}>
+                    <View style={styles.item}>
+                        <Image 
+                          style={styles.image} 
+                          source={{uri: `${item.image_url}`}}
+                        />
+                        <View>
+                          <Text style={styles.text1}>{item.name}</Text>
+                          <Text style={styles.text2}>{item.display_address}</Text>
+                        </View>
+                        <HeartFavorite 
+                          business = {item}
+                          user = {user}
+                        />
+                    </View>
+                  </TouchableOpacity>
+                  }
               />
         </LinearGradient> 
       </>
