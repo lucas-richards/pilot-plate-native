@@ -85,19 +85,20 @@ const Favorites = ({user, setDbChange, dbChange}) => {
                         />
                         <View>
                           <Text style={styles.text1}>{item.name}</Text>
-                          <Text style={styles.text2}>{item.display_address}</Text>
-                          <TouchableOpacity onPress={() => handleOpenMaps(item.display_address)}>
-                            
+                          <TouchableOpacity 
+                            style={{flexDirection: 'row', marginLeft: 5}}
+                            onPress={() => handleOpenMaps(item.display_address)}>
                             <FontAwesome
                               name="map-marker"
-                              size={24}
-                              color="blue"
+                              size={15}
+                              color="rgba(255,255,255,0.5)"
                             />
+                            <Text style={styles.text2}>{item.display_address}</Text>
                           </TouchableOpacity>
                         </View>
                         
                         <FontAwesome
-                          style={{ textAlign: 'right', marginRight: 20 }}
+                          style={{ textAlign: 'right' }}
                           name="heart"
                           size={24}
                           color="red"
@@ -127,14 +128,14 @@ const Favorites = ({user, setDbChange, dbChange}) => {
       flexWrap: 'wrap',
       fontSize: 15,
       padding: 3,
-      width: 250,
+      width: 200,
     },
     text2: {
       color: 'white',
       flexWrap: 'wrap',
       fontSize: 10,
       padding: 3,
-      width: 250,
+      width: 220,
     },
     item: {
       flexDirection: 'row',
