@@ -44,7 +44,7 @@ export default function App() {
   return (
     <>
     <NavigationContainer>
-      <Tab.Navigator initialRouteName='Home'>
+      <Tab.Navigator tabBarActiveTintColor="red" initialRouteName='Home'>
         <Tab.Screen 
           name="Filter" 
           children={() => <Filter 
