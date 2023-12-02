@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity, Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { getAllBusinesses } from '../api/business';
 import { FontAwesome } from '@expo/vector-icons';
@@ -62,6 +62,11 @@ const Favorites = ({user, setDbChange, dbChange}) => {
         return <Text style={{textAlign:'center', marginTop:100, color:'black'}}>No favorites yet</Text>
     }
 
+    const handleOpenMaps = (address) => {
+      const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+      Linking.openURL(mapsUrl);
+    };
+
     return (
       <>
         <LinearGradient
@@ -81,6 +86,14 @@ const Favorites = ({user, setDbChange, dbChange}) => {
                         <View>
                           <Text style={styles.text1}>{item.name}</Text>
                           <Text style={styles.text2}>{item.display_address}</Text>
+                          <TouchableOpacity onPress={() => handleOpenMaps(item.display_address)}>
+                            
+                            <FontAwesome
+                              name="map-marker"
+                              size={24}
+                              color="blue"
+                            />
+                          </TouchableOpacity>
                         </View>
                         
                         <FontAwesome
