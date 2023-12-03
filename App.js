@@ -13,23 +13,33 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator()
 
 // this is a stack navigation and includes back button
-// const ProfileNavigator = () => {
+// const HomePage = () => {
 //   return (
-//     <Stack.Navigator initialRouteName="Profile" screenOptions={{headerShown: false}}>
-//       <Stack.Screen name="Profile" component={Profile} />
-//       <Stack.Screen name="SignUp" component={SignUpForm} />
-//       <Stack.Screen name="SignIn" component={SignInForm} />
+//     <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+//       <Stack.Screen 
+//         name="Home" 
+//         children={() => <Home 
+//             location={location} 
+//             price={price} 
+//             category={category} 
+//             radius={radius} 
+//             user={user}
+//             dbChange = {dbChange}
+//             setDbChange={setDbChange}
+//             />} />
+//       <Stack.Screen name="Detail" component={Detail} />
+//       {/* <Stack.Screen name="SignIn" component={SignInForm} /> */}
 //     </Stack.Navigator>
 //   );
 // };
 // this code makes a smooth page transition
-//   <View style={{marginTop:20}}>
-//       <Pressable onPress={() => navigation.navigate("SignIn")}>
-//           <Text>
-//           HELLO
-//           </Text> 
-//       </Pressable>
-//   </View>
+  // <View style={{marginTop:20}}>
+  //     <Pressable onPress={() => navigation.navigate("SignIn")}>
+  //         <Text>
+  //         HELLO
+  //         </Text> 
+  //     </Pressable>
+  // </View>
 
 
 export default function App() {

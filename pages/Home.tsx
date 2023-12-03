@@ -3,6 +3,12 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, ActivityIndicator } fr
 import { LinearGradient } from 'expo-linear-gradient';
 import {Card, Button, Icon} from 'react-native-elements';
 import { getbusinesses } from '../api/yelp_api';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Detail from './business/Detail';
+
+
 //stars
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import HeartFavorite from '../components/HeartFavorite';
@@ -27,6 +33,8 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
     price:"$"
   
   })
+
+  const Stack = createNativeStackNavigator()
   
 
   React.useEffect(() => {
@@ -103,12 +111,15 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
                 dbChange = {dbChange}
                 setDbChange={setDbChange}
               />
-
+             
               <Button
-                onPress={() => alert(`view restaurant!${randomRestaurant.name}`)}
+                // onPress={() => navigation.navigate("Detail")}
                 icon={<Icon name='code' color='#ffffff' />}
                 buttonStyle={{width: 100, alignSelf: 'center'}}
-                title='View' />
+                title='View' 
+                />
+                
+                
             </View>
             <TouchableOpacity
               onPress={handlePress}
