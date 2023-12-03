@@ -113,6 +113,7 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
               />
              
               <Button
+                // doesn't work yet
                 // onPress={() => navigation.navigate("Detail")}
                 icon={<Icon name='code' color='#ffffff' />}
                 buttonStyle={{width: 100, alignSelf: 'center'}}
