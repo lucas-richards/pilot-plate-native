@@ -1,14 +1,17 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 
-const Detail = ({business}) => {
+const Detail = ({route, navigation:{goBack}}) => {
+    const business = route.params.selectedBusiness
+    console.log(business)
     return(
         <View>
+            <Text>Detail Page</Text>
+            <Button onPress={() => goBack()} title="Go Back" />
             <Text>{business.name}</Text>
-            <Text>{business.address}</Text>
-            <Text>{business.phone}</Text>
-            <Text>{business.website}</Text>
-            <Text>{business.description}</Text>
+            <Text>{business.display_phone}</Text>
+            <Text>{business.rating}</Text>
+            <Text>{business.price}</Text>
         </View>
     )
 }

@@ -5,11 +5,12 @@ import { getAllBusinesses } from '../api/business';
 import { FontAwesome } from '@expo/vector-icons';
 import { Alert } from "react-native";
 import { removeBusiness } from "../api/business";
-
+import { useNavigation } from '@react-navigation/native';
 
 
 const Favorites = ({user, setDbChange, dbChange}) => {
   const [businesses,setBusinesses] = useState([])
+  const navigation = useNavigation(); // needed for navigation
 
     useEffect(()=>{
         getAllBusinesses()
@@ -79,10 +80,12 @@ const Favorites = ({user, setDbChange, dbChange}) => {
                 renderItem={({item}) => 
                   
                     <View style={styles.item}>
+                      <TouchableOpacity onPress={() => navigation.navigate('DetailScreen',{ selectedBusiness: item})}>
                         <Image 
                           style={styles.image} 
                           source={{uri: `${item.image_url}`}}
                         />
+                      </TouchableOpacity>
                         <View>
                           <Text style={styles.text1}>{item.name}</Text>
                           <TouchableOpacity 

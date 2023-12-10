@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Detail from './business/Detail';
-
+import { useNavigation } from '@react-navigation/native';
 
 //stars
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
@@ -15,6 +15,8 @@ import HeartFavorite from '../components/HeartFavorite';
 
 // home page
 const Home = ({location, price, category, radius, user, setDbChange, dbChange}) => {
+
+  const navigation = useNavigation(); // needed for navigation
 
   const [data, setData] = React.useState([])
   const [spin, setSpin] = React.useState(false)
@@ -35,7 +37,6 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
   })
 
   const Stack = createNativeStackNavigator()
-  
 
   React.useEffect(() => {
     getbusinesses(location, price, category, radius)
@@ -114,7 +115,7 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
              
               <Button
                 // doesn't work yet
-                // onPress={() => navigation.navigate("Detail")}
+                onPress={() => navigation.navigate('DetailScreen',{ selectedBusiness: randomRestaurant})}
                 icon={<Icon name='code' color='#ffffff' />}
                 buttonStyle={{width: 100, alignSelf: 'center'}}
                 title='View' 
