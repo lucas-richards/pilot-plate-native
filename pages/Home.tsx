@@ -113,13 +113,18 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
                 setDbChange={setDbChange}
               />
              
-              <Button
+              {/* <Button
                 // doesn't work yet
                 onPress={() => navigation.navigate('DetailScreen',{ selectedBusiness: randomRestaurant})}
                 icon={<Icon name='code' color='#ffffff' />}
                 buttonStyle={{width: 100, alignSelf: 'center'}}
                 title='View' 
-                />
+                /> */}
+                <TouchableOpacity 
+                  onPress={() => navigation.navigate('DetailScreen',{ selectedBusiness: randomRestaurant})}
+                >
+                  <Text style={styles.viewMore}>View More</Text>
+                </TouchableOpacity>
                 
                 
             </View>
@@ -143,6 +148,13 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
   export default Home
 
   const styles = StyleSheet.create({
+    viewMore: {
+      fontSize: 18,
+      alignSelf:'center',
+      backgroundColor: 'rgb(239, 120, 36)',
+      borderRadius: 8,
+      padding: 4,
+    },
     text: {
       textAlign: 'center',
       padding: 10,
