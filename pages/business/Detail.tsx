@@ -41,18 +41,22 @@ const Detail = ({route, navigation:{goBack}}) => {
                 <Text style={styles.name}>{business.name}</Text>
 
                 <StarRatingDisplay rating={business.rating} starSize={25}/>
+                <View style={{borderColor:'white'}}>
 
-                <Text>{business.price}</Text>
+                    <Text>{business.price}</Text>
 
-                <TouchableOpacity onPress={()=> dialCall(`${business.display_phone}`)}>
-                <Text>
-                    {business.display_phone}
-                </Text>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> dialCall(`${business.display_phone}`)}>
+                    <Text>
+                        {business.display_phone}
+                    </Text>
+                    </TouchableOpacity>
+                </View>
                 
                 <TouchableOpacity 
-                            onPress={() => handleOpenMaps(businessAddress)}>
+                    style={styles.container}
+                    onPress={() => handleOpenMaps(businessAddress)}>
                             <FontAwesome
+                            
                               name="map-marker"
                               size={15}
                               color="rgba(255,255,255,0.5)"
