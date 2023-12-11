@@ -2,11 +2,13 @@ import React from 'react';
 import { StyleSheet, View, Text, Button, Image, Touchable, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import { Linking, Platform } from 'react-native'
+import { Linking, Platform } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
 const Detail = ({route, navigation:{goBack}}) => {
     const business = route.params.selectedBusiness
-    console.log(business)
+    //console.log(business.display_address || business.location.display_address)
+    let businessAddress = business.display_address || business.location.display_address
 
     const dialCall = (number) => {
         console.log(number)
@@ -17,6 +19,13 @@ const Detail = ({route, navigation:{goBack}}) => {
         Linking.openURL(phoneNumber);
      };
     
+
+     const handleOpenMaps = (address) => {
+        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+        Linking.openURL(mapsUrl);
+      };
+
+
     return(
         <LinearGradient
         colors={['rgb(239, 120, 36)', 'rgb(236, 80, 31)']}
@@ -33,14 +42,23 @@ const Detail = ({route, navigation:{goBack}}) => {
 
                 <StarRatingDisplay rating={business.rating} starSize={25}/>
 
+                <Text>{business.price}</Text>
+
                 <TouchableOpacity onPress={()=> dialCall(`${business.display_phone}`)}>
                 <Text>
                     {business.display_phone}
                 </Text>
                 </TouchableOpacity>
                 
-
-                <Text>{business.price}</Text>
+                <TouchableOpacity 
+                            onPress={() => handleOpenMaps(businessAddress)}>
+                            <FontAwesome
+                              name="map-marker"
+                              size={15}
+                              color="rgba(255,255,255,0.5)"
+                            />
+                            <Text>{businessAddress}</Text>
+                </TouchableOpacity>
 
                 <Button onPress={() => goBack()} title="Go Back" />
             </View>
