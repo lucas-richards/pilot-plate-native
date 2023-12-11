@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -8,6 +8,8 @@ import Filter from './pages/Filter';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import Profile from './pages/Profile';
+import Detail from './pages/business/Detail';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator()
@@ -40,15 +42,61 @@ const Stack = createNativeStackNavigator()
   //         </Text> 
   //     </Pressable>
   // </View>
+  
+  
+  export default function App() {
+    const [user, setUser] = React.useState(null);
+    const [location, setLocation] = React.useState('LA')
+    const [price, setPrice] = React.useState(2)
+    const [radius, setRadius] = React.useState(8000)
+    const [category, setCategory] = React.useState('food')
+    const [dbChange, setDbChange] = React.useState(false)
 
 
-export default function App() {
-  const [user, setUser] = React.useState(null);
-  const [location, setLocation] = React.useState('LA')
-  const [price, setPrice] = React.useState(2)
-  const [radius, setRadius] = React.useState(8000)
-  const [category, setCategory] = React.useState('food')
-  const [dbChange, setDbChange] = React.useState(false)
+    const HomeNavigation = () => {
+      return (
+        <Stack.Navigator initialRouteName="HomeScreen" screenOptions={{headerShown: false}}>
+          <Stack.Screen 
+            name="HomeScreen" 
+            children={() => <Home 
+              location={location} 
+              price={price} 
+              category={category} 
+              radius={radius} 
+              user={user}
+              dbChange = {dbChange}
+              setDbChange={setDbChange}
+              />} 
+          />
+          <Stack.Screen 
+            name="DetailScreen" 
+            component={Detail}
+          />
+        </Stack.Navigator>
+      )
+    }
+
+    const FavoritesNavigation = () => {
+      return (
+        <Stack.Navigator initialRouteName="FavoriteScreen" screenOptions={{headerShown: false}}>
+          <Stack.Screen 
+            name="FavoriteScreen" 
+            children={() => <Favorites 
+              user={user} 
+              dbChange={dbChange}
+              setDbChange={setDbChange}
+              />} 
+          />
+          <Stack.Screen 
+            name="DetailScreen" 
+            component={Detail}
+          />
+
+        </Stack.Navigator>
+      )
+    }
+    
+
 
   console.log(radius)
   return (
@@ -74,27 +122,30 @@ export default function App() {
           }}/>
         <Tab.Screen 
           name="Home" 
-          children={() => <Home 
-            location={location} 
-            price={price} 
-            category={category} 
-            radius={radius} 
-            user={user}
-            dbChange = {dbChange}
-            setDbChange={setDbChange}
-            />} //allows props to be passed
+          component={HomeNavigation}
+          // children={() => <Home 
+          //   location={location} 
+          //   price={price} 
+          //   category={category} 
+          //   radius={radius} 
+          //   user={user}
+          //   dbChange = {dbChange}
+          //   setDbChange={setDbChange}
+          //   />} //allows props to be passed
           options={{ 
             tabBarLabel: "",
             title: <Header />,
             tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='home' color={color} size={35} />) 
-          }}/>
+          }}
+          />
         <Tab.Screen 
           name="Favorites" 
-          children={() => <Favorites  
-            user={user} 
-            dbChange={dbChange}
-            setDbChange={setDbChange}
-            />} //allows props to be passed
+          component={FavoritesNavigation}
+          // children={() => <Favorites  
+          //   user={user} 
+          //   dbChange={dbChange}
+          //   setDbChange={setDbChange}
+          //   />} //allows props to be passed
           options={{ 
             tabBarLabel: "",
             title: <Header />,
