@@ -96,7 +96,7 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
               <Text style={{marginHorizontal: 10, fontWeight:'600'}}>
                   {randomRestaurant.name}
               </Text>
-              <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between', marginHorizontal: 10}}>
+              <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between', marginHorizontal: 10, marginTop:5}}>
                 <Text style={{marginHorizontal: 10, fontWeight:'600'}}>
                   {randomRestaurant.price}
                 </Text>
