@@ -80,7 +80,12 @@ const Favorites = ({user, setDbChange, dbChange}) => {
                 renderItem={({item}) => 
                   
                     <View style={styles.item}>
-                      <TouchableOpacity onPress={() => navigation.navigate('DetailScreen',{ selectedBusiness: item})}>
+                      <TouchableOpacity onPress={() => navigation.navigate('DetailScreen',{ 
+                        selectedBusiness: item,
+                        user: user,
+                        dbChange: dbChange,
+                        setDbChange: setDbChange
+                        })}>
                         <Image 
                           style={styles.image} 
                           source={{uri: `${item.image_url}`}}

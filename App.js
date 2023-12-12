@@ -124,14 +124,14 @@ const Stack = createNativeStackNavigator()
           name="Home" 
           component={HomeNavigation}
           // children={() => <Home 
-          //   location={location} 
-          //   price={price} 
-          //   category={category} 
-          //   radius={radius} 
-          //   user={user}
-          //   dbChange = {dbChange}
-          //   setDbChange={setDbChange}
-          //   />} //allows props to be passed
+          //     location={location} 
+          //     price={price} 
+          //     category={category} 
+          //     radius={radius} 
+          //     user={user}
+          //     dbChange = {dbChange}
+          //     setDbChange={setDbChange}
+          //     />}  //allows props to be passed
           options={{ 
             tabBarLabel: "",
             title: <Header />,

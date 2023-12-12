@@ -23,7 +23,7 @@ export default function HeartFavorite({ business, user, setDbChange, dbChange })
           if (businesses.length > 0) {
             setClick(true)
             setMyBusiness(businesses[0]);
-            console.log('my business',myBusiness)
+            console.log('my business',myBusiness._id)
           }
           else {
             setClick(false)

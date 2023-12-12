@@ -121,7 +121,12 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
                 title='View' 
                 /> */}
                 <TouchableOpacity 
-                  onPress={() => navigation.navigate('DetailScreen',{ selectedBusiness: randomRestaurant})}
+                  onPress={() => navigation.navigate('DetailScreen',{ 
+                    selectedBusiness: randomRestaurant,
+                    user: user,
+                    dbChange: dbChange,
+                    setDbChange: setDbChange
+                  })}
                 >
                   <Text style={styles.viewMore}>View More</Text>
                 </TouchableOpacity>

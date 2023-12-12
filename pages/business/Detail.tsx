@@ -4,9 +4,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import { Linking, Platform } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import HeartFavorite from '../../components/HeartFavorite';
+import { AntDesign } from '@expo/vector-icons'; 
 
 const Detail = ({route, navigation:{goBack}}) => {
     const business = route.params.selectedBusiness
+    const user = route.params.user
+    const dbChange = route.params.dbChange
+    const setDbChange = route.params.setDbChange
+    
     //console.log(business.display_address || business.location.display_address)
     let businessAddress = business.display_address || business.location.display_address
 
@@ -32,6 +38,19 @@ const Detail = ({route, navigation:{goBack}}) => {
         style={{height: '100%'}}
         > 
             <View style={styles.container}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
+                    <Text onPress={() => goBack()} >
+                    <AntDesign name="left" size={24} color="black" />
+                    
+                    </Text>
+                    <Text style={styles.name}>{business.name}</Text>
+                    <HeartFavorite
+                        business={business} 
+                        user={user}
+                        dbChange = {dbChange}
+                        setDbChange={setDbChange}
+                    />
+                </View>
 
                 <Image
                     style={styles.image}
@@ -64,7 +83,7 @@ const Detail = ({route, navigation:{goBack}}) => {
                             <Text>{businessAddress}</Text>
                 </TouchableOpacity>
 
-                <Button onPress={() => goBack()} title="Go Back" />
+                
             </View>
                 
         </LinearGradient>
