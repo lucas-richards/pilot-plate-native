@@ -32,7 +32,8 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
     rating: 0,
     review_count: 0,
     distance: 0,
-    price:"$"
+    price:"$",
+    // categories: []
   
   })
 
@@ -92,26 +93,43 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
               <Card.Image style={styles.cardImage} source={{ uri: `${randomRestaurant.image_url}` }} />
                 
               <Card.Divider/>
-              <Text style={{marginHorizontal: 10}}>
+              <Text style={{marginHorizontal: 10, fontWeight:'600'}}>
                   {randomRestaurant.name}
               </Text>
-              <Text style={{marginHorizontal: 10}}>
-                {/* {randomRestaurant.rating} */}
-                <StarRatingDisplay rating={randomRestaurant.rating} starSize={25}/>
-              </Text>
-              <Text style={{marginHorizontal: 10}}>
-                {randomRestaurant.price}
-              </Text>
-              <Text style={{marginHorizontal: 10}}>
+              <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between', marginHorizontal: 10}}>
+                <Text style={{marginHorizontal: 10, fontWeight:'600'}}>
+                  {randomRestaurant.price}
+                </Text>
+                <Text style={{marginHorizontal: 10}}>
+                  {/* {randomRestaurant.rating} */}
+                  <StarRatingDisplay rating={randomRestaurant.rating} starSize={25}/>
+                </Text>
+              </View>
+              <Text style={{marginHorizontal: 20}}>
                 {Math.round((randomRestaurant.distance / 1609) * 10) / 10} mi away
               </Text>
-
-              <HeartFavorite
-                business={randomRestaurant} 
-                user={user}
-                dbChange = {dbChange}
-                setDbChange={setDbChange}
-              />
+              <Text style={styles.category}>
+                {/* {randomRestaurant.categories[0]} */}
+              </Text>
+              <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between', marginHorizontal: 10}}>
+                <Text 
+                  style={styles.viewMore}
+                  onPress={() => navigation.navigate('DetailScreen',{ 
+                    selectedBusiness: randomRestaurant,
+                    user: user,
+                    dbChange: dbChange,
+                    setDbChange: setDbChange
+                  })}
+                >
+                  More
+                </Text>
+                <HeartFavorite
+                  business={randomRestaurant} 
+                  user={user}
+                  dbChange = {dbChange}
+                  setDbChange={setDbChange}
+                />
+              </View>
              
               {/* <Button
                 // doesn't work yet
@@ -120,16 +138,9 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
                 buttonStyle={{width: 100, alignSelf: 'center'}}
                 title='View' 
                 /> */}
-                <TouchableOpacity 
-                  onPress={() => navigation.navigate('DetailScreen',{ 
-                    selectedBusiness: randomRestaurant,
-                    user: user,
-                    dbChange: dbChange,
-                    setDbChange: setDbChange
-                  })}
-                >
-                  <Text style={styles.viewMore}>View More</Text>
-                </TouchableOpacity>
+                
+                  
+                
                 
                 
             </View>
@@ -155,10 +166,10 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
   const styles = StyleSheet.create({
     viewMore: {
       fontSize: 18,
-      alignSelf:'center',
-      backgroundColor: 'rgb(239, 120, 36)',
+      color: 'green',
       borderRadius: 8,
-      padding: 4,
+      padding: 6,
+      cursor: 'pointer',
     },
     text: {
       textAlign: 'center',
@@ -180,6 +191,13 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
       width: 300,
       height: 250,
       borderRadius:10
+    },
+    category: {
+      fontSize: 18,
+      color: 'blue',
+      borderRadius: 8,
+      padding: 6,
+      cursor: 'pointer',
     }
 
   });
