@@ -11,7 +11,7 @@ const Detail = ({route, navigation:{goBack}}) => {
     const business = route.params.selectedBusiness
     const user = route.params.user
     const dbChange = route.params.dbChange
-    const setDbChange = route.params.setDbChange
+    
     
     //console.log(business.display_address || business.location.display_address)
     let businessAddress = business.display_address || business.location.display_address

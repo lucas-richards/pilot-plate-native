@@ -5,12 +5,14 @@ import { AntDesign } from '@expo/vector-icons';
 import { getAllBusinesses, createBusiness, removeBusiness } from "../api/business";
 import { Alert } from "react-native";
 import { Db } from "mongodb";
+import { useNavigation } from "@react-navigation/native";
 
 export default function HeartFavorite({ business, user, setDbChange, dbChange }) {
     const [isClick, setClick] = useState(false);
     const [myBusiness, setMyBusiness] = useState({
       _id: '',
     });
+    const navigation = useNavigation()
   
     useEffect(() => {
       if (!user) return;
@@ -75,6 +77,14 @@ export default function HeartFavorite({ business, user, setDbChange, dbChange })
     const handleClick = () => {
       if (!user) {
         console.log('NO USER');
+        Alert.alert('Sign in', 'Please sign in to add favorites', [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          { text: 'Sign in', onPress: () => navigation.navigate('ProfileTab') },
+        ]);
       } else if (isClick) {
         Alert.alert('Remove restaurant', 'Remove this restaurant from favorites?', [
           {

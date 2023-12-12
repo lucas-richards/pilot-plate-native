@@ -114,7 +114,7 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
               <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between', marginHorizontal: 10}}>
                 <Text 
                   style={styles.viewMore}
-                  onPress={() => navigation.navigate('DetailScreen',{ 
+                  onPress={() => navigation.navigate('ProfileTab',{ 
                     selectedBusiness: randomRestaurant,
                     user: user,
                     dbChange: dbChange,
@@ -138,9 +138,6 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
                 buttonStyle={{width: 100, alignSelf: 'center'}}
                 title='View' 
                 /> */}
-                
-                  
-                
                 
                 
             </View>
@@ -169,7 +166,6 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
       color: 'green',
       borderRadius: 8,
       padding: 6,
-      cursor: 'pointer',
     },
     text: {
       textAlign: 'center',
@@ -197,7 +193,6 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
       color: 'blue',
       borderRadius: 8,
       padding: 6,
-      cursor: 'pointer',
     }
 
   });
