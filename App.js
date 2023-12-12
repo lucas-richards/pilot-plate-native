@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import Profile from './pages/Profile';
 import Detail from './pages/business/Detail';
+import { DataProvider } from './DataContext';
 
 
 const Tab = createBottomTabNavigator();
@@ -45,12 +46,13 @@ const Stack = createNativeStackNavigator()
   
   
   export default function App() {
-    const [user, setUser] = React.useState(null);
+    // const [user, setUser] = React.useState(null);
     const [location, setLocation] = React.useState('LA')
     const [price, setPrice] = React.useState(2)
     const [radius, setRadius] = React.useState(8000)
     const [category, setCategory] = React.useState('food')
-    const [dbChange, setDbChange] = React.useState(false)
+    // const [dbChange, setDbChange] = React.useState(false)
+    // const { dbChange, setDbChange } = useContext(DbContext);
 
 
     const HomeNavigation = () => {
@@ -63,9 +65,6 @@ const Stack = createNativeStackNavigator()
               price={price} 
               category={category} 
               radius={radius} 
-              user={user}
-              dbChange = {dbChange}
-              setDbChange={setDbChange}
               />} 
           />
           <Stack.Screen 
@@ -81,89 +80,83 @@ const Stack = createNativeStackNavigator()
         <Stack.Navigator initialRouteName="FavoriteScreen" screenOptions={{headerShown: false}}>
           <Stack.Screen 
             name="FavoriteScreen" 
-            children={() => <Favorites 
-              user={user} 
-              dbChange={dbChange}
-              setDbChange={setDbChange}
-              />} 
+            component={Favorites} 
           />
           <Stack.Screen 
             name="DetailScreen" 
             component={Detail}
           />
-
         </Stack.Navigator>
       )
     }
     
-
-
-  console.log(radius)
   return (
     <>
-    <NavigationContainer>
-      <Tab.Navigator tabBarActiveTintColor="red" initialRouteName='Home'>
-        <Tab.Screen 
-          name="Filter" 
-          children={() => <Filter 
-            location={location} 
-            setLocation={setLocation}
-            price={price}
-            setPrice={setPrice}
-            category={category}
-            setCategory={setCategory} 
-            radius={radius}
-            setRadius={setRadius} 
-            />}        
-          options={{ 
-            tabBarLabel: "",
-            title: <Header />,
-            tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='filter-variant' color={color} size={35} />) 
-          }}/>
-        <Tab.Screen 
-          name="Home" 
-          component={HomeNavigation}
-          // children={() => <Home 
-          //     location={location} 
-          //     price={price} 
-          //     category={category} 
-          //     radius={radius} 
-          //     user={user}
-          //     dbChange = {dbChange}
-          //     setDbChange={setDbChange}
-          //     />}  //allows props to be passed
-          options={{ 
-            tabBarLabel: "",
-            title: <Header />,
-            tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='home' color={color} size={35} />) 
-          }}
-          />
-        <Tab.Screen 
-          name="Favorites" 
-          component={FavoritesNavigation}
-          // children={() => <Favorites  
-          //   user={user} 
-          //   dbChange={dbChange}
-          //   setDbChange={setDbChange}
-          //   />} //allows props to be passed
-          options={{ 
-            tabBarLabel: "",
-            title: <Header />,
-            tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='heart' color={color} size={35} />) 
-          }}/>
+    <DataProvider>
+      <NavigationContainer>
+        <Tab.Navigator tabBarActiveTintColor="red" initialRouteName='Home'>
           <Tab.Screen 
-            name="ProfileTab" 
-            children={() => <Profile 
-                              setUser={setUser} 
-                              user={user} 
-                              />} //allows props to be passed
+            name="Filter" 
+            children={() => <Filter 
+              location={location} 
+              setLocation={setLocation}
+              price={price}
+              setPrice={setPrice}
+              category={category}
+              setCategory={setCategory} 
+              radius={radius}
+              setRadius={setRadius} 
+              />}        
+              options={{ 
+                tabBarLabel: "",
+                title: <Header />,
+              tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='filter-variant' color={color} size={35} />) 
+            }}/>
+          <Tab.Screen 
+            name="Home" 
+            component={HomeNavigation}
+            // children={() => <Home 
+            //     location={location} 
+            //     price={price} 
+            //     category={category} 
+            //     radius={radius} 
+            //     user={user}
+            //     dbChange = {dbChange}
+            //     setDbChange={setDbChange}
+            //     />}  //allows props to be passed
             options={{ 
               tabBarLabel: "",
               title: <Header />,
-              tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account' color={color} size={35} />) 
+              tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='home' color={color} size={35} />) 
+            }}
+            />
+          <Tab.Screen 
+            name="Favorites" 
+            component={FavoritesNavigation}
+            // children={() => <Favorites  
+            //   user={user} 
+            //   dbChange={dbChange}
+            //   setDbChange={setDbChange}
+            //   />} //allows props to be passed
+            options={{ 
+              tabBarLabel: "",
+              title: <Header />,
+              tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='heart' color={color} size={35} />) 
             }}/>
-      </Tab.Navigator>
-    </NavigationContainer>
+            <Tab.Screen 
+              name="ProfileTab" 
+              children={() => <Profile 
+                                // setUser={setUser} 
+                                // user={user} 
+                                />} //allows props to be passed
+                                options={{ 
+                                  tabBarLabel: "",
+                                  title: <Header />,
+                                  tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account' color={color} size={35} />) 
+                                }}/>
+          </Tab.Navigator>
+        </NavigationContainer>
+      </DataProvider>
     </>
 
   );

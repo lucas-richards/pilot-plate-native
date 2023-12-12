@@ -9,11 +9,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 const Detail = ({route, navigation:{goBack}}) => {
     const business = route.params.selectedBusiness
-    const user = route.params.user
-    const dbChange = route.params.dbChange
     
-    
-    //console.log(business.display_address || business.location.display_address)
     let businessAddress = business.display_address || business.location.display_address
 
     const dialCall = (number) => {
@@ -39,16 +35,13 @@ const Detail = ({route, navigation:{goBack}}) => {
         > 
             <View style={styles.container}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
-                    <Text onPress={() => goBack()} >
-                    <AntDesign name="left" size={24} color="black" />
-                    
-                    </Text>
+                    <AntDesign onPress={() => goBack()} name="left" size={24} color="black" />
                     <Text style={styles.name}>{business.name}</Text>
                     <HeartFavorite
                         business={business} 
-                        user={user}
-                        dbChange = {dbChange}
-                        setDbChange={setDbChange}
+                        // user={user}
+                        // dbChange = {dbChange}
+                        // setDbChange={setDbChange}
                     />
                 </View>
 
@@ -56,6 +49,7 @@ const Detail = ({route, navigation:{goBack}}) => {
                     style={styles.image}
                     source={{uri: `${business.image_url}`}}
                 />
+                
 
                 <Text style={styles.name}>{business.name}</Text>
 
@@ -97,7 +91,8 @@ export default Detail;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
+        margin: 20,
     },
     image: {
         height: 300,

@@ -1,14 +1,16 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { getAllBusinesses, createBusiness, removeBusiness } from "../api/business";
 import { Alert } from "react-native";
 import { Db } from "mongodb";
 import { useNavigation } from "@react-navigation/native";
+import { DbContext } from '../DataContext';
 
-export default function HeartFavorite({ business, user, setDbChange, dbChange }) {
+export default function HeartFavorite({ business }) {
     const [isClick, setClick] = useState(false);
+    const { dbChange, setDbChange, user } = useContext(DbContext);
     const [myBusiness, setMyBusiness] = useState({
       _id: '',
     });

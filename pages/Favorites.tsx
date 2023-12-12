@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity, Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { getAllBusinesses } from '../api/business';
@@ -6,11 +6,13 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Alert } from "react-native";
 import { removeBusiness } from "../api/business";
 import { useNavigation } from '@react-navigation/native';
+import { DbContext } from '../DataContext';
 
 
-const Favorites = ({user, setDbChange, dbChange}) => {
+const Favorites = () => {
   const [businesses,setBusinesses] = useState([])
   const navigation = useNavigation(); // needed for navigation
+  const { dbChange, setDbChange, user } = useContext(DbContext);
 
     useEffect(()=>{
         getAllBusinesses()
@@ -83,8 +85,8 @@ const Favorites = ({user, setDbChange, dbChange}) => {
                       <TouchableOpacity onPress={() => navigation.navigate('DetailScreen',{ 
                         selectedBusiness: item,
                         user: user,
-                        dbChange: dbChange,
-                        setDbChange: setDbChange
+                        // dbChange: dbChange,
+                        // setDbChange: setDbChange
                         })}>
                         <Image 
                           style={styles.image} 

@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import SignInForm from '../components/SignInForm';
 import SignUpForm from "../components/SignUpForm";
-import { signOut } from '../api/auth';
+import { signOut } from '../api/auth'
+import { DbContext } from '../DataContext';
 
 
-const Profile = ({ user, setUser }) => {
+const Profile = () => {
     
    
     const [signOptionToggle, setSignOptionToggle] = useState(false)
+    const {user, setUser} = useContext(DbContext);
 
     console.log('user',user)
 

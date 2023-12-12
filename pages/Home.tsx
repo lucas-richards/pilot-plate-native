@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {Card, Button, Icon} from 'react-native-elements';
@@ -8,19 +8,21 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Detail from './business/Detail';
 import { useNavigation } from '@react-navigation/native';
+import { DbContext } from '../DataContext';
 
 //stars
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import HeartFavorite from '../components/HeartFavorite';
 
 // home page
-const Home = ({location, price, category, radius, user, setDbChange, dbChange}) => {
+const Home = ({location, price, category, radius, }) => {
 
   const navigation = useNavigation(); // needed for navigation
 
   const [data, setData] = React.useState([])
   const [spin, setSpin] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
+  const { dbChange, setDbChange, user } = useContext(DbContext);
   
   const [randomRestaurant, setRandomRestaurant] = React.useState({
     image_url: 'https://s3-media0.fl.yelpcdn.com/bphoto/9Y4sB4D2z7jzqj3XZPb9jA/o.jpg',
@@ -82,6 +84,7 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
           colors={['rgb(239, 120, 36)', 'rgb(236, 80, 31)']}
           style={{height: '100%'}}
         > 
+        
         <Text style={{textAlign: 'center', fontSize: 25, marginTop: 30, color: 'white'}}>What do you want to eat?</Text>
 
           {/* restaurant card */}
@@ -114,7 +117,7 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
               <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between', marginHorizontal: 10}}>
                 <Text 
                   style={styles.viewMore}
-                  onPress={() => navigation.navigate('ProfileTab',{ 
+                  onPress={() => navigation.navigate('DetailScreen',{ 
                     selectedBusiness: randomRestaurant,
                     user: user,
                     dbChange: dbChange,
@@ -125,9 +128,9 @@ const Home = ({location, price, category, radius, user, setDbChange, dbChange}) 
                 </Text>
                 <HeartFavorite
                   business={randomRestaurant} 
-                  user={user}
-                  dbChange = {dbChange}
-                  setDbChange={setDbChange}
+                  // user={user}
+                  // dbChange = {dbChange}
+                  // setDbChange={setDbChange}
                 />
               </View>
              
