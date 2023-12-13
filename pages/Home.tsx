@@ -189,7 +189,8 @@ const Home = ({location, price, category, radius, }) => {
     cardImage: {
       width: 300,
       height: 250,
-      borderRadius:10
+      borderTopRightRadius:10,
+      borderTopLeftRadius:10
     },
     category: {
       fontSize: 18,
