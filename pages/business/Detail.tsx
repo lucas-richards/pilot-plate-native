@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { StyleSheet, View, Text, Button, Image, Touchable, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import  StarRating  from 'react-native-star-rating-widget';
@@ -13,11 +13,13 @@ import { updateBusiness } from '../../api/business';
 const Detail = ({route, navigation:{goBack}}) => {
     const business = route.params.selectedBusiness
     const [updateB, setUpdateB] = useState(business)
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState(business.rating);
     const { user } = useContext(DbContext);
     
     let businessAddress = business.display_address || business.location.display_address
-
+    
+    console.log('business', business)
+    
     const dialCall = (number) => {
         console.log(number)
         number = (number.replace(/\D/g, ""))
@@ -37,7 +39,7 @@ const Detail = ({route, navigation:{goBack}}) => {
         setRating(rating)
         setUpdateB({...updateB, rating: rating})
         updateBusiness(user,updateB)
-            .then(res => console.log('business updated', res))
+            .then(res => console.log('business updated', res.config.data))
             .catch(err => console.log('err', err))
     }
 
@@ -75,11 +77,22 @@ const Detail = ({route, navigation:{goBack}}) => {
                             {/* if business coming from yelp show all reviews, if not user review */}
                             ({typeof business.price === 'number'? user.email:business.review_count})
                         </Text>
-                        <StarRating 
-                            onChange={handleRating}
-                            rating={typeof business.price === 'number'?rating:business.rating} 
-                            starSize={25}
-                        /> 
+                        {
+                            typeof business.price === 'number'?
+                            <StarRating 
+                                onChange={handleRating}
+                                rating={typeof business.price === 'number'?rating:business.rating} 
+                                starSize={25}
+                            /> 
+                            :
+                            <StarRating 
+                                onChange={()=>{console.log('yelp rating cant be changed')}}
+                                rating={typeof business.price === 'number'?rating:business.rating} 
+                                starSize={25}
+                            /> 
+                            
+                        }
+                        
                     </View>
                     
                     <View style={{margin:10}}>

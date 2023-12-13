@@ -64,11 +64,12 @@ export default function HeartFavorite({ business }) {
         distance:business.distance,
         url: business.url,
         display_address:business.location.display_address,
-        display_phone:business.display_phone
+        display_phone:business.display_phone,
+        rating: business.rating,
       })
         .then((res) => {
           setClick(true);
-          console.log('Business added to favorites');
+          console.log('Business added to favorites',res.config.data);
           setDbChange(!dbChange)
         })
         .catch((err) => {
