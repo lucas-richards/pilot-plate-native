@@ -46,8 +46,7 @@ const Filter = ({location,
           colors={['rgb(239, 120, 36)', 'rgb(236, 80, 31)']}
           style={{height: '100%'}}
         >   
-          
-          <Text style={styles.title}>Settings</Text>
+        
           <KeyboardAvoidingView 
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.container}

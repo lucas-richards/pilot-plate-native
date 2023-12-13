@@ -119,9 +119,9 @@ const Home = ({location, price, category, radius, }) => {
                   style={styles.viewMore}
                   onPress={() => navigation.navigate('DetailScreen',{ 
                     selectedBusiness: randomRestaurant,
-                    user: user,
-                    dbChange: dbChange,
-                    setDbChange: setDbChange
+                    // user: user,
+                    // dbChange: dbChange,
+                    // setDbChange: setDbChange
                   })}
                 >
                   More

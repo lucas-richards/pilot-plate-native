@@ -42,7 +42,7 @@ export default function HeartFavorite({ business }) {
     }, [business.id, user, isClick, dbChange]);
   
     const removeBusinessFromFavorites = () => {
-      removeBusiness(user, myBusiness._id)
+      removeBusiness(user, business._id||myBusiness._id)
         .then((res) => {
           setClick(false);
           console.log('Business removed from favorites => business._id=',myBusiness._id);
@@ -88,7 +88,7 @@ export default function HeartFavorite({ business }) {
           { text: 'Sign in', onPress: () => navigation.navigate('ProfileTab') },
         ]);
       } else if (isClick) {
-        Alert.alert('Remove restaurant', 'Remove this restaurant from favorites?', [
+        Alert.alert(`Remove ${business.name} ${business._id||myBusiness._id}`, 'Remove this restaurant from favorites?', [
           {
             text: 'Cancel',
             onPress: () => console.log('Cancel Pressed'),
