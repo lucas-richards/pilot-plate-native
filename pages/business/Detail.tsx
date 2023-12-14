@@ -62,46 +62,49 @@ const Detail = ({route, navigation:{goBack}}) => {
                 <View style={styles.card}>
               
                     <Card.Image style={styles.cardImage} source={{ uri: `${business.image_url}` }} />
-                    <Card.Title>
-                        <Text style={{fontSize:20, fontWeight:'600', color:'black'}}>
+                    <Text style={{fontSize:18,fontWeight:'600', margin:10}}>
+                        
                             {business.name} - {business.is_closed?
                                 <Text style={{fontSize:16,color:'red'}}>Closed</Text>
                                 :
                                 <Text style={{fontSize:16,color:'green'}}>Open</Text>}
-                        </Text>
-                    </Card.Title>
-                    <Card.Divider/>
-                    
-                    <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal: 10, marginTop:5}}>
+                        
+                    </Text>
+                    <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal:5}}>
+                        {
+                            typeof business.price === 'number'?
+                            <StarRating 
+                            onChange={handleRating}
+                            rating={typeof business.price === 'number'?rating:business.rating} 
+                            starSize={25}
+                            /> 
+                            :
+                            <StarRating 
+                            onChange={()=>{console.log('yelp rating cant be changed')}}
+                            rating={typeof business.price === 'number'?rating:business.rating} 
+                            starSize={20}
+                            /> 
+                            
+                        }
                         <Text style={{color:'gray'}}>
                             {/* if business coming from yelp show all reviews, if not user review */}
                             ({typeof business.price === 'number'? user.email:business.review_count})
                         </Text>
-                        {
-                            typeof business.price === 'number'?
-                            <StarRating 
-                                onChange={handleRating}
-                                rating={typeof business.price === 'number'?rating:business.rating} 
-                                starSize={25}
-                            /> 
-                            :
-                            <StarRating 
-                                onChange={()=>{console.log('yelp rating cant be changed')}}
-                                rating={typeof business.price === 'number'?rating:business.rating} 
-                                starSize={25}
-                            /> 
-                            
-                        }
                         
                     </View>
+                    <Card.Divider/>
                     
-                    <View style={{margin:10}}>
-                    <Text style={{fontSize:20}}>{ typeof business.price === 'number'?'$'.repeat(business.price):business.price}</Text>
+                    <View style={{marginHorizontal:10}}>
+                    
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
+                            <Text style={{fontSize:20}}>{ typeof business.price === 'number'?'$'.repeat(business.price):business.price}</Text>
+                            <Text style={styles.category}>{business.categories[0].title}</Text>
+                        </View>
                         <Text style={{marginTop:5}}>
                             {Math.round((business.distance / 1609) * 10) / 10} mi away
                         </Text>
                         <Text
-                            style={{marginTop:5}}
+                            style={{marginTop:10}}
                             onPress={() => handleOpenMaps(businessAddress)}
                         >
                             <Text style={{fontWeight:'bold'}}>
@@ -171,8 +174,8 @@ const styles = StyleSheet.create({
     },
     card: {
         backgroundColor:'white',
-        width: 300,
-        height: 500,
+        maxWidth: 300,
+        minHeight: 500,
         borderRadius:10
       },
     cardImage: {
@@ -184,6 +187,16 @@ const styles = StyleSheet.create({
     yelpImage: {
         width: 50, 
         height: 50,
+
+    },
+    category: {
+        color: 'rgb(236, 80, 31)',
+        fontSize: 12,
+        marginTop: 5,
+        borderColor: 'rgb(236, 80, 31)',
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 3,
 
     }
 
