@@ -8,7 +8,7 @@ import { Db } from "mongodb";
 import { useNavigation } from "@react-navigation/native";
 import { DbContext } from '../DataContext';
 
-export default function HeartFavorite({ business }) {
+export default function HeartFavorite({ business, comingFromFav }) {
     const [isClick, setClick] = useState(false);
     const { dbChange, setDbChange, user } = useContext(DbContext);
     const [myBusiness, setMyBusiness] = useState({
@@ -47,6 +47,7 @@ export default function HeartFavorite({ business }) {
           setClick(false);
           console.log('Business removed from favorites => business._id=',myBusiness._id);
           setDbChange(!dbChange)
+          comingFromFav? navigation.navigate('FavoriteScreen'):null
         })
         .catch((err) => {
           console.log('Error removing business._id =>', err, myBusiness._id);

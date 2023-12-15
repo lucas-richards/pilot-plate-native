@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {Card, Button, Icon} from 'react-native-elements';
 import { getbusinesses } from '../api/yelp_api';
@@ -22,7 +22,7 @@ const Home = ({location, price, category, radius, }) => {
   const [data, setData] = React.useState([])
   const [spin, setSpin] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
-  const { dbChange, setDbChange, user } = useContext(DbContext);
+  
   
   const [randomRestaurant, setRandomRestaurant] = React.useState({
     image_url: 'https://s3-media0.fl.yelpcdn.com/bphoto/9Y4sB4D2z7jzqj3XZPb9jA/o.jpg',
@@ -90,7 +90,7 @@ const Home = ({location, price, category, radius, }) => {
           {/* restaurant card */}
           {
           randomRestaurant ? 
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={styles.card}>
               
               <Card.Image style={styles.cardImage} source={{ uri: `${randomRestaurant.image_url}` }} />
@@ -127,7 +127,8 @@ const Home = ({location, price, category, radius, }) => {
                   More
                 </Text>
                 <HeartFavorite
-                  business={randomRestaurant} 
+                  business={randomRestaurant}
+                  comingFromFav={false} 
                   // user={user}
                   // dbChange = {dbChange}
                   // setDbChange={setDbChange}
@@ -150,7 +151,7 @@ const Home = ({location, price, category, radius, }) => {
               <Text style={styles.text}>SPIN</Text>
             </TouchableOpacity>
             
-          </View>
+          </ScrollView>
           :
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <ActivityIndicator size="large" color="#ffff" />

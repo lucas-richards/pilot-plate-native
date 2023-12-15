@@ -11,8 +11,9 @@ import { DbContext } from '../DataContext';
 
 const Favorites = () => {
   const [businesses,setBusinesses] = useState([])
+  
   const navigation = useNavigation(); // needed for navigation
-  const { dbChange, setDbChange, user } = useContext(DbContext);
+  const { dbChange, setDbChange, user, rating, setRating } = useContext(DbContext);
 
     useEffect(()=>{
         getAllBusinesses()
@@ -23,13 +24,14 @@ const Favorites = () => {
                   const ownerBusinesses = res.data.businesses.filter(business => business.owner._id === user._id)
                   setBusinesses(ownerBusinesses)
                   
+                  
                 }
             })
             .catch(err => {
                 console.log('error',err)
                 
             })
-    },[user, dbChange])
+    },[user, dbChange, rating])
 
     const handleClick = (itemId) => {
       

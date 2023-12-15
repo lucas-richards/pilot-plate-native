@@ -12,13 +12,20 @@ import { updateBusiness } from '../../api/business';
 
 const Detail = ({route, navigation:{goBack}}) => {
     const business = route.params.selectedBusiness
-    const [updateB, setUpdateB] = useState(business)
-    const [rating, setRating] = useState(business.rating);
-    const { user } = useContext(DbContext);
+    const { user, rating, setRating } = useContext(DbContext);
+    const [comingFromFav, setComingFromFav] = useState(false)
     
     let businessAddress = business.display_address || business.location.display_address
     
     console.log('business', business)
+
+    useEffect(() => {
+        console.log('rating1', rating)
+        setRating(business.rating)
+        typeof business.price === 'number'? setComingFromFav(true):setComingFromFav(false)
+        
+
+    },[])
     
     const dialCall = (number) => {
         console.log(number)
@@ -35,13 +42,15 @@ const Detail = ({route, navigation:{goBack}}) => {
         Linking.openURL(mapsUrl);
     };
 
-    const handleRating = (rating) => {
-        setRating(rating)
-        setUpdateB({...updateB, rating: rating})
-        updateBusiness(user,updateB)
-            .then(res => console.log('business updated', res.config.data))
-            .catch(err => console.log('err', err))
-    }
+    useEffect(() => {
+        console.log('rating to be saved', rating)
+        if (user){
+            updateBusiness(user,{...business, rating: rating})
+                .then(res => console.log('business updated', res.config.data))
+                .catch(err => console.log('err', err))
+        }
+    },[rating])
+
 
 
     return(
@@ -56,6 +65,7 @@ const Detail = ({route, navigation:{goBack}}) => {
                     <Text style={styles.name}>{business.name}</Text>
                     <HeartFavorite
                         business={business} 
+                        comingFromFav={comingFromFav}
                     />
                 </View>
 
@@ -72,23 +82,23 @@ const Detail = ({route, navigation:{goBack}}) => {
                     </Text>
                     <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal:5}}>
                         {
-                            typeof business.price === 'number'?
+                            comingFromFav?
                             <StarRating 
-                            onChange={handleRating}
-                            rating={typeof business.price === 'number'?rating:business.rating} 
-                            starSize={25}
+                            onChange={setRating}
+                            rating={rating} 
+                            starSize={20}
                             /> 
                             :
                             <StarRating 
                             onChange={()=>{console.log('yelp rating cant be changed')}}
-                            rating={typeof business.price === 'number'?rating:business.rating} 
+                            rating={business.rating} 
                             starSize={20}
                             /> 
                             
                         }
                         <Text style={{color:'gray'}}>
                             {/* if business coming from yelp show all reviews, if not user review */}
-                            ({typeof business.price === 'number'? user.email:business.review_count})
+                            ({comingFromFav? user.email:business.review_count})
                         </Text>
                         
                     </View>
@@ -97,7 +107,7 @@ const Detail = ({route, navigation:{goBack}}) => {
                     <View style={{marginHorizontal:10}}>
                     
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
-                            <Text style={{fontSize:20}}>{ typeof business.price === 'number'?'$'.repeat(business.price):business.price}</Text>
+                            <Text style={{fontSize:20}}>{ comingFromFav?'$'.repeat(business.price):business.price}</Text>
                             <Text style={styles.category}>{business.categories[0].title}</Text>
                         </View>
                         <Text style={{marginTop:5}}>
