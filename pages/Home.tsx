@@ -90,14 +90,12 @@ const Home = ({location, price, category, radius, }) => {
         <Text style={{textAlign: 'center', fontSize: 25, marginTop: 30, color: 'white'}}>What do you want to eat?</Text>
          {/* <Index /> */}
          <FlatList
-                data={data}
+                data={[{name:'lucas'},{name:'lukas'},{name:'mat'}]}
                 horizontal={true}
                 renderItem={({item}) => 
                 <View>
-                  <Text style={{textAlign: 'center', fontSize: 25, margin: 3, backgroundColor: 'white'}}>{item.name}
-                    <Image 
-                      style={{width: 100, height: 100, borderRadius: 50, margin: 5}} 
-                      source={{uri: `${item.image_url}`}} />
+                  <Text style={{textAlign: 'center', fontSize: 25, margin: 3, backgroundColor: 'white'}}>
+                    {item.name}
                   </Text>
 
                 </View>
