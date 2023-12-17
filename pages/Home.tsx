@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, ScrollView, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, FlatList, View, ScrollView, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {Card, Button, Icon} from 'react-native-elements';
 import { getbusinesses } from '../api/yelp_api';
@@ -13,6 +13,8 @@ import { DbContext } from '../DataContext';
 //stars
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import HeartFavorite from '../components/HeartFavorite';
+import Index from '../components/Index';
+
 
 // home page
 const Home = ({location, price, category, radius, }) => {
@@ -86,7 +88,22 @@ const Home = ({location, price, category, radius, }) => {
         > 
         
         <Text style={{textAlign: 'center', fontSize: 25, marginTop: 30, color: 'white'}}>What do you want to eat?</Text>
+         {/* <Index /> */}
+         <FlatList
+                data={data}
+                horizontal={true}
+                renderItem={({item}) => 
+                <View>
+                  <Text style={{textAlign: 'center', fontSize: 25, margin: 3, backgroundColor: 'white'}}>{item.name}
+                    <Image 
+                      style={{width: 100, height: 100, borderRadius: 50, margin: 5}} 
+                      source={{uri: `${item.image_url}`}} />
+                  </Text>
 
+                </View>
+                }
+
+          />
           {/* restaurant card */}
           {
           randomRestaurant ? 
