@@ -90,7 +90,7 @@ const Home = ({location, price, category, radius, }) => {
         <Text style={{textAlign: 'center', fontSize: 25, marginTop: 30, color: 'white'}}>What do you want to eat?</Text>
          {/* <Index /> */}
          <FlatList
-                data={[{name:'lucas'},{name:'lukas'},{name:'mat'},{name:'mat2'}]}
+                data={[{name:'lucas'},{name:'lukas'},{name:'lukas2'},{name:'mat'},{name:'mat2'}]}
                 horizontal={true}
                 renderItem={({item}) => 
                 <View>
