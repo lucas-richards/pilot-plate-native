@@ -14,6 +14,9 @@ import Carousel from 'react-native-reanimated-carousel';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import HeartFavorite from '../components/HeartFavorite';
 
+import { PixelRatio } from 'react-native';
+
+
 // home page
 const Home = ({location, price, category, radius, }) => {
 
@@ -94,7 +97,10 @@ const Home = ({location, price, category, radius, }) => {
 
   }
   const width = Dimensions.get('window').width;
-
+  const height = Dimensions.get('window').height;
+  //responsive font size
+  const fontScale = PixelRatio.getFontScale();
+  const fontSize = 20 * fontScale;
 
     return (
       <>
@@ -109,7 +115,7 @@ const Home = ({location, price, category, radius, }) => {
             <Carousel
                 loop
                 width={width}
-                height={500}
+                height={.65 * height}
                 autoPlay={false}
                 ref={carouselRef}
                 mode='parallax'
@@ -122,47 +128,50 @@ const Home = ({location, price, category, radius, }) => {
                   randomRestaurant ? 
                   <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <View style={styles.card}>
-                      <Card.Image style={styles.cardImage} source={{ uri: `${data[index].image_url}` }} />
+                      <Image style={{width: '100%', height: height * .35}} source={{ uri: `${data[index].image_url}` }} />
                       <Card.Divider/>
-                      <Text style={{marginHorizontal: 10, fontWeight:'600'}}>
-                          {data[index].name}
-                      </Text>
-                      <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between', marginHorizontal: 10, marginTop:5}}>
-                        <Text style={{marginHorizontal: 10, fontWeight:'600'}}>
-                          {data[index].price}
+                      <View style={{marginTop: height * .02}}>
+                      
+                        <Text style={{marginHorizontal: 20, fontWeight:'600', fontSize: height * .025}}>
+                            {data[index].name}
                         </Text>
-                        <Text style={{marginHorizontal: 10}}>
-                          {/* {data[index].rating} */}
-                          <StarRatingDisplay rating={data[index].rating} starSize={25}/>
+                        <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between', marginHorizontal: 10, marginTop:5}}>
+                          <Text style={{marginLeft: 20, fontWeight:'600', fontSize: height * .025}}>
+                            {data[index].price}
+                          </Text>
+                          <Text style={{marginHorizontal: 10}}>
+                            {/* {data[index].rating} */}
+                            <StarRatingDisplay style={{alignContent: 'center', alignItems: 'center'}} rating={data[index].rating} starSize={height * .037}/>
+                          </Text>
+                        </View>
+                        <Text style={{marginHorizontal: 20, fontSize: height * .025}}>
+                          {Math.round((data[index].distance / 1609) * 10) / 10} mi away
                         </Text>
+                        <Text style={styles.category}>
+                          {/* {data[index].categories[0]} */}
+                        </Text>
+                        <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between', marginHorizontal: 10}}>
+                          <Text 
+                            style={styles.viewMore}
+                            onPress={() => navigation.navigate('DetailScreen',{ 
+                              selectedBusiness: data[index],
+                              // user: user,
+                              // dbChange: dbChange,
+                              // setDbChange: setDbChange
+                            })}
+                          >
+                            More
+                          </Text>
+                          <HeartFavorite
+                            business={data[index]}
+                            comingFromFav={false} 
+                            // user={user}
+                            // dbChange = {dbChange}
+                            // setDbChange={setDbChange}
+                          />
+                        </View>
+  
                       </View>
-                      <Text style={{marginHorizontal: 20}}>
-                        {Math.round((data[index].distance / 1609) * 10) / 10} mi away
-                      </Text>
-                      <Text style={styles.category}>
-                        {/* {data[index].categories[0]} */}
-                      </Text>
-                      <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between', marginHorizontal: 10}}>
-                        <Text 
-                          style={styles.viewMore}
-                          onPress={() => navigation.navigate('DetailScreen',{ 
-                            selectedBusiness: data[index],
-                            // user: user,
-                            // dbChange: dbChange,
-                            // setDbChange: setDbChange
-                          })}
-                        >
-                          More
-                        </Text>
-                        <HeartFavorite
-                          business={data[index]}
-                          comingFromFav={false} 
-                          // user={user}
-                          // dbChange = {dbChange}
-                          // setDbChange={setDbChange}
-                        />
-                      </View>
-                     
                         
                         
                     </View>
@@ -176,14 +185,15 @@ const Home = ({location, price, category, radius, }) => {
                 )}
             />
         </View>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <TouchableOpacity
+      
+        <View style={{ alignContent: 'center' , alignItems: 'center', height: height * .14}}>
+          <TouchableOpacity
               onPress={handlePress}
               style={ styles.button }>
-              <Text style={styles.text}>SPIN</Text>
-            </TouchableOpacity>
+            <Text style={styles.text}>SPIN</Text>
+          </TouchableOpacity>
         </View>
-            
+
           
         </LinearGradient> 
       </>
@@ -191,34 +201,42 @@ const Home = ({location, price, category, radius, }) => {
     );
   }
   export default Home
+  const width = Dimensions.get('window').width;
+  const height = Dimensions.get('window').height;
+
+  const fontScale = PixelRatio.getFontScale();
+  const fontSize = 20 * fontScale;
+
 
   const styles = StyleSheet.create({
     viewMore: {
-      fontSize: 18,
+      fontSize: height * .028,
       color: 'green',
       borderRadius: 8,
       padding: 6,
     },
     text: {
       textAlign: 'center',
+      
       padding: 10,
       width: 100,
     },
     button: {
-      marginTop: 100,
+      //marginTop: 100,
       borderRadius: 20,
       backgroundColor: 'rgba(100,100,100,0.7)',
       width: 100,
     },
     card: {
       backgroundColor:'white',
-      width: 300,
-      height: 400,
+      width: '95%',
+      height: '100%',
       borderRadius:10
     },
     cardImage: {
-      width: 300,
-      height: 250,
+      width: '100%',
+      // height: 250,
+      marginBottom: 0,
       borderTopRightRadius:10,
       borderTopLeftRadius:10
     },
