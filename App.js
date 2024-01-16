@@ -96,6 +96,15 @@ const Stack = createNativeStackNavigator()
       <NavigationContainer>
         <Tab.Navigator tabBarActiveTintColor="red" initialRouteName='Home'>
           <Tab.Screen 
+              name="friends" 
+              children={() => <Profile />}
+              options={{ 
+                tabBarLabel: "",
+                title: <Header />,
+                tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account-group' color={color} size={35} />) 
+              }}
+              />
+          <Tab.Screen 
             name="Filter" 
             children={() => <Filter 
               location={location} 
@@ -115,29 +124,16 @@ const Stack = createNativeStackNavigator()
           <Tab.Screen 
             name="Home" 
             component={HomeNavigation}
-            // children={() => <Home 
-            //     location={location} 
-            //     price={price} 
-            //     category={category} 
-            //     radius={radius} 
-            //     user={user}
-            //     dbChange = {dbChange}
-            //     setDbChange={setDbChange}
-            //     />}  //allows props to be passed
             options={{ 
               tabBarLabel: "",
               title: <Header />,
               tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='home' color={color} size={35} />) 
             }}
             />
+          
           <Tab.Screen 
             name="Favorites" 
             component={FavoritesNavigation}
-            // children={() => <Favorites  
-            //   user={user} 
-            //   dbChange={dbChange}
-            //   setDbChange={setDbChange}
-            //   />} //allows props to be passed
             options={{ 
               tabBarLabel: "",
               title: <Header />,
@@ -149,11 +145,12 @@ const Stack = createNativeStackNavigator()
                                 // setUser={setUser} 
                                 // user={user} 
                                 />} //allows props to be passed
-                                options={{ 
-                                  tabBarLabel: "",
-                                  title: <Header />,
-                                  tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account' color={color} size={35} />) 
-                                }}/>
+              options={{ 
+                tabBarLabel: "",
+                title: <Header />,
+                tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account' color={color} size={35} />) 
+              }}/>
+            
           </Tab.Navigator>
         </NavigationContainer>
       </DataProvider>
