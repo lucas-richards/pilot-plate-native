@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import Profile from './pages/Profile';
 import Detail from './pages/business/Detail';
+import Friends from './pages/Friends';
 import { DataProvider } from './DataContext';
 
 
@@ -96,8 +97,8 @@ const Stack = createNativeStackNavigator()
       <NavigationContainer>
         <Tab.Navigator tabBarActiveTintColor="red" initialRouteName='Home'>
           <Tab.Screen 
-              name="friends" 
-              children={() => <Profile />}
+              name="Friends" 
+              children={() => <Friends />}
               options={{ 
                 tabBarLabel: "",
                 title: <Header />,
