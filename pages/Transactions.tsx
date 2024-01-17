@@ -1,52 +1,60 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import FriendsForm from '../components/FriendsForm';
 import { signOut } from '../api/auth'
 import { DbContext } from '../DataContext';
+import { getTransactions } from '../api/transaction';
 
 
-const Friends = () => {
+const Transactions = () => {
     
-   
-    const [signOptionToggle, setSignOptionToggle] = useState(false)
     const {user, setUser} = useContext(DbContext);
+    const [transactions, setTransactions] = useState([])
 
     console.log('user',user)
 
-    const handleSignOut = async () => {
-        signOut(user)
-        .then(() => {
-          setUser(null)
-          console.log("Sign Out Success")
-        })
+    useEffect(()=>{
+      getTransactions()
+          .then(res => {
+              console.log('this is user',user)
+              if (user) {
 
-    };
+                const transactions = res.data.businesses.filter(business => business.owner._id === user._id)
+                setTransactions(transactions)
+                
+                
+              }
+          })
+          .catch(err => {
+              console.log('error',err)
+              
+          })
+  },[])
+
+   
 
     return (
-      <>
+      
         <LinearGradient
           colors={['rgb(239, 120, 36)', 'rgb(236, 80, 31)']}
           style={{height: '100%'}}
         >   
-
-            <KeyboardAvoidingView>
-                
-                    <View style={styles.container}>
-                    
-                        <FriendsForm
-                            setUser = {setUser}
-                        />
-                     
-                    </View>
-                    
-            </KeyboardAvoidingView>
-
+        
+          <Text style={styles.text}>Transactions</Text>
+          {transactions.map((transaction, index) => {
+            return (
+              <View key={index} style={styles.container2}>
+                <Text style={styles.text}>{transaction.business_name}</Text>
+                <Text style={styles.text}>{transaction.amount}</Text>
+              </View>
+            )
+          })}
+          
         </LinearGradient> 
-      </>
+      
   
     );
-  }
+  };
 
   const styles = StyleSheet.create({
 
@@ -84,4 +92,4 @@ const Friends = () => {
 
 
 
-  export default Friends
+  export default Transactions

@@ -7,10 +7,15 @@ import { Alert } from "react-native";
 import { removeBusiness } from "../api/business";
 import { useNavigation } from '@react-navigation/native';
 import { DbContext } from '../DataContext';
+import { createTransaction } from '../api/transaction';
+import DialogInput from 'react-native-dialog-input';
+
 
 
 const Favorites = () => {
   const [businesses,setBusinesses] = useState([])
+  const [comment, setComment] = useState('')
+  const [dialogVisible, setDialogVisible] = useState(false)
   
   const navigation = useNavigation(); // needed for navigation
   const { dbChange, setDbChange, user, rating, setRating } = useContext(DbContext);
@@ -24,7 +29,6 @@ const Favorites = () => {
                   const ownerBusinesses = res.data.businesses.filter(business => business.owner._id === user._id)
                   setBusinesses(ownerBusinesses)
                   
-                  
                 }
             })
             .catch(err => {
@@ -33,7 +37,7 @@ const Favorites = () => {
             })
     },[user, dbChange, rating])
 
-    const handleClick = (itemId) => {
+    const handleClick = (item) => {
       
         Alert.alert('Remove restaurant', 'Remove this restaurant from favorites?', [
           {
@@ -41,21 +45,74 @@ const Favorites = () => {
             onPress: () => console.log('Cancel Pressed'),
             style: 'cancel',
           },
-          {text: 'Remove', onPress: () => {
-            console.log('Remove Pressed', itemId)
-            removeBusiness(user, itemId)
+          {
+            text: 'Remove', 
+            onPress: () => {
+              
+              
+                  Alert.prompt('Any comments?', 'write them below', [
+                    {
+                      text: 'No Comment',
+                      onPress: () => {
+                        newTransaction(item, 'no comment')
+                      },
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Save', 
+                      onPress: (inputComment) => {
+                        console.log('comment', inputComment)
+                        setComment(inputComment)
+                        newTransaction(item, comment)
+                        
+                        }
+                    },
+                    ],
+                    'plain-text', // specify the input type
+                    comment // pre-fill the input with the current comment value
+                    )
+                    
+                }
+            },
+          ]);
+        }
+      
+    const newTransaction = (item, comment) => {
+      console.log('Remove Pressed', item._id)
+        removeBusiness(user, item._id)
+          .then((res) => {
+            console.log('Business removed from favorites => business._id=',item._id);
+            setDbChange(!dbChange)
+          })
+          .then(() => {
+            createTransaction(user, {
+              business_name: item.name,
+              yelp_id: item.yelp_id,
+              image_url: item.image_url,
+              favorite: false,
+              owner: user._id,
+              display_address:item.display_address,
+              comment: comment
+            })
               .then((res) => {
-                console.log('Business removed from favorites => business._id=',itemId);
-                setDbChange(!dbChange)
+                console.log('Transaction created', res.config.data);
+                setComment('')
               })
               .catch((err) => {
-                console.log('Error removing business._id =>', err, itemId);
+                console.log('Error creating transaction:', err);
+                setComment('')
               });
+          })
+          .then((res) => {
+            console.log('Business removed from favorites => business._id=',item._id);
+            setDbChange(!dbChange)
             
-          }},
-        ]);
+          })
+          .catch((err) => {
+            console.log('Error removing business._id =>', err, item._id);
+          });
       
-    };
+      }
 
     if(!user){
         return <Text style={{textAlign:'center', marginTop:100, color:'black'}}>Please login to view favorites</Text>
@@ -114,7 +171,7 @@ const Favorites = () => {
                           name="heart"
                           size={24}
                           color="red"
-                          onPress={() => handleClick(item._id)}
+                          onPress={() => handleClick(item)}
                         />
                     </View>
                   

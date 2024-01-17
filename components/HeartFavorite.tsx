@@ -44,10 +44,12 @@ export default function HeartFavorite({ business, comingFromFav }) {
     const removeBusinessFromFavorites = () => {
       removeBusiness(user, business._id||myBusiness._id)
         .then((res) => {
+
           setClick(false);
           console.log('Business removed from favorites => business._id=',myBusiness._id);
           setDbChange(!dbChange)
           comingFromFav? navigation.navigate('FavoriteScreen'):null
+          
         })
         .catch((err) => {
           console.log('Error removing business._id =>', err, myBusiness._id);
