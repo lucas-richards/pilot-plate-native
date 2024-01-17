@@ -18,11 +18,8 @@ const Transactions = () => {
           .then(res => {
               console.log('this is user',user)
               if (user) {
-
-                const transactions = res.data.businesses.filter(business => business.owner._id === user._id)
-                setTransactions(transactions)
-                
-                
+                setTransactions(res.data.transactions)
+                console.log('transactions',transactions)
               }
           })
           .catch(err => {

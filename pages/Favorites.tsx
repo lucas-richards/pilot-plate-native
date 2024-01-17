@@ -49,28 +49,8 @@ const Favorites = () => {
             text: 'Remove', 
             onPress: () => {
               
-              
-                  Alert.prompt('Any comments?', 'write them below', [
-                    {
-                      text: 'No Comment',
-                      onPress: () => {
-                        newTransaction(item, 'no comment')
-                      },
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'Save', 
-                      onPress: (inputComment) => {
-                        console.log('comment', inputComment)
-                        setComment(inputComment)
-                        newTransaction(item, comment)
-                        
-                        }
-                    },
-                    ],
-                    'plain-text', // specify the input type
-                    comment // pre-fill the input with the current comment value
-                    )
+              setDialogVisible(true)
+                  
                     
                 }
             },
@@ -165,6 +145,19 @@ const Favorites = () => {
                             <Text style={styles.text2}>{item.display_address}</Text>
                           </TouchableOpacity>
                         </View>
+                        <DialogInput isDialogVisible={dialogVisible}
+                            title={"Write a comment"}
+                            message={"Why did you remove this restaurant from your favorites?"}
+                            hintInput ={"comment"}
+                            submitInput={ (inputText) => {
+                              console.log('input',inputText)
+                              newTransaction(item, inputText)
+                              setDialogVisible(false)
+                            } }
+                            closeDialog={ () => {
+                              newTransaction(item, 'no comment')
+                              setDialogVisible(false)}}>
+                        </DialogInput>
                         
                         <FontAwesome
                           style={{ textAlign: 'right' }}
@@ -174,6 +167,8 @@ const Favorites = () => {
                           onPress={() => handleClick(item)}
                         />
                     </View>
+
+                    
                   
                   }
               />
