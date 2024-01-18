@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
+import { FlatList, Image, StyleSheet, View, Text, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { signOut } from '../api/auth'
 import { DbContext } from '../DataContext';
 import { getTransactions } from '../api/transaction';
+import { FontAwesome } from '@expo/vector-icons';
 
 
 const Transactions = () => {
@@ -16,11 +16,10 @@ const Transactions = () => {
     useEffect(()=>{
       getTransactions()
           .then(res => {
-              console.log('this is user',user)
-              if (user) {
-                setTransactions(res.data.transactions)
-                console.log('transactions',transactions)
-              }
+              
+            setTransactions(res.data.transactions)
+            console.log('transactions',transactions)
+              
           })
           .catch(err => {
               console.log('error',err)
@@ -37,55 +36,100 @@ const Transactions = () => {
           style={{height: '100%'}}
         >   
         
-          <Text style={styles.text}>Transactions</Text>
-          {transactions.map((transaction, index) => {
-            return (
-              <View key={index} style={styles.container2}>
-                <Text style={styles.text}>{transaction.business_name}</Text>
-                <Text style={styles.text}>{transaction.amount}</Text>
-              </View>
-            )
-          })}
+          <Text style={styles.title}>Transactions</Text>
+          <FlatList
+                data={transactions}
+                renderItem={({item}) => 
+                  
+                    <View style={styles.item}>
+                      <TouchableOpacity 
+                        // onPress={() => navigation.navigate('DetailScreen',{ 
+                        // selectedBusiness: item,
+                        // user: user,
+                        // })}
+                        >
+                        <Image 
+                          style={styles.image} 
+                          source={{uri: `${item.image_url}`}}
+                        />
+                      </TouchableOpacity>
+                        <View>
+                          
+                          <Text style={styles.text1}>
+                            {
+                             Math.floor((Date.now() - Date.parse(item.createdAt)) / (1000 * 60 * 60 * 24))===0?
+                              'Today ':
+                              Math.floor((Date.now() - Date.parse(item.createdAt)) / (1000 * 60 * 60 * 24)) + 'd '
+                            }
+                            
+                            {item.favorite ? 
+                              <FontAwesome name="heart" size={15} color="red" />
+                              :
+                              <FontAwesome name="heart-o" size={15} color="black" />
+                            }
+                              
+                          </Text>
+                          <Text style={styles.text2}>
+                           {item.owner.email} {item.favorite ? 
+                              <Text>added <Text style={{fontWeight:'bold'}}>{item.business_name}</Text> to favorites</Text> 
+                              : 
+                              <Text>removed <Text style={{fontWeight:'bold'}}>{item.business_name}</Text> from favorites</Text>
+                            }
+                          </Text>
+                          
+                        </View>
+                      </View>
+                      }
+                      />
           
         </LinearGradient> 
       
   
-    );
-  };
+    )
+  }
 
   const styles = StyleSheet.create({
-
-    container: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 0,
-      
-    },
-    container2: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 15,
-    },
-    text: {
-      justifyContent: 'center',
+    title: {
       fontSize: 20,
-      color: 'white',
-      textAlign: 'center',
       fontWeight: 'bold',
-    },
-    button: {
-      width: '100%',
-      textAlign: 'center',
-      padding: 5,
-      fontSize: 22,
-      backgroundColor: 'black',
       color: 'white',
-      marginTop: 20,
+      textAlign: 'center',
+      margin: 10,
     },
-
-  });
+    text1: {
+      color: 'white',
+      flexWrap: 'wrap',
+      fontSize: 15,
+      padding: 3,
+      width: 200,
+    },
+    text2: {
+      color: 'white',
+      flexWrap: 'wrap',
+      fontSize: 12,
+      padding: 3,
+      width: 220,
+      borderBottomColor: 'rgba(0,0,0,0.5)',
+      borderBottomWidth: 1,
+    },
+    item: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      margin: 8,
+      paddingBottom: 15,
+      height: 80,
+      // backgroundColor: 'rgba(0,0,0,0.5)',
+      borderBottomColor: 'rgba(0,0,0,0.5)',
+      borderBottomWidth: 1,
+      borderRadius: 10,
+    },
+    image: {
+      width: 60,
+      height: 60,
+      borderRadius: 10,
+      margin: 7,
+    },
+  })
 
 
 
