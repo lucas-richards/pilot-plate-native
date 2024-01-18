@@ -10,20 +10,33 @@ const Transactions = () => {
     
     const {user, setUser, dbChange} = useContext(DbContext);
     const [transactions, setTransactions] = useState([])
+    const [page, setPage] = useState(1)
+    const [loading, setLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
+    const [count, setCount] = useState(0);
 
     useEffect(()=>{
-      getTransactions()
+      getTransactions(page)
           .then(res => {
-            setTransactions(res.data.transactions)
+            const newData = res.data.transactions
+            setTransactions(newData);
               
           })
           .catch(err => {
               console.log('error',err)
               
           })
-  },[dbChange])
+  },[dbChange, page])
 
   console.log('render transactions page')
+
+  const fetchMoreData = async () => {
+    setPage((prevPage) => prevPage + 1);
+    
+  };
+
+  
+
 
    
 
@@ -34,7 +47,14 @@ const Transactions = () => {
           style={{height: '100%'}}
         >   
         
-          <Text style={styles.title}>News</Text>
+          <Text style={styles.title}>News 
+          {
+            count > 0 ?
+            <Text style={{color: 'white', fontSize: 15, fontWeight: 'normal'}}> ({count})</Text>
+            :
+            null
+          }
+          </Text>
           {
             transactions.length === 0 ?
             // loading
@@ -44,6 +64,9 @@ const Transactions = () => {
           
           <FlatList
                 data={transactions}
+                keyExtractor={(item, index) => index.toString()}
+                onEndReached={fetchMoreData}
+                onEndReachedThreshold={0.1}
                 renderItem={({item}) => 
                   
                     <View style={styles.item}>
@@ -60,20 +83,28 @@ const Transactions = () => {
                       </TouchableOpacity>
                         <View>
                           
-                          <Text style={styles.text1}>
-                            {
-                             Math.floor((Date.now() - Date.parse(item.createdAt)) / (1000 * 60 * 60 * 24))===0?
-                              'Today ':
-                              Math.floor((Date.now() - Date.parse(item.createdAt)) / (1000 * 60 * 60 * 24)) + 'd '
+                        <Text style={styles.text1}>
+                          {(() => {
+                            const hoursAgo = (Date.now() - Date.parse(item.createdAt)) / (1000 * 60 * 60);
+                            const minutesAgo = (Date.now() - Date.parse(item.createdAt)) / (1000 * 60);
+
+                            if (Math.floor(hoursAgo / 24) === 0) {
+                              if (hoursAgo < 1) {
+                                return `${minutesAgo.toFixed(0)}m `;
+                              } else {
+                                return `${hoursAgo.toFixed(0)}h `;
+                              }
+                            } else {
+                              return `${Math.floor(hoursAgo / 24)}d `;
                             }
-                            
-                            {item.favorite ? 
-                              <FontAwesome name="heart" size={15} color="red" />
-                              :
-                              <FontAwesome name="heart-o" size={15} color="black" />
-                            }
-                              
-                          </Text>
+                          })()}
+                          
+                          {item.favorite ? 
+                            <FontAwesome name="heart" size={15} color="red" />
+                            :
+                            <FontAwesome name="heart-o" size={15} color="black" />
+                          }
+                        </Text>
                           <Text style={styles.text2}>
                            {item.owner.email} {item.favorite ? 
                               <Text>added <Text style={{fontWeight:'bold'}}>{item.business_name}</Text> to favorites</Text> 
@@ -89,6 +120,12 @@ const Transactions = () => {
                       </View>
                       }
                       />
+            }
+            {
+              loading ?
+              <ActivityIndicator style={styles.title} size="large" color="#ffff" />
+              :
+              null
             }
           
         </LinearGradient> 
