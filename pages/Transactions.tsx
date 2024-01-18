@@ -31,7 +31,7 @@ const Transactions = () => {
   console.log('render transactions page')
 
   const fetchMoreData = async () => {
-    setPage((prevPage) => prevPage + 1);
+    setPage((prevPage) => prevPage + 3);
     
   };
 
