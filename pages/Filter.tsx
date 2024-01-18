@@ -35,6 +35,8 @@ const Filter = ({location,
       setCategory(categoryValue)
       setRadius((radiusValue * 1609.344).toFixed(0)) //set to meter value
   };
+
+  console.log('render filter page')
     
 
 

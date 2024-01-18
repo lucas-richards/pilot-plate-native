@@ -51,6 +51,8 @@ const Detail = ({route, navigation:{goBack}}) => {
         }
     },[rating])
 
+    console.log('render detail page')
+
 
 
     return(

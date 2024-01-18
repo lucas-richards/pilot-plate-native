@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { FlatList, Image, StyleSheet, View, Text, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
+import { ActivityIndicator, FlatList, Image, StyleSheet, View, Text, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DbContext } from '../DataContext';
 import { getTransactions } from '../api/transaction';
@@ -8,24 +8,22 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const Transactions = () => {
     
-    const {user, setUser} = useContext(DbContext);
+    const {user, setUser, dbChange} = useContext(DbContext);
     const [transactions, setTransactions] = useState([])
-
-    console.log('user',user)
 
     useEffect(()=>{
       getTransactions()
           .then(res => {
-              
             setTransactions(res.data.transactions)
-            console.log('transactions',transactions)
               
           })
           .catch(err => {
               console.log('error',err)
               
           })
-  },[])
+  },[dbChange])
+
+  console.log('render transactions page')
 
    
 
@@ -36,7 +34,14 @@ const Transactions = () => {
           style={{height: '100%'}}
         >   
         
-          <Text style={styles.title}>Transactions</Text>
+          <Text style={styles.title}>News</Text>
+          {
+            transactions.length === 0 ?
+            // loading
+            <ActivityIndicator style={styles.title} size="large" color="#ffff" />
+            :
+            
+          
           <FlatList
                 data={transactions}
                 renderItem={({item}) => 
@@ -76,11 +81,15 @@ const Transactions = () => {
                               <Text>removed <Text style={{fontWeight:'bold'}}>{item.business_name}</Text> from favorites</Text>
                             }
                           </Text>
+                          <Text style={styles.comment}>
+                            "{item.comment}"
+                          </Text>
                           
                         </View>
                       </View>
                       }
                       />
+            }
           
         </LinearGradient> 
       
@@ -106,27 +115,35 @@ const Transactions = () => {
     text2: {
       color: 'white',
       flexWrap: 'wrap',
-      fontSize: 12,
+      fontSize: 10,
+      marginLeft: 5,
       padding: 3,
       width: 220,
-      borderBottomColor: 'rgba(0,0,0,0.5)',
-      borderBottomWidth: 1,
+    },
+    comment: {
+      color: 'white',
+      fontStyle: 'italic',
+      fontWeight: 'bold',
+      flexWrap: 'wrap',
+      fontSize: 12,
+      marginLeft: 5,
+      padding: 3,
+      width: 220,
     },
     item: {
       flexDirection: 'row',
       alignItems: 'center',
       margin: 8,
       paddingBottom: 15,
-      height: 80,
-      // backgroundColor: 'rgba(0,0,0,0.5)',
-      borderBottomColor: 'rgba(0,0,0,0.5)',
+      height: 100,
+      borderBottomColor: 'rgba(0,0,0,0.2)',
       borderBottomWidth: 1,
       borderRadius: 10,
     },
     image: {
-      width: 60,
-      height: 60,
-      borderRadius: 10,
+      width: 90,
+      height: 90,
+      borderRadius: 50,
       margin: 7,
     },
   })

@@ -13,7 +13,7 @@ const Profile = () => {
     const [signOptionToggle, setSignOptionToggle] = useState(false)
     const {user, setUser} = useContext(DbContext);
 
-    console.log('user',user)
+    console.log('render profile page')
 
     const handleSignOut = async () => {
         signOut(user)

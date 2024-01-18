@@ -13,8 +13,8 @@ import Carousel from 'react-native-reanimated-carousel';
 //stars
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import HeartFavorite from '../components/HeartFavorite';
-
-import { PixelRatio } from 'react-native';
+import { createTransaction } from '../api/transaction';
+import DialogInput from 'react-native-dialog-input';
 
 
 // home page
@@ -27,6 +27,7 @@ const Home = ({location, price, category, radius, }) => {
   const [loading, setLoading] = React.useState(false)
   const carouselRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  
   
   const [randomRestaurant, setRandomRestaurant] = React.useState({
     image_url: 'https://s3-media0.fl.yelpcdn.com/bphoto/9Y4sB4D2z7jzqj3XZPb9jA/o.jpg',
@@ -63,6 +64,8 @@ const Home = ({location, price, category, radius, }) => {
     resolve => setTimeout(resolve, ms)
   );
 
+  console.log('render home page')
+
  
 
   const handlePress = async () => {
@@ -76,31 +79,10 @@ const Home = ({location, price, category, radius, }) => {
       carouselRef.current.next()
     }
     
-    
-    // carouselRef.current.snapToItem(randomIndex) // Snap to the random image
-
-    // setTimeout(() => {
-    //   // Stop spinning after 3 seconds and update the current index
-    //   setCurrentIndex(randomIndex);
-    // }, 3000);
-
-    // setSpin(!spin)
-    // let delayTime = [50,50,50,50,50,50,50,50,150,150,150,200,200,200,200,300,300]
-    // for(let i = 0; i < 15; i++) {
-    //   await delay(delayTime[i])
-    //   setRandomRestaurant(data[i])
-    // }
-    // await delay(300)
-    // setRandomRestaurant(data[(Math.floor(Math.random() * data.length))])
-    // await delay(2000)
-    // setLoading(!loading)
-
   }
+
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
-  //responsive font size
-  const fontScale = PixelRatio.getFontScale();
-  const fontSize = 20 * fontScale;
 
     return (
       <>
@@ -165,9 +147,7 @@ const Home = ({location, price, category, radius, }) => {
                           <HeartFavorite
                             business={data[index]}
                             comingFromFav={false} 
-                            // user={user}
-                            // dbChange = {dbChange}
-                            // setDbChange={setDbChange}
+                            
                           />
                         </View>
   
@@ -193,6 +173,7 @@ const Home = ({location, price, category, radius, }) => {
             <Text style={styles.text}>SPIN</Text>
           </TouchableOpacity>
         </View>
+        
 
           
         </LinearGradient> 
@@ -203,10 +184,6 @@ const Home = ({location, price, category, radius, }) => {
   export default Home
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
-
-  const fontScale = PixelRatio.getFontScale();
-  const fontSize = 20 * fontScale;
-
 
   const styles = StyleSheet.create({
     viewMore: {

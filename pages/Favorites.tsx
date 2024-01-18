@@ -23,9 +23,7 @@ const Favorites = () => {
     useEffect(()=>{
         getAllBusinesses()
             .then(res => {
-                console.log('this is user',user)
                 if (user) {
-
                   const ownerBusinesses = res.data.businesses.filter(business => business.owner._id === user._id)
                   setBusinesses(ownerBusinesses)
                   
@@ -36,6 +34,8 @@ const Favorites = () => {
                 
             })
     },[user, dbChange, rating])
+
+    console.log('render favorites page')
 
     const handleClick = (item) => {
       
@@ -50,9 +50,7 @@ const Favorites = () => {
             onPress: () => {
               
               setDialogVisible(true)
-                  
-                    
-                }
+              }
             },
           ]);
         }
