@@ -111,6 +111,7 @@ const HeartFavorite = ({ business, comingFromFav }) => {
       .then(() => {
         console.log('Transaction created', transactionData);
         setComment('');
+        setDbChange(!dbChange);
       })
       .catch((err) => {
         console.log('Error creating transaction:', err);
