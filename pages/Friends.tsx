@@ -1,10 +1,20 @@
+import React, { useState, useContext } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { View, Text,} from 'react-native';
+import { View, Text, TextInput, StyleSheet, FlatList} from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
+import { DbContext } from '../DataContext';
+
 
 
 
 const Friends = ({navigation:{goBack}}) => {
+
+    const {user, setUser} = useContext(DbContext);
+    const [search, setSearch] = useState('')
+    
+    //call the backend to do a search based on what it typed out
+    // const filteredUsers = response based on {search}
+    
 
     return(
         <LinearGradient
@@ -21,8 +31,37 @@ const Friends = ({navigation:{goBack}}) => {
         Friends
         </Text>
 
+
+        <View style={{alignItems:'center'}}>
+            <TextInput
+                placeholder='Search'
+                onChangeText={setSearch}
+                style={styles.searchBar}
+            />
+            <Text>
+                {search}
+            </Text>
+            {/* <FlatList
+                data={filteredUsers}
+                renderItem={ ({ item }) => <Text>{item}</Text>}
+            /> */}
+        </View>
+
+
         </LinearGradient>
     )
 }
 
 export default Friends
+
+const styles = StyleSheet.create({
+    searchBar: {
+        width: '50%',
+        borderRadius: 8,
+        backgroundColor: 'white',
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+      },
+    })
