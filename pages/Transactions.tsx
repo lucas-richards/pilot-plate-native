@@ -18,7 +18,14 @@ const Transactions = () => {
     useEffect(()=>{
       getTransactions(page)
           .then(res => {
-            const newData = res.data.transactions
+            // filter data to only show friends transactions
+            let newData = res.data.transactions
+            if (user){
+              newData = res.data.transactions.filter((transaction) => {
+                return user.friends.includes(transaction.owner.email || user.email)
+              })
+            }
+          
             setTransactions(newData);
               
           })
@@ -26,7 +33,7 @@ const Transactions = () => {
               console.log('error',err)
               
           })
-  },[dbChange, page])
+  },[dbChange, page, user])
 
   console.log('render transactions page')
 
