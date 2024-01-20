@@ -20,11 +20,11 @@ const Transactions = () => {
           .then(res => {
             // filter data to only show friends transactions
             let newData = res.data.transactions
-            if (user){
-              newData = res.data.transactions.filter((transaction) => {
-                return user.friends.includes(transaction.owner.email || user.email)
-              })
-            }
+            // if (user){
+            //   newData = res.data.transactions.filter((transaction) => {
+            //     return user.friends.includes(transaction.owner.email || user.email)
+            //   })
+            // }
           
             setTransactions(newData);
               
