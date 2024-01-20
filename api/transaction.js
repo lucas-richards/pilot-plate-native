@@ -5,7 +5,7 @@ import axios from 'axios'
 
 // READ -> Index
 export const getTransactions = (page) => {
-    return axios(`${apiUrl}/transactions/?page=${page}`)
+    return axios(`${apiUrl}/transactions?page=${page}`)
 }
 
 // READ -> Show
