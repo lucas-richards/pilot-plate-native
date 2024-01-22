@@ -50,6 +50,8 @@ const HeartFavorite = ({ business, comingFromFav }) => {
       .catch((err) => {
         console.log('Error removing business._id =>', err, myBusiness._id);
       });
+      //toggle the comment alert
+      setDialogVisible(true);
   };
 
   const addBusinessToFavorites = () => {
@@ -75,6 +77,7 @@ const HeartFavorite = ({ business, comingFromFav }) => {
       .catch((err) => {
         console.log('Error adding business:', err);
       });
+      //toggle the comment alert
     setDialogVisible(true);
   };
 
@@ -86,7 +89,7 @@ const HeartFavorite = ({ business, comingFromFav }) => {
         { text: 'Sign in', onPress: () => navigation.navigate('ProfileTab') },
       ]);
     } else if (isFavorite) {
-      Alert.alert(`Remove ${business.name} ${business._id || myBusiness._id}`, 'Remove this restaurant from favorites?', [
+      Alert.alert(`Remove ${business.name}`, 'Remove this restaurant from favorites?', [
         { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
         { text: 'Remove', onPress: removeBusinessFromFavorites },
       ]);
@@ -148,6 +151,7 @@ const HeartFavorite = ({ business, comingFromFav }) => {
           "Why did you remove this restaurant from your favorites?" 
         }
         hintInput={"comment"}
+        cancelText={"No comment"}
         submitInput={(inputText) => {
           console.log('input', inputText);
           newTransaction(business, isFavorite, inputText);

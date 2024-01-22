@@ -10,6 +10,7 @@ import Favorites from './pages/Favorites';
 import Profile from './pages/Profile';
 import Detail from './pages/business/Detail';
 import Transactions from './pages/Transactions';
+import Friends from './pages/Friends';
 import { DataProvider } from './DataContext';
 
 
@@ -90,6 +91,21 @@ const Stack = createNativeStackNavigator()
         </Stack.Navigator>
       )
     }
+
+  const ProfileNavigation = () => {
+    return (
+      <Stack.Navigator initialRouteName='ProfileScreen' screenOptions={{headerShown: false}}>
+        <Stack.Screen 
+          name="ProfileScreen"
+        component={Profile}
+        />
+        <Stack.Screen
+          name="FriendsScreen"
+          component={Friends}
+        />
+      </Stack.Navigator>
+    )
+  }
     
   return (
     <>
@@ -142,10 +158,8 @@ const Stack = createNativeStackNavigator()
             }}/>
             <Tab.Screen 
               name="ProfileTab" 
-              children={() => <Profile 
-                                // setUser={setUser} 
-                                // user={user} 
-                                />} //allows props to be passed
+              component={ProfileNavigation}
+              //children={() => <Profile/>}
               options={{ 
                 tabBarLabel: "",
                 title: <Header />,

@@ -18,7 +18,15 @@ const Transactions = () => {
     useEffect(()=>{
       getTransactions(page)
           .then(res => {
-            const newData = res.data.transactions
+            // filter data to only show friends transactions
+            let newData = res.data.transactions
+            if (user){
+              newData = res.data.transactions.filter((transaction) => {
+                //returns friends transactions and signed in user transactions
+                return user.friends.includes(transaction.owner.email) || transaction.owner.email === user.email
+              })
+            }
+          
             setTransactions(newData);
               
           })
@@ -26,7 +34,7 @@ const Transactions = () => {
               console.log('error',err)
               
           })
-  },[dbChange, page])
+  },[dbChange, page, user])
 
   console.log('render transactions page')
 
@@ -57,8 +65,14 @@ const Transactions = () => {
           </Text>
           {
             transactions.length === 0 ?
-            // loading
-            <ActivityIndicator style={styles.title} size="large" color="#ffff" />
+              //nested conditional
+              user ?
+              //user signed in show text of no post
+              <Text style={styles.noPost}>No Post</Text>
+              :
+              //no user signed in
+              // loading
+              <ActivityIndicator style={styles.title} size="large" color="#ffff" />
             :
             
           
@@ -113,7 +127,8 @@ const Transactions = () => {
                             }
                           </Text>
                           <Text style={styles.comment}>
-                            "{item.comment}"
+                              "{item.comment}"
+                           
                           </Text>
                           
                         </View>
@@ -183,6 +198,11 @@ const Transactions = () => {
       borderRadius: 50,
       margin: 7,
     },
+    noPost: {
+      textAlign: 'center',
+      fontSize: 15,
+      marginTop: 20
+    }
   })
 
 

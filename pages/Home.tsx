@@ -166,7 +166,7 @@ const Home = ({location, price, category, radius, }) => {
             />
         </View>
       
-        <View style={{ alignContent: 'center' , alignItems: 'center', height: height * .14}}>
+        <View style={{ alignContent: 'center' , alignItems: 'center', justifyContent:'center', height: height * .14}}>
           <TouchableOpacity
               onPress={handlePress}
               style={ styles.button }>
@@ -194,15 +194,22 @@ const Home = ({location, price, category, radius, }) => {
     },
     text: {
       textAlign: 'center',
-      
-      padding: 10,
+      color: 'black',
+      fontWeight: 'bold',
+      padding: 0,
       width: 100,
+      fontSize: height * .05
     },
     button: {
-      //marginTop: 100,
-      borderRadius: 20,
-      backgroundColor: 'rgba(100,100,100,0.7)',
-      width: 100,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 15,
+      backgroundColor: 'white',
+      width: 210,
+      height: 100,
+      borderColor: 'red',
+      borderWidth: 5,
     },
     card: {
       backgroundColor:'white',

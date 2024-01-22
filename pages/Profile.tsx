@@ -1,20 +1,36 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, KeyboardAvoidingView, Alert} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import SignInForm from '../components/SignInForm';
 import SignUpForm from "../components/SignUpForm";
 import { signOut } from '../api/auth'
 import { DbContext } from '../DataContext';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Profile = () => {
     
-   
+    const navigation = useNavigation(); // needed for navigation
     const [signOptionToggle, setSignOptionToggle] = useState(false)
     const {user, setUser} = useContext(DbContext);
 
-    console.log('render profile page')
+    //console.log('render profile page')
 
+
+  const confirmSignOut = () => {
+    Alert.alert("Are you sure you want to Sign Out", "", [
+      {
+        text: 'No',
+        onPress: () => console.log('Cancel sign out'),
+        style: 'cancel'
+      },
+      {
+        text: "Sign Out",
+        onPress: () => handleSignOut()
+      },
+    ])
+  }
+  
     const handleSignOut = async () => {
         signOut(user)
         .then(() => {
@@ -38,13 +54,23 @@ const Profile = () => {
                       <Text style={styles.text}>Welcome Back!</Text>
                       <Text style={styles.text}>{user.email}</Text>
                     
-                      <TouchableOpacity
-                        onPress={handleSignOut}
-                      >
-                      <Text style={styles.button}>
-                        SIGN OUT
-                      </Text>
-                    </TouchableOpacity>
+                      <View style={{alignItems:'center'}}>
+                        <Text onPress={() => navigation.navigate('FriendsScreen',{ })} style={{textAlign:'center',fontSize:20, margin:10, }}>
+                          Friends Page
+                        </Text>
+                      </View>
+
+                      <View>
+                        <View
+                          //onPress={confirmSignOut}
+                          style={{alignItems:'center'}}
+                        >
+                          <Text onPress={confirmSignOut} style={styles.button}>
+                            SIGN OUT
+                          </Text>
+                        </View>
+                      </View>
+                      
                     </View>
                 ) : (
 
@@ -98,13 +124,13 @@ const Profile = () => {
       fontWeight: 'bold',
     },
     button: {
-      width: '100%',
+      width: '25%',
       textAlign: 'center',
-      padding: 5,
-      fontSize: 22,
+      padding: 3,
+      fontSize: 20,
       backgroundColor: 'black',
       color: 'white',
-      marginTop: 20,
+      //marginTop: 20,
     },
 
   });

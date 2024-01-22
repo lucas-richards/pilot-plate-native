@@ -14,8 +14,8 @@ import DialogInput from 'react-native-dialog-input';
 
 const Favorites = () => {
   const [businesses,setBusinesses] = useState([])
-  const [comment, setComment] = useState('')
   const [dialogVisible, setDialogVisible] = useState(false)
+  const [busToBeRemoved, SetBusToBeRemoved] = useState(businesses[0])
   
   const navigation = useNavigation(); // needed for navigation
   const { dbChange, setDbChange, user, rating, setRating } = useContext(DbContext);
@@ -39,6 +39,7 @@ const Favorites = () => {
 
     const handleClick = (item) => {
       
+
         Alert.alert('Remove restaurant', 'Remove this restaurant from favorites?', [
           {
             text: 'Cancel',
@@ -48,47 +49,43 @@ const Favorites = () => {
           {
             text: 'Remove', 
             onPress: () => {
-              
+              removeBusiness(user, item._id)
+                .then((res) => {
+                  console.log('Business removed from favorites => business._id=',item._id);
+                  //the business item info needed
+                  SetBusToBeRemoved(item)
+                })
+                .catch((err) => {
+                  console.log('Error removing business._id =>', err, item._id);
+                });
+              //toggle alert - comments for transactions
               setDialogVisible(true)
               }
             },
           ]);
-        }
+    }
       
-    const newTransaction = (item, comment) => {
-      console.log('Remove Pressed', item._id)
-        removeBusiness(user, item._id)
-          .then((res) => {
-            console.log('Business removed from favorites => business._id=',item._id);
-            setDbChange(!dbChange)
-          })
-          .then(() => {
+    const newTransaction = (comment) => {
+      console.log('Remove Pressed', busToBeRemoved._id)
+
             createTransaction(user, {
-              business_name: item.name,
-              yelp_id: item.yelp_id,
-              image_url: item.image_url,
+              business_name: busToBeRemoved.name,
+              yelp_id: busToBeRemoved.yelp_id,
+              image_url: busToBeRemoved.image_url,
               favorite: false,
               owner: user._id,
-              display_address:item.display_address,
+              display_address:busToBeRemoved.display_address,
               comment: comment
             })
               .then((res) => {
                 console.log('Transaction created', res.config.data);
-                setComment('')
+                //cause refresh 
+                setDbChange(!dbChange)
               })
               .catch((err) => {
                 console.log('Error creating transaction:', err);
-                setComment('')
               });
-          })
-          .then((res) => {
-            console.log('Business removed from favorites => business._id=',item._id);
-            setDbChange(!dbChange)
-            
-          })
-          .catch((err) => {
-            console.log('Error removing business._id =>', err, item._id);
-          });
+
       
       }
 
@@ -143,20 +140,7 @@ const Favorites = () => {
                             <Text style={styles.text2}>{item.display_address}</Text>
                           </TouchableOpacity>
                         </View>
-                        <DialogInput isDialogVisible={dialogVisible}
-                            title={"Write a comment"}
-                            message={"Why did you remove this restaurant from your favorites?"}
-                            hintInput ={"comment"}
-                            submitInput={ (inputText) => {
-                              console.log('input',inputText)
-                              newTransaction(item, inputText)
-                              setDialogVisible(false)
-                            } }
-                            closeDialog={ () => {
-                              newTransaction(item, 'no comment')
-                              setDialogVisible(false)}}>
-                        </DialogInput>
-                        
+
                         <FontAwesome
                           style={{ textAlign: 'right' }}
                           name="heart"
@@ -164,6 +148,23 @@ const Favorites = () => {
                           color="red"
                           onPress={() => handleClick(item)}
                         />
+
+                        <DialogInput isDialogVisible={dialogVisible}
+                            title={"Write a comment"}
+                            message={"Why did you remove this restaurant from your favorites?"}
+                            hintInput ={"comment"}
+                            cancelText={"No comment"}
+                            submitInput={ (inputText) => {
+                              console.log('input',inputText)
+                              console.log("from Dialog",item)
+                              newTransaction(inputText)
+                              setDialogVisible(false)
+                            } }
+                            closeDialog={ () => {
+                              newTransaction('no comment')
+                              setDialogVisible(false)
+                              }}>
+                        </DialogInput>
                     </View>
 
                     
