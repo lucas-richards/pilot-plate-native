@@ -54,21 +54,21 @@ const Profile = () => {
                       <Text style={styles.text}>Welcome Back!</Text>
                       <Text style={styles.text}>{user.email}</Text>
                     
-                      <TouchableOpacity onPress={() => navigation.navigate('FriendsScreen',{ })}>
-                        <Text style={{textAlign:'center',fontSize:20, margin:10}}>
+                      <View style={{alignItems:'center'}}>
+                        <Text onPress={() => navigation.navigate('FriendsScreen',{ })} style={{textAlign:'center',fontSize:20, margin:10, }}>
                           Friends Page
                         </Text>
-                      </TouchableOpacity>
+                      </View>
 
                       <View>
-                        <TouchableOpacity
-                          onPress={confirmSignOut}
+                        <View
+                          //onPress={confirmSignOut}
                           style={{alignItems:'center'}}
                         >
-                          <Text style={styles.button}>
+                          <Text onPress={confirmSignOut} style={styles.button}>
                             SIGN OUT
                           </Text>
-                        </TouchableOpacity>
+                        </View>
                       </View>
                       
                     </View>

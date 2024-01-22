@@ -60,7 +60,7 @@ const Favorites = () => {
         removeBusiness(user, item._id)
           .then((res) => {
             console.log('Business removed from favorites => business._id=',item._id);
-            setDbChange(!dbChange)
+            setDbChange(!dbChange) 
           })
           .then(() => {
             createTransaction(user, {
@@ -81,11 +81,11 @@ const Favorites = () => {
                 setComment('')
               });
           })
-          .then((res) => {
-            console.log('Business removed from favorites => business._id=',item._id);
-            setDbChange(!dbChange)
+          // .then((res) => {
+          //   console.log('Business removed from favorites => business._id=',item._id);
+          //   setDbChange(!dbChange)
             
-          })
+          // })
           .catch((err) => {
             console.log('Error removing business._id =>', err, item._id);
           });

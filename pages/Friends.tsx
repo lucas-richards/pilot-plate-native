@@ -10,12 +10,15 @@ import { FontAwesome } from '@expo/vector-icons';
 
 
 const Friends = ({navigation:{goBack}}) => {
-
+    //current signed in user
     const {user, setUser} = useContext(DbContext);
+    //array of found users from search
     const [users, setUsers] = useState([])
+    //email search bar string
     const [partialEmail, setPartialEmail] = useState('');
     const [edit, setEdit] = useState(false);
 
+    console.log(user)
 
     const handleInputChange = async (input) => {
 
@@ -50,9 +53,12 @@ const Friends = ({navigation:{goBack}}) => {
                     .then(res => {
                         console.log('res', res.data.user)
                         console.log('user', user)
+                        //updates the user data with new friend
                         const newData2 = res.data.user
                         setUser(newData2)
+                        //resets the email search
                         setPartialEmail('')
+                        //reset the array of emails
                         setUsers([])
                     })
                     .catch(err => {
@@ -81,6 +87,7 @@ const Friends = ({navigation:{goBack}}) => {
                     .then(res => {
                         console.log('res', res.data.user)
                         console.log('user', user)
+                        //updates the user data with new friend
                         const newData2 = res.data.user
                         setUser(newData2)
                         setPartialEmail('')
