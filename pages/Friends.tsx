@@ -19,6 +19,7 @@ const Friends = ({navigation:{goBack}}) => {
     const [edit, setEdit] = useState(false);
 
     console.log(user)
+    console.log(users)
 
     const handleInputChange = async (input) => {
 
