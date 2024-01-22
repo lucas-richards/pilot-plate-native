@@ -206,7 +206,7 @@ const Home = ({location, price, category, radius, }) => {
       justifyContent: 'center',
       borderRadius: 15,
       backgroundColor: 'white',
-      width: 200,
+      width: 210,
       height: 100,
       borderColor: 'red',
       borderWidth: 5,
