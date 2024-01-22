@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { DbContext } from '../DataContext';
 import { createTransaction } from '../api/transaction';
 import DialogInput from 'react-native-dialog-input';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 
 
@@ -20,20 +21,28 @@ const Favorites = () => {
   const navigation = useNavigation(); // needed for navigation
   const { dbChange, setDbChange, user, rating, setRating } = useContext(DbContext);
 
+  const [drop, setDrop] = useState('')
+
+  
     useEffect(()=>{
         getAllBusinesses()
             .then(res => {
+                if(user && drop.length === 0) {
+                  setDrop(user.email)
+                }
+
                 if (user) {
-                  const ownerBusinesses = res.data.businesses.filter(business => business.owner._id === user._id)
-                  setBusinesses(ownerBusinesses)
                   
+                  const ownerBusinesses = res.data.businesses.filter(business => business.owner.email === drop)
+                  setBusinesses(ownerBusinesses)
                 }
             })
             .catch(err => {
                 console.log('error',err)
                 
             })
-    },[user, dbChange, rating])
+
+    },[user, dbChange, rating, drop])
 
     console.log('render favorites page')
 
@@ -110,6 +119,25 @@ const Favorites = () => {
           colors={['rgb(239, 120, 36)', 'rgb(236, 80, 31)']}
           style={{height: '100%'}}
         >   
+
+        {user ?
+          <DropDownPicker
+            items={[{label:user.email, value: user.email}, ...user.friends.map((friend) =>({label:friend, value: friend}))]}
+            defaultValue={`${user.email}`}
+            placeholder={`${user.email}`}
+            containerStyle={{height: 40}}
+            style={{backgroundColor: '#fafafa'}}
+            itemStyle={{
+                justifyContent: 'flex-start'
+            }}
+            dropDownStyle={{backgroundColor: '#fafafa'}}
+            onChangeItem={item => setDrop(item.value)}
+          />
+          :
+          null
+        }
+
+
           <Text style={styles.title}>Favorites!</Text>
               <FlatList
                 data={businesses}
@@ -119,6 +147,7 @@ const Favorites = () => {
                       <TouchableOpacity onPress={() => navigation.navigate('DetailScreen',{ 
                         selectedBusiness: item,
                         user: user,
+                        drop: drop,
                         // dbChange: dbChange,
                         // setDbChange: setDbChange
                         })}>
@@ -141,14 +170,17 @@ const Favorites = () => {
                           </TouchableOpacity>
                         </View>
 
-                        <FontAwesome
-                          style={{ textAlign: 'right' }}
-                          name="heart"
-                          size={24}
-                          color="red"
-                          onPress={() => handleClick(item)}
-                        />
-
+                        { drop === user.email ?
+                          <FontAwesome
+                            style={{ textAlign: 'right' }}
+                            name="heart"
+                            size={24}
+                            color="red"
+                            onPress={() => handleClick(item)}
+                          />
+                          :
+                          null
+                        }
                         <DialogInput isDialogVisible={dialogVisible}
                             title={"Write a comment"}
                             message={"Why did you remove this restaurant from your favorites?"}
