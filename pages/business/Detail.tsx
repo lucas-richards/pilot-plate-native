@@ -12,6 +12,8 @@ import { updateBusiness } from '../../api/business';
 
 const Detail = ({route, navigation:{goBack}}) => {
     const business = route.params.selectedBusiness
+    const drop = route.params.drop 
+    console.log("drop",drop)
     const { user, rating, setRating } = useContext(DbContext);
     const [comingFromFav, setComingFromFav] = useState(false)
     
@@ -62,14 +64,37 @@ const Detail = ({route, navigation:{goBack}}) => {
         > 
             <View style={styles.container}>
             
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
+                {
+                    drop === user.email?
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
+                        <AntDesign onPress={() => goBack()} name="left" size={24} color="black" />
+                        <Text style={styles.name}>{business.name}</Text>
+                        <HeartFavorite
+                            business={business} 
+                            comingFromFav={comingFromFav}
+                        />  
+                        </View>
+                    : 
+                    <>
+                        <AntDesign style={{position:'absolute', left:0}}onPress={() => goBack()} name="left" size={24} color="black" />
+                        <Text style={styles.name}>{business.name}</Text>
+                    </>
+                }
+
+
+
+                {/* <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
                     <AntDesign onPress={() => goBack()} name="left" size={24} color="black" />
                     <Text style={styles.name}>{business.name}</Text>
-                    <HeartFavorite
-                        business={business} 
-                        comingFromFav={comingFromFav}
-                    />
-                </View>
+                    { drop === user.email ?
+                        <HeartFavorite
+                            business={business} 
+                            comingFromFav={comingFromFav}
+                        />
+                        :
+                        null
+                    }
+                </View> */}
 
                 <View style={styles.card}>
               
