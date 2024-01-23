@@ -35,7 +35,7 @@ const HeartFavorite = ({ business, comingFromFav }) => {
       });
   }, [business.id, user, isFavorite, dbChange]);
 
-  console.log('render HeartFavorite')
+  //console.log('render HeartFavorite')
 
 
   const removeBusinessFromFavorites = () => {

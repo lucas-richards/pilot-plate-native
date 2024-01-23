@@ -13,6 +13,7 @@ import Transactions from './pages/Transactions';
 import Friends from './pages/Friends';
 import { DataProvider } from './DataContext';
 import BrandingPage from './pages/BrandingPage';
+import { getbusinesses } from './api/yelp_api';
 
 
 const Tab = createBottomTabNavigator();
@@ -28,13 +29,39 @@ const Stack = createNativeStackNavigator()
     const [radius, setRadius] = React.useState(8000)
     const [category, setCategory] = React.useState('food')
     const [loading, setLoading] = React.useState(true)
+    const [isDataFetched, setIsDataFetched] = React.useState(false)
+
+
+    const [data, setData] = React.useState([])
+
+    const [randomRestaurant, setRandomRestaurant] = React.useState({
+      image_url: 'https://s3-media0.fl.yelpcdn.com/bphoto/9Y4sB4D2z7jzqj3XZPb9jA/o.jpg',
+      name: 'Loading...',
+      location: {
+        display_address: ['Loading...']
+      },
+      display_phone: 'Loading...',
+      rating: 0,
+      review_count: 0,
+      distance: 0,
+      price:"$",
+      // categories: []
     
-    React.useEffect(() => { 
-      setTimeout(() => {
-        setLoading(false)
-      }, 2000)
-    }
-    ,[])
+    })
+    //fetch business and save it to data and the selected random restaurant
+    React.useEffect(() => {
+      getbusinesses(location, price, category, radius)
+        .then(res => {
+          setData(res.data.businesses)
+          return res.data.businesses
+        })
+        .then(data => {
+          setRandomRestaurant(data[(Math.floor(Math.random() * data.length))])
+          setLoading(false)
+        })
+        .catch(err => { console.log('err', err) })
+   
+    },[ location, price, category, radius])
 
     const HomeNavigation = () => {
       return (
@@ -46,6 +73,8 @@ const Stack = createNativeStackNavigator()
               price={price} 
               category={category} 
               radius={radius} 
+              randomRestaurant={randomRestaurant}
+              data={data}
               />} 
           />
           <Stack.Screen 
@@ -101,7 +130,7 @@ const Stack = createNativeStackNavigator()
               children={() => <Transactions />}
               options={{ 
                 tabBarLabel: "",
-                title: <Header />,
+                title: <Header fontSize={20} />,
                 tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account-group' color={color} size={35} />) 
               }}
               />
@@ -119,7 +148,7 @@ const Stack = createNativeStackNavigator()
               />}        
               options={{ 
                 tabBarLabel: "",
-                title: <Header />,
+                title: <Header fontSize={20} />,
                 tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='filter-variant' color={color} size={35} />) 
               }}/>
           <Tab.Screen 
@@ -127,7 +156,7 @@ const Stack = createNativeStackNavigator()
             component={HomeNavigation}
             options={{ 
               tabBarLabel: "",
-              title: <Header />,
+              title: <Header fontSize={20} />,
               tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='home' color={color} size={35} />) 
             }}
             />
@@ -137,7 +166,7 @@ const Stack = createNativeStackNavigator()
             component={FavoritesNavigation}
             options={{ 
               tabBarLabel: "",
-              title: <Header />,
+              title: <Header fontSize={20} />,
               tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='heart' color={color} size={35} />) 
             }}/>
             <Tab.Screen 
@@ -146,7 +175,7 @@ const Stack = createNativeStackNavigator()
               //children={() => <Profile/>}
               options={{ 
                 tabBarLabel: "",
-                title: <Header />,
+                title: <Header fontSize={20} />,
                 tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account' color={color} size={35} />) 
               }}/>
             
