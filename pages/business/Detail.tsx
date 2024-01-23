@@ -125,7 +125,7 @@ const Detail = ({route, navigation:{goBack}}) => {
                         }
                         <Text style={{color:'gray'}}>
                             {/* if business coming from yelp show all reviews, if not user review */}
-                            ({comingFromFav? user.email:business.review_count})
+                            ({comingFromFav? drop === undefined? user.email:'friend':business.review_count})
                         </Text>
                         
                     </View>

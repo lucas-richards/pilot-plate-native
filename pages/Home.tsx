@@ -18,13 +18,12 @@ import DialogInput from 'react-native-dialog-input';
 
 
 // home page
-const Home = ({location, price, category, radius, }) => {
+const Home = ({location, price, category, radius, setLoading }) => {
 
   const navigation = useNavigation(); // needed for navigation
 
   const [data, setData] = React.useState([])
   const [spin, setSpin] = React.useState(false)
-  const [loading, setLoading] = React.useState(false)
   const carouselRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   
@@ -50,11 +49,11 @@ const Home = ({location, price, category, radius, }) => {
     getbusinesses(location, price, category, radius)
       .then(res => {
         setData(res.data.businesses)
-        // setLoading(false)
         return res.data.businesses
       })
       .then(data => {
         setRandomRestaurant(data[(Math.floor(Math.random() * data.length))])
+
       })
       .catch(err => { console.log('err', err) })
  
