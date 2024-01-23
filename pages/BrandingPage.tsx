@@ -4,11 +4,13 @@ import Header from '../components/Header';
 
 const BrandingPage = () => {
   return (
-    <View style={styles.container}>
-      <Image source={require('../assets/favicon.png')} style={styles.logo} />
-      <Header />
-      {/* Add any additional information here */}
-    </View>
+  
+      <View style={styles.container}>
+        {/* <Image source={require('../assets/favicon.png')} style={styles.logo} /> */}
+        <Header fontSize={36}/>
+        {/* Add any additional information here */}
+      </View>
+ 
   );
 };
 
@@ -17,17 +19,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
+
   },
   logo: {
     width: 100,
     height: 100,
     resizeMode: 'contain',
+    
+    
   },
-  brandName: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginTop: 16,
-  },
+  
 });
 
 export default BrandingPage;
