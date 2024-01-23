@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
 
 
-const Header = () => (
+const Header = ({fontSize}) => (
 
     
-      <Text style={styles.text}>
+      <Text style={{fontSize:fontSize}}>
         Pl
         <Text style={styles.letter}>
           a
@@ -22,9 +22,7 @@ const Header = () => (
 
 const styles = StyleSheet.create({
 
-    text: {
-      fontSize: 20,
-    },
+
     letter: {
       color: 'red',
     }

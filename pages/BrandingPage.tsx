@@ -5,8 +5,7 @@ import Header from '../components/Header';
 const BrandingPage = () => {
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/favicon.png')} style={styles.logo} />
-      <Header />
+      <Header fontSize={34}/>
       {/* Add any additional information here */}
     </View>
   );
