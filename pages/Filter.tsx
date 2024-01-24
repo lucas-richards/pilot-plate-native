@@ -6,9 +6,6 @@ import {
   TextInput, 
   TouchableOpacity,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Button,
   Platform,
  } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -28,16 +25,15 @@ const Filter = ({location,
     const [priceValue, setPriceValue] = useState(price)
     const [categoryValue, setCategoryValue] = useState(category)
     const [radiusValue, setRadiusValue] = useState(Math.floor(radius * 0.000621371)) //converted to miles         
-    const [message, setMessage] = useState(true)
+    const [message, setMessage] = useState(false)
 
-    const handleSignOut = async () => {
+    const handleFilter = async () => {
+      setMessage(true)
       setLocation(locationValue)
       setPrice(priceValue)
       setCategory(categoryValue)
       setRadius((radiusValue * 1609.344).toFixed(0)) //set to meter value
 
-      // show message for two seconds
-      setMessage(true)
       setTimeout(() => {
         setMessage(false)
       }, 2000)
@@ -45,8 +41,7 @@ const Filter = ({location,
   };
 
   console.log('render filter page')
-    
-
+  
 
 
 
@@ -58,7 +53,11 @@ const Filter = ({location,
         >   
         {
           message ?
-          <Text style={styles.message}>Saved!</Text>
+          
+            <View style={styles.message}>
+              <Text style={{textAlign:'center'}}>Saved!</Text>
+            </View>
+     
           :
           null
         }
@@ -107,7 +106,7 @@ const Filter = ({location,
               onChange={ (values) => setRadiusValue((values)) }
             />
 
-          <TouchableOpacity onPress={handleSignOut} >
+          <TouchableOpacity onPress={handleFilter} >
             <Text style={styles.button}>
               Save
             </Text>
@@ -172,15 +171,17 @@ const Filter = ({location,
       margin:10
     },
     message: {
-      marginBottom: 20,
       backgroundColor: 'white',
       textAlign: 'center',
       padding: 5,
       marginTop: 25,
-      position: 'absolute',
-      left: '25%',
-      width: '75%',
-
+      fontSize: 20,
+      color: 'black',
+      borderRadius: 5,
+      opacity: 0.8,
+      position:'absolute',
+      width: '100%',
+      
     },
   });
 

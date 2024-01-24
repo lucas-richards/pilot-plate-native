@@ -37,6 +37,7 @@ const Friends = ({navigation:{goBack}}) => {
                 console.log('error',err)
                 
             })
+
     };
 
     const handleAddFriend = (email) => {
@@ -64,6 +65,7 @@ const Friends = ({navigation:{goBack}}) => {
                     })
                     .catch(err => {
                         console.log('error',err)
+                    
                 
             })
               }}

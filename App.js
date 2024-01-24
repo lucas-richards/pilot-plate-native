@@ -16,7 +16,6 @@ import { DataProvider } from './DataContext';
 import BrandingPage from './pages/BrandingPage';
 import { getbusinesses } from './api/yelp_api';
 
-import { getbusinesses } from './api/yelp_api';
 
 
 const Tab = createBottomTabNavigator();
