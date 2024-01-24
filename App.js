@@ -14,6 +14,7 @@ import Transactions from './pages/Transactions';
 import Friends from './pages/Friends';
 import { DataProvider } from './DataContext';
 import BrandingPage from './pages/BrandingPage';
+import { getbusinesses } from './api/yelp_api';
 
 import { getbusinesses } from './api/yelp_api';
 
@@ -31,25 +32,39 @@ const Stack = createNativeStackNavigator()
     const [radius, setRadius] = React.useState(8000)
     const [category, setCategory] = React.useState('food')
     const [loading, setLoading] = React.useState(true)
-    const [data, setData] = React.useState([])   
+    const [isDataFetched, setIsDataFetched] = React.useState(false)
 
+
+    const [data, setData] = React.useState([])
+
+    const [randomRestaurant, setRandomRestaurant] = React.useState({
+      image_url: 'https://s3-media0.fl.yelpcdn.com/bphoto/9Y4sB4D2z7jzqj3XZPb9jA/o.jpg',
+      name: 'Loading...',
+      location: {
+        display_address: ['Loading...']
+      },
+      display_phone: 'Loading...',
+      rating: 0,
+      review_count: 0,
+      distance: 0,
+      price:"$",
+      // categories: []
+    
+    })
+    //fetch business and save it to data and the selected random restaurant
     React.useEffect(() => {
       getbusinesses(location, price, category, radius)
         .then(res => {
           setData(res.data.businesses)
           return res.data.businesses
         })
+        .then(data => {
+          setRandomRestaurant(data[(Math.floor(Math.random() * data.length))])
+          setLoading(false)
+        })
         .catch(err => { console.log('err', err) })
-      
    
     },[ location, price, category, radius])
-    
-    React.useEffect(() => { 
-      setTimeout(() => {
-        setLoading(false)
-      }, 2000)
-    }
-    ,[])
 
     
 
@@ -59,7 +74,12 @@ const Stack = createNativeStackNavigator()
           <Stack.Screen 
             name="HomeScreen" 
             children={() => <Home 
-              data = {data}
+              location={location} 
+              price={price} 
+              category={category} 
+              radius={radius} 
+              randomRestaurant={randomRestaurant}
+              data={data}
               />} 
           />
           <Stack.Screen 

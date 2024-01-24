@@ -22,7 +22,11 @@ const Header = ( {fontSize}) => (
 
 const styles = StyleSheet.create({
 
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> cad0f48d8d1c11e2c99651999b111a552fdd6b8e
     letter: {
       color: 'red',
     }
