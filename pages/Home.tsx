@@ -2,7 +2,7 @@ import React, { useContext, useState, useRef } from 'react';
 import { Dimensions,StyleSheet, View, ScrollView, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {Card, Button, Icon} from 'react-native-elements';
-import { getbusinesses } from '../api/yelp_api';
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -18,47 +18,48 @@ import DialogInput from 'react-native-dialog-input';
 
 
 // home page
-const Home = ({location, price, category, radius, }) => {
+const Home = ({location, price, category, radius, setLoading, randomRestaurant, data  }) => {
 
   const navigation = useNavigation(); // needed for navigation
 
-  const [data, setData] = React.useState([])
+  //const [data, setData] = React.useState([])
   const [spin, setSpin] = React.useState(false)
-  const [loading, setLoading] = React.useState(false)
   const carouselRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  
-  
-  const [randomRestaurant, setRandomRestaurant] = React.useState({
-    image_url: 'https://s3-media0.fl.yelpcdn.com/bphoto/9Y4sB4D2z7jzqj3XZPb9jA/o.jpg',
-    name: 'Loading...',
-    location: {
-      display_address: ['Loading...']
-    },
-    display_phone: 'Loading...',
-    rating: 0,
-    review_count: 0,
-    distance: 0,
-    price:"$",
-    // categories: []
-  
-  })
 
-  const Stack = createNativeStackNavigator()
+  
+  
+  
+  // const [randomRestaurant, setRandomRestaurant] = React.useState({
+  //   image_url: 'https://s3-media0.fl.yelpcdn.com/bphoto/9Y4sB4D2z7jzqj3XZPb9jA/o.jpg',
+  //   name: 'Loading...',
+  //   location: {
+  //     display_address: ['Loading...']
+  //   },
+  //   display_phone: 'Loading...',
+  //   rating: 0,
+  //   review_count: 0,
+  //   distance: 0,
+  //   price:"$",
+  //   // categories: []
+  
+  // })
 
-  React.useEffect(() => {
-    getbusinesses(location, price, category, radius)
-      .then(res => {
-        setData(res.data.businesses)
-        // setLoading(false)
-        return res.data.businesses
-      })
-      .then(data => {
-        setRandomRestaurant(data[(Math.floor(Math.random() * data.length))])
-      })
-      .catch(err => { console.log('err', err) })
+  //const Stack = createNativeStackNavigator()
+
+  // React.useEffect(() => {
+  //   getbusinesses(location, price, category, radius)
+  //     .then(res => {
+  //       setData(res.data.businesses)
+  //       return res.data.businesses
+  //     })
+  //     .then(data => {
+  //       setRandomRestaurant(data[(Math.floor(Math.random() * data.length))])
+
+  //     })
+  //     .catch(err => { console.log('err', err) })
  
-  },[ location, price, category, radius])
+  // },[ location, price, category, radius])
 
   const delay = ms => new Promise(
     resolve => setTimeout(resolve, ms)
@@ -72,8 +73,8 @@ const Home = ({location, price, category, radius, }) => {
     
     const numImages = data.length;
     const randomIndex = Math.floor(Math.random() * numImages);
-    console.log('random index:', randomIndex)
-    console.log('current',carouselRef.current.getCurrentIndex())
+    //console.log('random index:', randomIndex)
+    //console.log('current',carouselRef.current.getCurrentIndex())
     for (let i = 0; i < 30; i++) {
       await delay(100)
       carouselRef.current.next()
@@ -86,6 +87,10 @@ const Home = ({location, price, category, radius, }) => {
 
     return (
       <>
+      <View style={{backgroundColor:'white', position:'relative'}}>
+        <Text style={{height:1000, position:'absolute'}}>Test</Text>
+
+      </View>
         <LinearGradient
           colors={['rgb(239, 120, 36)', 'rgb(236, 80, 31)']}
           style={{height: '100%'}}
@@ -103,9 +108,9 @@ const Home = ({location, price, category, radius, }) => {
                 mode='parallax'
                 data={data}
                 scrollAnimationDuration={90}
-                onSnapToItem={(index) => {
-                  console.log('current index:', index)
-                }}
+                // onSnapToItem={(index) => {
+                //   console.log('current :', index)
+                // }}
                 renderItem={({ index }) => (
                   randomRestaurant ? 
                   <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

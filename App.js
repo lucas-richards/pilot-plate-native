@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -12,50 +13,59 @@ import Detail from './pages/business/Detail';
 import Transactions from './pages/Transactions';
 import Friends from './pages/Friends';
 import { DataProvider } from './DataContext';
+import BrandingPage from './pages/BrandingPage';
+import { getbusinesses } from './api/yelp_api';
+
 
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator()
 
 // this is a stack navigation and includes back button
-// const HomePage = () => {
-//   return (
-//     <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
-//       <Stack.Screen 
-//         name="Home" 
-//         children={() => <Home 
-//             location={location} 
-//             price={price} 
-//             category={category} 
-//             radius={radius} 
-//             user={user}
-//             dbChange = {dbChange}
-//             setDbChange={setDbChange}
-//             />} />
-//       <Stack.Screen name="Detail" component={Detail} />
-//       {/* <Stack.Screen name="SignIn" component={SignInForm} /> */}
-//     </Stack.Navigator>
-//   );
-// };
-// this code makes a smooth page transition
-  // <View style={{marginTop:20}}>
-  //     <Pressable onPress={() => navigation.navigate("SignIn")}>
-  //         <Text>
-  //         HELLO
-  //         </Text> 
-  //     </Pressable>
-  // </View>
   
   
   export default function App() {
-    // const [user, setUser] = React.useState(null);
+    
     const [location, setLocation] = React.useState('LA')
     const [price, setPrice] = React.useState(2)
     const [radius, setRadius] = React.useState(8000)
     const [category, setCategory] = React.useState('food')
-    // const [dbChange, setDbChange] = React.useState(false)
-    // const { dbChange, setDbChange } = useContext(DbContext);
+    const [loading, setLoading] = React.useState(true)
+    const [isDataFetched, setIsDataFetched] = React.useState(false)
 
+
+    const [data, setData] = React.useState([])
+
+    const [randomRestaurant, setRandomRestaurant] = React.useState({
+      image_url: 'https://s3-media0.fl.yelpcdn.com/bphoto/9Y4sB4D2z7jzqj3XZPb9jA/o.jpg',
+      name: 'Loading...',
+      location: {
+        display_address: ['Loading...']
+      },
+      display_phone: 'Loading...',
+      rating: 0,
+      review_count: 0,
+      distance: 0,
+      price:"$",
+      // categories: []
+    
+    })
+    //fetch business and save it to data and the selected random restaurant
+    React.useEffect(() => {
+      getbusinesses(location, price, category, radius)
+        .then(res => {
+          setData(res.data.businesses)
+          return res.data.businesses
+        })
+        .then(data => {
+          setRandomRestaurant(data[(Math.floor(Math.random() * data.length))])
+          setLoading(false)
+        })
+        .catch(err => { console.log('err', err) })
+   
+    },[ location, price, category, radius])
+
+    
 
     const HomeNavigation = () => {
       return (
@@ -67,6 +77,8 @@ const Stack = createNativeStackNavigator()
               price={price} 
               category={category} 
               radius={radius} 
+              randomRestaurant={randomRestaurant}
+              data={data}
               />} 
           />
           <Stack.Screen 
@@ -106,9 +118,14 @@ const Stack = createNativeStackNavigator()
       </Stack.Navigator>
     )
   }
+
+  if (loading) {
+    return <BrandingPage />
+  }
     
   return (
     <>
+    
     <DataProvider>
       <NavigationContainer>
         <Tab.Navigator tabBarActiveTintColor="red" initialRouteName='Home'>
@@ -117,7 +134,7 @@ const Stack = createNativeStackNavigator()
               children={() => <Transactions />}
               options={{ 
                 tabBarLabel: "",
-                title: <Header />,
+                title: <Header fontSize={20} />,
                 tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account-group' color={color} size={35} />) 
               }}
               />
@@ -135,15 +152,15 @@ const Stack = createNativeStackNavigator()
               />}        
               options={{ 
                 tabBarLabel: "",
-                title: <Header />,
-              tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='filter-variant' color={color} size={35} />) 
-            }}/>
+                title: <Header fontSize={20} />,
+                tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='filter-variant' color={color} size={35} />) 
+              }}/>
           <Tab.Screen 
             name="Home" 
             component={HomeNavigation}
             options={{ 
               tabBarLabel: "",
-              title: <Header />,
+              title: <Header fontSize={20} />,
               tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='home' color={color} size={35} />) 
             }}
             />
@@ -153,7 +170,7 @@ const Stack = createNativeStackNavigator()
             component={FavoritesNavigation}
             options={{ 
               tabBarLabel: "",
-              title: <Header />,
+              title: <Header fontSize={20} />,
               tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='heart' color={color} size={35} />) 
             }}/>
             <Tab.Screen 
@@ -162,13 +179,14 @@ const Stack = createNativeStackNavigator()
               //children={() => <Profile/>}
               options={{ 
                 tabBarLabel: "",
-                title: <Header />,
+                title: <Header fontSize={20} />,
                 tabBarIcon:({color, size}) =>(<MaterialCommunityIcons name='account' color={color} size={35} />) 
               }}/>
             
           </Tab.Navigator>
         </NavigationContainer>
       </DataProvider>
+      
     </>
 
   );

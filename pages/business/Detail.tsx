@@ -9,6 +9,7 @@ import HeartFavorite from '../../components/HeartFavorite';
 import { AntDesign } from '@expo/vector-icons'; 
 import { DbContext } from '../../DataContext';
 import { updateBusiness } from '../../api/business';
+import { isColonToken } from 'typescript';
 
 const Detail = ({route, navigation:{goBack}}) => {
     const business = route.params.selectedBusiness
@@ -24,9 +25,8 @@ const Detail = ({route, navigation:{goBack}}) => {
     useEffect(() => {
         console.log('rating1', rating)
         setRating(business.rating)
+        //check based on yelp info or database info
         typeof business.price === 'number'? setComingFromFav(true):setComingFromFav(false)
-        
-
     },[])
     
     const dialCall = (number) => {
@@ -65,7 +65,7 @@ const Detail = ({route, navigation:{goBack}}) => {
             <View style={styles.container}>
             
                 {
-                    drop === user.email?
+                    comingFromFav && drop === user.email || comingFromFav === false ?
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
                         <AntDesign onPress={() => goBack()} name="left" size={24} color="black" />
                         <Text style={styles.name}>{business.name}</Text>
@@ -109,7 +109,7 @@ const Detail = ({route, navigation:{goBack}}) => {
                     </Text>
                     <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal:5}}>
                         {
-                            comingFromFav?
+                            comingFromFav && drop === user.email?
                             <StarRating 
                             onChange={setRating}
                             rating={rating} 
@@ -125,7 +125,8 @@ const Detail = ({route, navigation:{goBack}}) => {
                         }
                         <Text style={{color:'gray'}}>
                             {/* if business coming from yelp show all reviews, if not user review */}
-                            ({comingFromFav? user.email:business.review_count})
+                            ({comingFromFav ? drop : business.review_count})
+                            {/* ({comingFromFav? drop === undefined? user.email:'friend':business.review_count}) */}
                         </Text>
                         
                     </View>

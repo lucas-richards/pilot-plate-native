@@ -104,10 +104,6 @@ const Favorites = () => {
 
     // console.log('owner businesses',businesses)
 
-    if(businesses.length === 0){
-        return <Text style={{textAlign:'center', marginTop:100, color:'black'}}>No favorites yet</Text>
-    }
-
     const handleOpenMaps = (address) => {
       const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
       Linking.openURL(mapsUrl);
@@ -139,6 +135,18 @@ const Favorites = () => {
 
 
           <Text style={styles.title}>Favorites!</Text>
+          {
+            businesses.length === 0 ?
+              //nested conditional
+              user ?
+              //user signed in show text of no post
+              <Text style={styles.noPost}>No Post</Text>
+              :
+              //user not signed in show text of please sign in
+              <Text style={styles.noPost}>Please sign in</Text>
+              :
+              null
+          }
               <FlatList
                 data={businesses}
                 renderItem={({item}) => 
@@ -246,4 +254,9 @@ const Favorites = () => {
       borderRadius: 10,
       margin: 7,
     },
+    noPost: {
+      textAlign: 'center',
+      fontSize: 15,
+      marginTop: 20
+    }
   })
