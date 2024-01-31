@@ -27,12 +27,12 @@ const Stack = createNativeStackNavigator()
   export default function App() {
     
     const [location, setLocation] = React.useState('LA')
-    const [latitud, setLatitud] = React.useState(34.052235)
+    const [latitude, setLatitud] = React.useState(34.052235)
     const [longitude, setLongitude] = React.useState(-118.243683)
     const [price, setPrice] = React.useState(2)
     const [radius, setRadius] = React.useState(8000)
     const [category, setCategory] = React.useState('food')
-    const [loading, setLoading] = React.useState(true)
+    const [loading, setLoading] = React.useState(false)
     const [isDataFetched, setIsDataFetched] = React.useState(false)
 
 
@@ -54,16 +54,19 @@ const Stack = createNativeStackNavigator()
     })
     //fetch business and save it to data and the selected random restaurant
     React.useEffect(() => {
-      getbusinesses(location, price, category, radius)
+      getbusinesses(location, latitude, longitude,  price, category, radius)
         .then(res => {
           setData(res.data.businesses)
           return res.data.businesses
         })
         .then(data => {
           setRandomRestaurant(data[(Math.floor(Math.random() * data.length))])
-          setLoading(false)
+          
         })
-        .catch(err => { console.log('err', err) })
+        .catch(err => { console.log('error fetching businesses', err) })
+        .finally(() => setLoading(false))
+
+      
    
     },[ location, price, category, radius])
 
@@ -145,7 +148,7 @@ const Stack = createNativeStackNavigator()
             children={() => <Filter 
               location={location} 
               setLocation={setLocation}
-              latitud={latitud}
+              latitude={latitude}
               setLatitud={setLatitud}
               longitude={longitude}
               setLongitude={setLongitude}

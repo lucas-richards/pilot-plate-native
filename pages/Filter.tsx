@@ -7,11 +7,9 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  Button,
  } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Slider from "react-native-a11y-slider";
-import Geolocation from 'react-native-geolocation-service';
 import * as Location from 'expo-location';
 
 
@@ -36,8 +34,8 @@ const Filter = ({location,
     const [radiusValue, setRadiusValue] = useState(Math.floor(radius * 0.000621371)) //converted to miles         
     const [message, setMessage] = useState(false)
     const [userLocation, setUserLocation] = useState({
-      latitude: 0,
-      longitude: 0,});
+      latitude: null,
+      longitude: null,});
 
     const handleFilter = async () => {
       setMessage(true)

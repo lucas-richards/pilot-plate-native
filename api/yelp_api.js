@@ -3,17 +3,11 @@ import axios from 'axios'
 
 // Yelp API
 
-export const getbusinesses = (location, latitud, longitude, price, category, radius) => {
-    console.log('filter',location,price,category,radius)
+export const getbusinesses = (location, latitude, longitude, price, category, radius) => {
+    console.log('filter',location,latitude,longitude,price,category,radius)
 	return axios({
 		method: 'GET',
-		url: apiUrl + '/yelp-data' + `/search?
-		location=${location}&
-		latitude=${latitud}&
-		longitude=${longitude}&
-		price=${price}&
-		term=${category}&
-		radius=${radius}`,
+		url: apiUrl + '/yelp-data' + `/search?location=${location}&latitude=${latitude}&longitude=${longitude}&price=${price}&term=${category}&radius=${radius}`,
 		
 	})
 }
