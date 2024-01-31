@@ -27,7 +27,7 @@ const Stack = createNativeStackNavigator()
   export default function App() {
     
     const [location, setLocation] = React.useState('LA')
-    const [latitude, setLatitud] = React.useState(34.052235)
+    const [latitude, setLatitude] = React.useState(34.052235)
     const [longitude, setLongitude] = React.useState(-118.243683)
     const [price, setPrice] = React.useState(2)
     const [radius, setRadius] = React.useState(8000)
@@ -149,7 +149,7 @@ const Stack = createNativeStackNavigator()
               location={location} 
               setLocation={setLocation}
               latitude={latitude}
-              setLatitud={setLatitud}
+              setLatitude={setLatitude}
               longitude={longitude}
               setLongitude={setLongitude}
               price={price}

@@ -66,6 +66,9 @@ const Filter = ({location,
         // Get current location
         let location = await Location.getCurrentPositionAsync({});
         setUserLocation(location.coords);
+        //set Lat Long for yelp api call
+        setLatitude(location.coords.latitude)
+        setLongitude(location.coords.longitude)
         setLocationValue('')
       } catch (error) {
         console.error('Error getting location:', error);
