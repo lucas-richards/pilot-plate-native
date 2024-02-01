@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
  } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Slider from "react-native-a11y-slider";
@@ -27,15 +28,16 @@ const Filter = ({location,
                   setRadius}) => {
     
     const [locationValue, setLocationValue] = useState(location)
-    const [latitudeValue, setLatitudeValue] = useState(latitude)
-    const [longitudeValue, setLongitudeValue] = useState(longitude)
+    // const [latitudeValue, setLatitudeValue] = useState(latitude)
+    // const [longitudeValue, setLongitudeValue] = useState(longitude)
     const [priceValue, setPriceValue] = useState(price)
     const [categoryValue, setCategoryValue] = useState(category)
     const [radiusValue, setRadiusValue] = useState(Math.floor(radius * 0.000621371)) //converted to miles         
     const [message, setMessage] = useState(false)
     const [userLocation, setUserLocation] = useState({
-      latitude: null,
-      longitude: null,});
+      latitude: 0,
+      longitude: 0,});
+    const [geoLocation,setGeoLocation] = useState('')
 
     const handleFilter = async () => {
       setMessage(true)
@@ -66,10 +68,13 @@ const Filter = ({location,
         // Get current location
         let location = await Location.getCurrentPositionAsync({});
         setUserLocation(location.coords);
+        //console.log(location)
         //set Lat Long for yelp api call
         setLatitude(location.coords.latitude)
         setLongitude(location.coords.longitude)
         setLocationValue('')
+        //function call to reverseGeo to get city 
+        getCity(location.coords.latitude, location.coords.longitude)
       } catch (error) {
         console.error('Error getting location:', error);
       }
@@ -77,7 +82,26 @@ const Filter = ({location,
   };
 
   
-
+  const getCity = async function(lat, long){
+    try{
+      console.log(lat, long)
+        const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${long}&localityLanguage=en`
+        const response = await fetch(url);
+        if (response.ok) {
+            const data = await response.json();
+            const city = data.locality
+            console.log({city})
+            console.log(data)
+            setGeoLocation(city)
+            //setLoadToggle(!loadToggle)
+        } else {
+            console.log('Failed to fetch city data');
+        }
+    }
+    catch{
+        console.log('error fetching city')
+    } 
+}
     
   
 
@@ -106,12 +130,15 @@ const Filter = ({location,
             >
                 <View style={styles.useLocation}>
                   {
-                    userLocation ?
+                    userLocation.latitude ?
                     <Text 
                       style={{color:'blue'}}
                       onPress={() => {
                         setLocationValue('')
-                        setUserLocation(null)
+                        setUserLocation({latitude:0, longitude:0})
+                        setGeoLocation('')
+                        setLatitude(0)
+                        setLongitude(0)
                       }}
                       >Using my location</Text>
                     :
@@ -122,12 +149,18 @@ const Filter = ({location,
                   }
                 
                 </View>
-                {userLocation ? (
-                    <Text>
-                      Latitude: {userLocation.latitude}, Longitude: {userLocation.longitude}
-                    </Text>
-                  ) : (
-                    <Text>GPS stopped</Text>
+                {userLocation.latitude ? (
+                    geoLocation ? 
+                        <Text>
+                          {geoLocation}
+                          {/* Latitude: {userLocation.latitude}, Longitude: {userLocation.longitude} */}
+                        </Text>
+                      :
+                      <View style={{justifyContent: 'center', alignItems: 'center' }}>
+                        <ActivityIndicator size="small" color="#ffff" />
+                      </View>
+                   ): (
+                    <Text></Text>
                   )}
             <Text style={styles.text}>Location</Text>
             <TextInput
